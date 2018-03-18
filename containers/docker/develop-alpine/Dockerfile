@@ -2,13 +2,13 @@ FROM alpine:3.7
 
 RUN \
   apk add --update go git make gcc musl-dev linux-headers ca-certificates && \
-  git clone --depth 1 https://github.com/ethereum/go-ethereum && \
-  (cd go-ethereum && make geth) && \
-  cp go-ethereum/build/bin/geth /geth && \
+  git clone --depth 1 https://github.com/ubiq/go-ubiq && \
+  (cd go-gubiq && make gubiq) && \
+  cp go-ubiq/build/bin/gubiq /gubiq && \
   apk del go git make gcc musl-dev linux-headers && \
-  rm -rf /go-ethereum && rm -rf /var/cache/apk/*
+  rm -rf /go-ubiq && rm -rf /var/cache/apk/*
 
-EXPOSE 8545
+EXPOSE 8588
 EXPOSE 30303
 
-ENTRYPOINT ["/geth"]
+ENTRYPOINT ["/gubiq"]

@@ -1,5 +1,5 @@
 language: go
-go_import_path: github.com/ethereum/go-ethereum
+go_import_path: github.com/ubiq/go-ubiq
 sudo: false
 matrix:
   include:
@@ -54,7 +54,7 @@ matrix:
       env:
         - lint
       git:
-        submodules: false # avoid cloning ethereum/tests
+        submodules: false # avoid cloning ubiq/tests
       script:
         - go run build/ci.go lint
 
@@ -67,7 +67,7 @@ matrix:
         - ubuntu-ppa
         - azure-linux
       git:
-        submodules: false # avoid cloning ethereum/tests
+        submodules: false # avoid cloning ubiq/tests
       addons:
         apt:
           packages:
@@ -78,7 +78,7 @@ matrix:
             - fakeroot
       script:
         # Build for the primary platforms that Trusty can manage
-        - go run build/ci.go debsrc -signer "Go Ethereum Linux Builder <geth-ci@ethereum.org>" -upload ppa:ethereum/ethereum
+        - go run build/ci.go debsrc -signer "Go Ubiq Linux Builder" -upload ppa:ethereum/ethereum
         - go run build/ci.go install
         - go run build/ci.go archive -type tar -signer LINUX_SIGNING_KEY -upload gethstore/builds
         - go run build/ci.go install -arch 386
@@ -197,7 +197,7 @@ matrix:
       env:
         - azure-purge
       git:
-        submodules: false # avoid cloning ethereum/tests
+        submodules: false # avoid cloning ubiq/tests
       script:
         - go run build/ci.go purge -store gethstore/builds -days 14
 
