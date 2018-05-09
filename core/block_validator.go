@@ -37,7 +37,7 @@ var (
 	nPowAveragingWindow = big.NewInt(21)
 	nPowMaxAdjustDown   = big.NewInt(16) // 16% adjustment down
 	nPowMaxAdjustUp     = big.NewInt(8)  // 8% adjustment up
-
+//references blockheight at which changes in difficulty algorithm were implemented
 	diffChangeBlock       = big.NewInt(4088)
 	nPowAveragingWindow88 = big.NewInt(88)
 	nPowMaxAdjustDown2    = big.NewInt(3) // 3% adjustment down
