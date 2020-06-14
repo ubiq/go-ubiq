@@ -77,9 +77,10 @@ JavaScript API. See https://github.com/ubiq/go-ubiq/wiki/JavaScript-Console`,
 // same time.
 func localConsole(ctx *cli.Context) error {
 	// Create and start the node based on the CLI flags
+	prepare(ctx)
 	node := makeFullNode(ctx)
 	startNode(ctx, node)
-	defer node.Stop()
+	defer node.Close()
 
 	// Attach to the newly started node and start the JavaScript console
 	client, err := node.Attach()
@@ -122,9 +123,11 @@ func remoteConsole(ctx *cli.Context) error {
 			path = ctx.GlobalString(utils.DataDirFlag.Name)
 		}
 		if path != "" {
-			if ctx.GlobalBool(utils.TestnetFlag.Name) {
+			if ctx.GlobalBool(utils.LegacyTestnetFlag.Name) {
 				path = filepath.Join(path, "testnet")
-			}
+			} // else if ctx.GlobalBool(utils.RinkebyFlag.Name) {
+			// path = filepath.Join(path, "rinkeby")
+			// }
 		}
 		endpoint = fmt.Sprintf("%s/gubiq.ipc", path)
 	}
@@ -178,7 +181,7 @@ func ephemeralConsole(ctx *cli.Context) error {
 	// Create and start the node based on the CLI flags
 	node := makeFullNode(ctx)
 	startNode(ctx, node)
-	defer node.Stop()
+	defer node.Close()
 
 	// Attach to the newly started node and start the JavaScript console
 	client, err := node.Attach()

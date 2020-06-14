@@ -1,4 +1,4 @@
-// Copyright 2015 The go-ethereum Authors
+// Copyright 2018 The go-ethereum Authors
 // This file is part of the go-ethereum library.
 //
 // The go-ethereum library is free software: you can redistribute it and/or modify
@@ -26,13 +26,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/rlp"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/errors"
 	"github.com/syndtr/goleveldb/leveldb/iterator"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 	"github.com/syndtr/goleveldb/leveldb/storage"
 	"github.com/syndtr/goleveldb/leveldb/util"
+	"github.com/ubiq/go-ubiq/rlp"
 )
 
 // Keys in the node database.
@@ -41,6 +41,7 @@ const (
 	dbNodePrefix   = "n:"      // Identifier to prefix node entries with
 	dbLocalPrefix  = "local:"
 	dbDiscoverRoot = "v4"
+	dbDiscv5Root   = "v5"
 
 	// These fields are stored per ID and IP, the full key is "n:<ID>:v4:<IP>:findfail".
 	// Use nodeItemKey to create those keys.
@@ -57,7 +58,7 @@ const (
 const (
 	dbNodeExpiration = 24 * time.Hour // Time after which an unseen node should be dropped.
 	dbCleanupCycle   = time.Hour      // Time period for running the expiration task.
-	dbVersion        = 8
+	dbVersion        = 9
 )
 
 var zeroIP = make(net.IP, 16)
@@ -170,6 +171,16 @@ func splitNodeItemKey(key []byte) (id ID, ip net.IP, field string) {
 	// Field is the remainder of key.
 	field = string(key)
 	return id, ip, field
+}
+
+func v5Key(id ID, ip net.IP, field string) []byte {
+	return bytes.Join([][]byte{
+		[]byte(dbNodePrefix),
+		id[:],
+		[]byte(dbDiscv5Root),
+		ip.To16(),
+		[]byte(field),
+	}, []byte{':'})
 }
 
 // localItemKey returns the key of a local node item.
@@ -378,14 +389,24 @@ func (db *DB) UpdateFindFails(id ID, ip net.IP, fails int) error {
 	return db.storeInt64(nodeItemKey(id, ip, dbNodeFindFails), int64(fails))
 }
 
+// FindFailsV5 retrieves the discv5 findnode failure counter.
+func (db *DB) FindFailsV5(id ID, ip net.IP) int {
+	return int(db.fetchInt64(v5Key(id, ip, dbNodeFindFails)))
+}
+
+// UpdateFindFailsV5 stores the discv5 findnode failure counter.
+func (db *DB) UpdateFindFailsV5(id ID, ip net.IP, fails int) error {
+	return db.storeInt64(v5Key(id, ip, dbNodeFindFails), int64(fails))
+}
+
 // LocalSeq retrieves the local record sequence counter.
 func (db *DB) localSeq(id ID) uint64 {
-	return db.fetchUint64(nodeItemKey(id, zeroIP, dbLocalSeq))
+	return db.fetchUint64(localItemKey(id, dbLocalSeq))
 }
 
 // storeLocalSeq stores the local record sequence counter.
 func (db *DB) storeLocalSeq(id ID, n uint64) {
-	db.storeUint64(nodeItemKey(id, zeroIP, dbLocalSeq), n)
+	db.storeUint64(localItemKey(id, dbLocalSeq), n)
 }
 
 // QuerySeeds retrieves random nodes to be used as potential seed nodes

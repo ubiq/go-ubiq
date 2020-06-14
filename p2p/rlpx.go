@@ -35,22 +35,22 @@ import (
 	"sync"
 	"time"
 
+	"github.com/golang/snappy"
 	"github.com/ubiq/go-ubiq/common/bitutil"
 	"github.com/ubiq/go-ubiq/crypto"
 	"github.com/ubiq/go-ubiq/crypto/ecies"
-	"github.com/ubiq/go-ubiq/crypto/secp256k1"
+	"github.com/ubiq/go-ubiq/metrics"
 	"github.com/ubiq/go-ubiq/rlp"
-	"github.com/golang/snappy"
 	"golang.org/x/crypto/sha3"
 )
 
 const (
 	maxUint24 = ^uint32(0) >> 8
 
-	sskLen = 16 // ecies.MaxSharedKeyLength(pubKey) / 2
-	sigLen = 65 // elliptic S256
-	pubLen = 64 // 512 bit pubkey in uncompressed representation without format byte
-	shaLen = 32 // hash length (for nonce etc)
+	sskLen = 16                     // ecies.MaxSharedKeyLength(pubKey) / 2
+	sigLen = crypto.SignatureLength // elliptic S256
+	pubLen = 64                     // 512 bit pubkey in uncompressed representation without format byte
+	shaLen = 32                     // hash length (for nonce etc)
 
 	authMsgLen  = sigLen + shaLen + pubLen + shaLen + 1
 	authRespLen = pubLen + shaLen + 1
@@ -128,7 +128,7 @@ func (t *rlpx) doProtoHandshake(our *protoHandshake) (their *protoHandshake, err
 	// as the error so it can be tracked elsewhere.
 	werr := make(chan error, 1)
 	go func() { werr <- Send(t.rw, handshakeMsg, our) }()
-	if their, err = readProtocolHandshake(t.rw, our); err != nil {
+	if their, err = readProtocolHandshake(t.rw); err != nil {
 		<-werr // make sure the write terminates too
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func (t *rlpx) doProtoHandshake(our *protoHandshake) (their *protoHandshake, err
 	return their, nil
 }
 
-func readProtocolHandshake(rw MsgReader, our *protoHandshake) (*protoHandshake, error) {
+func readProtocolHandshake(rw MsgReader) (*protoHandshake, error) {
 	msg, err := rw.ReadMsg()
 	if err != nil {
 		return nil, err
@@ -400,7 +400,7 @@ func (h *encHandshake) handleAuthMsg(msg *authMsgV4, prv *ecdsa.PrivateKey) erro
 		return err
 	}
 	signedMsg := xor(token, h.initNonce)
-	remoteRandomPub, err := secp256k1.RecoverPubkey(signedMsg, msg.Signature[:])
+	remoteRandomPub, err := crypto.Ecrecover(signedMsg, msg.Signature[:])
 	if err != nil {
 		return err
 	}
@@ -420,16 +420,6 @@ func (h *encHandshake) makeAuthResp() (msg *authRespV4, err error) {
 	copy(msg.RandomPubkey[:], exportPubkey(&h.randomPrivKey.PublicKey))
 	msg.Version = 4
 	return msg, nil
-}
-
-func (msg *authMsgV4) sealPlain(h *encHandshake) ([]byte, error) {
-	buf := make([]byte, authMsgLen)
-	n := copy(buf, msg.Signature[:])
-	n += copy(buf[n:], crypto.Keccak256(exportPubkey(&h.randomPrivKey.PublicKey)))
-	n += copy(buf[n:], msg.InitiatorPubkey[:])
-	n += copy(buf[n:], msg.Nonce[:])
-	buf[n] = 0 // token-flag
-	return ecies.Encrypt(rand.Reader, h.remote, buf, nil, nil)
 }
 
 func (msg *authMsgV4) decodePlain(input []byte) {
@@ -603,6 +593,11 @@ func (rw *rlpxFrameRW) WriteMsg(msg Msg) error {
 		msg.Payload = bytes.NewReader(payload)
 		msg.Size = uint32(len(payload))
 	}
+	msg.meterSize = msg.Size
+	if metrics.Enabled && msg.meterCap.Name != "" { // don't meter non-subprotocol messages
+		m := fmt.Sprintf("%s/%s/%d/%#02x", egressMeterName, msg.meterCap.Name, msg.meterCap.Version, msg.meterCode)
+		metrics.GetOrRegisterMeter(m, nil).Mark(int64(msg.meterSize))
+	}
 	// write header
 	headbuf := make([]byte, 32)
 	fsize := uint32(len(ptype)) + msg.Size
@@ -687,6 +682,7 @@ func (rw *rlpxFrameRW) ReadMsg() (msg Msg, err error) {
 		return msg, err
 	}
 	msg.Size = uint32(content.Len())
+	msg.meterSize = msg.Size
 	msg.Payload = content
 
 	// if snappy is enabled, verify and decompress message

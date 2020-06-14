@@ -28,7 +28,7 @@ var errUbqhashStopped = errors.New("ubqhash stopped")
 
 // API exposes ubqhash related methods for the RPC interface.
 type API struct {
-	ubqhash *Ubqhash // Make sure the mode of ubqhash is normal.
+	ubqhash *Ubqhash
 }
 
 // GetWork returns a work package for external miner.
@@ -39,7 +39,7 @@ type API struct {
 //   result[2] - 32 bytes hex encoded boundary condition ("target"), 2^256/difficulty
 //   result[3] - hex encoded block number
 func (api *API) GetWork() ([4]string, error) {
-	if api.ubqhash.config.PowMode != ModeNormal && api.ubqhash.config.PowMode != ModeTest {
+	if api.ubqhash.remote == nil {
 		return [4]string{}, errors.New("not supported")
 	}
 
@@ -47,13 +47,11 @@ func (api *API) GetWork() ([4]string, error) {
 		workCh = make(chan [4]string, 1)
 		errc   = make(chan error, 1)
 	)
-
 	select {
-	case api.ubqhash.fetchWorkCh <- &sealWork{errc: errc, res: workCh}:
-	case <-api.ubqhash.exitCh:
+	case api.ubqhash.remote.fetchWorkCh <- &sealWork{errc: errc, res: workCh}:
+	case <-api.ubqhash.remote.exitCh:
 		return [4]string{}, errUbqhashStopped
 	}
-
 	select {
 	case work := <-workCh:
 		return work, nil
@@ -66,23 +64,21 @@ func (api *API) GetWork() ([4]string, error) {
 // It returns an indication if the work was accepted.
 // Note either an invalid solution, a stale work a non-existent work will return false.
 func (api *API) SubmitWork(nonce types.BlockNonce, hash, digest common.Hash) bool {
-	if api.ubqhash.config.PowMode != ModeNormal && api.ubqhash.config.PowMode != ModeTest {
+	if api.ubqhash.remote == nil {
 		return false
 	}
 
 	var errc = make(chan error, 1)
-
 	select {
-	case api.ubqhash.submitWorkCh <- &mineResult{
+	case api.ubqhash.remote.submitWorkCh <- &mineResult{
 		nonce:     nonce,
 		mixDigest: digest,
 		hash:      hash,
 		errc:      errc,
 	}:
-	case <-api.ubqhash.exitCh:
+	case <-api.ubqhash.remote.exitCh:
 		return false
 	}
-
 	err := <-errc
 	return err == nil
 }
@@ -94,21 +90,19 @@ func (api *API) SubmitWork(nonce types.BlockNonce, hash, digest common.Hash) boo
 // It accepts the miner hash rate and an identifier which must be unique
 // between nodes.
 func (api *API) SubmitHashRate(rate hexutil.Uint64, id common.Hash) bool {
-	if api.ubqhash.config.PowMode != ModeNormal && api.ubqhash.config.PowMode != ModeTest {
+	if api.ubqhash.remote == nil {
 		return false
 	}
 
 	var done = make(chan struct{}, 1)
-
 	select {
-	case api.ubqhash.submitRateCh <- &hashrate{done: done, rate: uint64(rate), id: id}:
-	case <-api.ubqhash.exitCh:
+	case api.ubqhash.remote.submitRateCh <- &hashrate{done: done, rate: uint64(rate), id: id}:
+	case <-api.ubqhash.remote.exitCh:
 		return false
 	}
 
 	// Block until hash rate submitted successfully.
 	<-done
-
 	return true
 }
 

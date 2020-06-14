@@ -50,8 +50,10 @@ func TestConsoleWelcome(t *testing.T) {
 	gubiq.SetTemplateFunc("goos", func() string { return runtime.GOOS })
 	gubiq.SetTemplateFunc("goarch", func() string { return runtime.GOARCH })
 	gubiq.SetTemplateFunc("gover", runtime.Version)
-	gubiq.SetTemplateFunc("gubiqver", func() string { return params.VersionWithMeta })
-	gubiq.SetTemplateFunc("niltime", func() string { return time.Unix(0, 0).Format(time.RFC1123) })
+	gubiq.SetTemplateFunc("gubiqver", func() string { return params.VersionWithCommit("", "") })
+	gubiq.SetTemplateFunc("niltime", func() string {
+		return time.Unix(0, 0).Format("Mon Jan 02 2006 15:04:05 GMT-0700 (MST)")
+	})
 	gubiq.SetTemplateFunc("apis", func() string { return ipcAPIs })
 
 	// Verify the actual welcome message to the required template
@@ -87,11 +89,14 @@ func TestIPCAttachWelcome(t *testing.T) {
 		"--port", "0", "--maxpeers", "0", "--nodiscover", "--nat", "none",
 		"--etherbase", coinbase, "--shh", "--ipcpath", ipc)
 
-	time.Sleep(2 * time.Second) // Simple way to wait for the RPC endpoint to open
+	defer func() {
+		gubiq.Interrupt()
+		gubiq.ExpectExit()
+	}()
+
+	waitForEndpoint(t, ipc, 3*time.Second)
 	testAttachWelcome(t, gubiq, "ipc:"+ipc, ipcAPIs)
 
-	gubiq.Interrupt()
-	gubiq.ExpectExit()
 }
 
 func TestHTTPAttachWelcome(t *testing.T) {
@@ -100,12 +105,14 @@ func TestHTTPAttachWelcome(t *testing.T) {
 	gubiq := runGubiq(t,
 		"--port", "0", "--maxpeers", "0", "--nodiscover", "--nat", "none",
 		"--etherbase", coinbase, "--rpc", "--rpcport", port)
+	defer func() {
+		gubiq.Interrupt()
+		gubiq.ExpectExit()
+	}()
 
-	time.Sleep(2 * time.Second) // Simple way to wait for the RPC endpoint to open
-	testAttachWelcome(t, gubiq, "http://localhost:"+port, httpAPIs)
-
-	gubiq.Interrupt()
-	gubiq.ExpectExit()
+	endpoint := "http://127.0.0.1:" + port
+	waitForEndpoint(t, endpoint, 3*time.Second)
+	testAttachWelcome(t, gubiq, endpoint, httpAPIs)
 }
 
 func TestWSAttachWelcome(t *testing.T) {
@@ -115,12 +122,14 @@ func TestWSAttachWelcome(t *testing.T) {
 	gubiq := runGubiq(t,
 		"--port", "0", "--maxpeers", "0", "--nodiscover", "--nat", "none",
 		"--etherbase", coinbase, "--ws", "--wsport", port)
+	defer func() {
+		gubiq.Interrupt()
+		gubiq.ExpectExit()
+	}()
 
-	time.Sleep(2 * time.Second) // Simple way to wait for the RPC endpoint to open
-	testAttachWelcome(t, gubiq, "ws://localhost:"+port, httpAPIs)
-
-	gubiq.Interrupt()
-	gubiq.ExpectExit()
+	endpoint := "ws://127.0.0.1:" + port
+	waitForEndpoint(t, endpoint, 3*time.Second)
+	testAttachWelcome(t, gubiq, endpoint, httpAPIs)
 }
 
 func testAttachWelcome(t *testing.T, gubiq *testgubiq, endpoint, apis string) {
@@ -133,9 +142,11 @@ func testAttachWelcome(t *testing.T, gubiq *testgubiq, endpoint, apis string) {
 	attach.SetTemplateFunc("goos", func() string { return runtime.GOOS })
 	attach.SetTemplateFunc("goarch", func() string { return runtime.GOARCH })
 	attach.SetTemplateFunc("gover", runtime.Version)
-	attach.SetTemplateFunc("gubiqver", func() string { return params.VersionWithMeta })
-	attach.SetTemplateFunc("etherbase", func() string { return gubiq.Etherbase })
-	attach.SetTemplateFunc("niltime", func() string { return time.Unix(0, 0).Format(time.RFC1123) })
+	attach.SetTemplateFunc("gubiqver", func() string { return params.VersionWithCommit("", "") })
+	attach.SetTemplateFunc("etherbase", func() string { return geth.Etherbase })
+	attach.SetTemplateFunc("niltime", func() string {
+		return time.Unix(0, 0).Format("Mon Jan 02 2006 15:04:05 GMT-0700 (MST)")
+	})
 	attach.SetTemplateFunc("ipc", func() bool { return strings.HasPrefix(endpoint, "ipc") })
 	attach.SetTemplateFunc("datadir", func() string { return gubiq.Datadir })
 	attach.SetTemplateFunc("apis", func() string { return apis })

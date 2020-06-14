@@ -14,10 +14,11 @@ import (
 )
 
 const (
-	timeFormat     = "2006-01-02T15:04:05-0700"
-	termTimeFormat = "01-02|15:04:05.000"
-	floatFormat    = 'f'
-	termMsgJust    = 40
+	timeFormat        = "2006-01-02T15:04:05-0700"
+	termTimeFormat    = "01-02|15:04:05.000"
+	floatFormat       = 'f'
+	termMsgJust       = 40
+	termCtxMaxPadding = 40
 )
 
 // locationTrims are trimmed for display to avoid unwieldy log lines.
@@ -175,7 +176,7 @@ func logfmt(buf *bytes.Buffer, ctx []interface{}, color int, term bool) {
 		fieldPaddingLock.RUnlock()
 
 		length := utf8.RuneCountInString(v)
-		if padding < length {
+		if padding < length && length <= termCtxMaxPadding {
 			padding = length
 
 			fieldPaddingLock.Lock()
@@ -189,7 +190,7 @@ func logfmt(buf *bytes.Buffer, ctx []interface{}, color int, term bool) {
 			buf.WriteByte('=')
 		}
 		buf.WriteString(v)
-		if i < len(ctx)-2 {
+		if i < len(ctx)-2 && padding > length {
 			buf.Write(bytes.Repeat([]byte{' '}, padding-length))
 		}
 	}
@@ -357,49 +358,19 @@ func formatLogfmtValue(value interface{}, term bool) string {
 	}
 }
 
-var stringBufPool = sync.Pool{
-	New: func() interface{} { return new(bytes.Buffer) },
-}
-
+// escapeString checks if the provided string needs escaping/quoting, and
+// calls strconv.Quote if needed
 func escapeString(s string) string {
-	needsQuotes := false
-	needsEscape := false
+	needsQuoting := false
 	for _, r := range s {
-		if r <= ' ' || r == '=' || r == '"' {
-			needsQuotes = true
-		}
-		if r == '\\' || r == '"' || r == '\n' || r == '\r' || r == '\t' {
-			needsEscape = true
+		// We quote everything below " (0x34) and above~ (0x7E), plus equal-sign
+		if r <= '"' || r > '~' || r == '=' {
+			needsQuoting = true
+			break
 		}
 	}
-	if !needsEscape && !needsQuotes {
+	if !needsQuoting {
 		return s
 	}
-	e := stringBufPool.Get().(*bytes.Buffer)
-	e.WriteByte('"')
-	for _, r := range s {
-		switch r {
-		case '\\', '"':
-			e.WriteByte('\\')
-			e.WriteByte(byte(r))
-		case '\n':
-			e.WriteString("\\n")
-		case '\r':
-			e.WriteString("\\r")
-		case '\t':
-			e.WriteString("\\t")
-		default:
-			e.WriteRune(r)
-		}
-	}
-	e.WriteByte('"')
-	var ret string
-	if needsQuotes {
-		ret = e.String()
-	} else {
-		ret = string(e.Bytes()[1 : e.Len()-1])
-	}
-	e.Reset()
-	stringBufPool.Put(e)
-	return ret
+	return strconv.Quote(s)
 }

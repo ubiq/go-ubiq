@@ -25,8 +25,8 @@ import (
 	"sync"
 	"time"
 
+	natpmp "github.com/jackpal/go-nat-pmp"
 	"github.com/ubiq/go-ubiq/log"
-	"github.com/jackpal/go-nat-pmp"
 )
 
 // An implementation of nat.Interface can map local ports to ports

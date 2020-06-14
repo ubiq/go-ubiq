@@ -1,4 +1,4 @@
-// Copyright 2015 The go-ethereum Authors
+// Copyright 2018 The go-ethereum Authors
 // This file is part of the go-ethereum library.
 //
 // The go-ethereum library is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@ func TestDBNodeItemKey(t *testing.T) {
 	if id != keytestID {
 		t.Errorf("splitNodeItemKey returned wrong ID: %v", id)
 	}
-	if !bytes.Equal(ip, wantIP) {
+	if !ip.Equal(wantIP) {
 		t.Errorf("splitNodeItemKey returned wrong IP: %v", ip)
 	}
 	if field != wantField {
@@ -461,4 +461,15 @@ func TestDBExpiration(t *testing.T) {
 			}
 		}
 	}
+}
+
+// This test checks that expiration works when discovery v5 data is present
+// in the database.
+func TestDBExpireV5(t *testing.T) {
+	db, _ := OpenDB("")
+	defer db.Close()
+
+	ip := net.IP{127, 0, 0, 1}
+	db.UpdateFindFailsV5(ID{}, ip, 4)
+	db.expireNodes()
 }

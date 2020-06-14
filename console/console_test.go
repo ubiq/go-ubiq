@@ -31,6 +31,7 @@ import (
 	"github.com/ubiq/go-ubiq/core"
 	"github.com/ubiq/go-ubiq/eth"
 	"github.com/ubiq/go-ubiq/internal/jsre"
+	"github.com/ubiq/go-ubiq/miner"
 	"github.com/ubiq/go-ubiq/node"
 )
 
@@ -96,8 +97,10 @@ func newTester(t *testing.T, confOverride func(*eth.Config)) *tester {
 		t.Fatalf("failed to create node: %v", err)
 	}
 	ethConf := &eth.Config{
-		Genesis:   core.DeveloperGenesisBlock(15, common.Address{}),
-		Etherbase: common.HexToAddress(testAddress),
+		Genesis: core.DeveloperGenesisBlock(15, common.Address{}),
+		Miner: miner.Config{
+			Etherbase: common.HexToAddress(testAddress),
+		},
 		Ubqhash: ubqhash.Config{
 			PowMode: ubqhash.ModeTest,
 		},
@@ -149,8 +152,8 @@ func (env *tester) Close(t *testing.T) {
 	if err := env.console.Stop(false); err != nil {
 		t.Errorf("failed to stop embedded console: %v", err)
 	}
-	if err := env.stack.Stop(); err != nil {
-		t.Errorf("failed to stop embedded node: %v", err)
+	if err := env.stack.Close(); err != nil {
+		t.Errorf("failed to tear down embedded node: %v", err)
 	}
 	os.RemoveAll(env.workspace)
 }
@@ -286,7 +289,7 @@ func TestPrettyError(t *testing.T) {
 	defer tester.Close(t)
 	tester.console.Evaluate("throw 'hello'")
 
-	want := jsre.ErrorColor("hello") + "\n"
+	want := jsre.ErrorColor("hello") + "\n\tat <eval>:1:7(1)\n\n"
 	if output := tester.output.String(); output != want {
 		t.Fatalf("pretty error mismatch: have %s, want %s", output, want)
 	}

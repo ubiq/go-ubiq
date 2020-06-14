@@ -24,22 +24,23 @@ import (
 
 	"github.com/ubiq/go-ubiq/accounts/abi"
 	"github.com/ubiq/go-ubiq/accounts/abi/bind"
+	"github.com/ubiq/go-ubiq/accounts/keystore"
 	"github.com/ubiq/go-ubiq/common"
 	"github.com/ubiq/go-ubiq/core/types"
 )
 
-// Signer is an interaface defining the callback when a contract requires a
+// Signer is an interface defining the callback when a contract requires a
 // method to sign the transaction before submission.
 type Signer interface {
 	Sign(*Address, *Transaction) (tx *Transaction, _ error)
 }
 
-type signer struct {
+type MobileSigner struct {
 	sign bind.SignerFn
 }
 
-func (s *signer) Sign(addr *Address, unsignedTx *Transaction) (signedTx *Transaction, _ error) {
-	sig, err := s.sign(types.HomesteadSigner{}, addr.address, unsignedTx.tx)
+func (s *MobileSigner) Sign(addr *Address, unsignedTx *Transaction) (signedTx *Transaction, _ error) {
+	sig, err := s.sign(types.EIP155Signer{}, addr.address, unsignedTx.tx)
 	if err != nil {
 		return nil, err
 	}
@@ -66,11 +67,27 @@ func (opts *CallOpts) GetGasLimit() int64 { return 0 /* TODO(karalabe) */ }
 func (opts *CallOpts) SetPending(pending bool)     { opts.opts.Pending = pending }
 func (opts *CallOpts) SetGasLimit(limit int64)     { /* TODO(karalabe) */ }
 func (opts *CallOpts) SetContext(context *Context) { opts.opts.Context = context.context }
+func (opts *CallOpts) SetFrom(addr *Address)       { opts.opts.From = addr.address }
 
 // TransactOpts is the collection of authorization data required to create a
 // valid Ethereum transaction.
 type TransactOpts struct {
 	opts bind.TransactOpts
+}
+
+// NewTransactOpts creates a new option set for contract transaction.
+func NewTransactOpts() *TransactOpts {
+	return new(TransactOpts)
+}
+
+// NewKeyedTransactOpts is a utility method to easily create a transaction signer
+// from a single private key.
+func NewKeyedTransactOpts(keyJson []byte, passphrase string) (*TransactOpts, error) {
+	key, err := keystore.DecryptKey(keyJson, passphrase)
+	if err != nil {
+		return nil, err
+	}
+	return &TransactOpts{*bind.NewKeyedTransactor(key.PrivateKey)}, nil
 }
 
 func (opts *TransactOpts) GetFrom() *Address    { return &Address{opts.opts.From} }
@@ -174,6 +191,15 @@ func (c *BoundContract) Call(opts *CallOpts, out *Interfaces, method string, arg
 // Transact invokes the (paid) contract method with params as input values.
 func (c *BoundContract) Transact(opts *TransactOpts, method string, args *Interfaces) (tx *Transaction, _ error) {
 	rawTx, err := c.contract.Transact(&opts.opts, method, args.objects...)
+	if err != nil {
+		return nil, err
+	}
+	return &Transaction{rawTx}, nil
+}
+
+// RawTransact invokes the (paid) contract method with raw calldata as input values.
+func (c *BoundContract) RawTransact(opts *TransactOpts, calldata []byte) (tx *Transaction, _ error) {
+	rawTx, err := c.contract.RawTransact(&opts.opts, calldata)
 	if err != nil {
 		return nil, err
 	}

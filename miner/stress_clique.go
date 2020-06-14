@@ -37,6 +37,7 @@ import (
 	"github.com/ubiq/go-ubiq/eth"
 	"github.com/ubiq/go-ubiq/eth/downloader"
 	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/miner"
 	"github.com/ubiq/go-ubiq/node"
 	"github.com/ubiq/go-ubiq/p2p"
 	"github.com/ubiq/go-ubiq/p2p/enode"
@@ -69,7 +70,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		defer node.Stop()
+		defer node.Close()
 
 		for node.Server().NodeInfo().Ports.Listener == 0 {
 			time.Sleep(250 * time.Millisecond)
@@ -199,10 +200,12 @@ func makeSealer(genesis *core.Genesis) (*node.Node, error) {
 			DatabaseHandles: 256,
 			TxPool:          core.DefaultTxPoolConfig,
 			GPO:             eth.DefaultConfig.GPO,
-			MinerGasFloor:   genesis.GasLimit * 9 / 10,
-			MinerGasCeil:    genesis.GasLimit * 11 / 10,
-			MinerGasPrice:   big.NewInt(1),
-			MinerRecommit:   time.Second,
+			Miner: miner.Config{
+				GasFloor: genesis.GasLimit * 9 / 10,
+				GasCeil:  genesis.GasLimit * 11 / 10,
+				GasPrice: big.NewInt(1),
+				Recommit: time.Second,
+			},
 		})
 	}); err != nil {
 		return nil, err

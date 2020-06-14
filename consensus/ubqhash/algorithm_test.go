@@ -729,7 +729,7 @@ func TestConcurrentDiskCacheGeneration(t *testing.T) {
 
 		go func(idx int) {
 			defer pend.Done()
-			ubqhash := New(Config{cachedir, 0, 1, "", 0, 0, ModeNormal}, nil, false)
+			ubqhash := New(Config{cachedir, 0, 1, false, "", 0, 0, false, ModeNormal, nil}, nil, false)
 			defer ubqhash.Close()
 			if err := ubqhash.VerifySeal(nil, block.Header()); err != nil {
 				t.Errorf("proc %d: block verification failed: %v", idx, err)
@@ -786,4 +786,29 @@ func BenchmarkHashimotoFullSmall(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		hashimotoFull(dataset, hash, 0)
 	}
+}
+
+func benchmarkHashimotoFullMmap(b *testing.B, name string, lock bool) {
+	b.Run(name, func(b *testing.B) {
+		tmpdir, err := ioutil.TempDir("", "ubqhash-test")
+		if err != nil {
+			b.Fatal(err)
+		}
+		defer os.RemoveAll(tmpdir)
+
+		d := &dataset{epoch: 0}
+		d.generate(tmpdir, 1, lock, false)
+		var hash [common.HashLength]byte
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			binary.PutVarint(hash[:], int64(i))
+			hashimotoFull(d.dataset, hash[:], 0)
+		}
+	})
+}
+
+// Benchmarks the full verification performance for mmap
+func BenchmarkHashimotoFullMmap(b *testing.B) {
+	benchmarkHashimotoFullMmap(b, "WithLock", true)
+	benchmarkHashimotoFullMmap(b, "WithoutLock", false)
 }

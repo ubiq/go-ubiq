@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package les implements the Light Ethereum Subprotocol.
 package les
 
 import (
@@ -31,6 +30,7 @@ import (
 	"github.com/ubiq/go-ubiq/common/mclock"
 	"github.com/ubiq/go-ubiq/crypto"
 	"github.com/ubiq/go-ubiq/ethdb"
+	"github.com/ubiq/go-ubiq/les/utils"
 	"github.com/ubiq/go-ubiq/log"
 	"github.com/ubiq/go-ubiq/p2p"
 	"github.com/ubiq/go-ubiq/p2p/discv5"
@@ -91,7 +91,7 @@ const (
 
 // connReq represents a request for peer connection.
 type connReq struct {
-	p      *peer
+	p      *serverPeer
 	node   *enode.Node
 	result chan *poolEntry
 }
@@ -116,8 +116,6 @@ type serverPool struct {
 	db     ethdb.Database
 	dbKey  []byte
 	server *p2p.Server
-	quit   chan struct{}
-	wg     *sync.WaitGroup
 	connWg sync.WaitGroup
 
 	topic discv5.Topic
@@ -126,26 +124,27 @@ type serverPool struct {
 	discNodes     chan *enode.Node
 	discLookups   chan bool
 
+	trustedNodes         map[enode.ID]*enode.Node
 	entries              map[enode.ID]*poolEntry
 	timeout, enableRetry chan *poolEntry
 	adjustStats          chan poolStatAdjust
 
-	connCh     chan *connReq
-	disconnCh  chan *disconnReq
-	registerCh chan *registerReq
-
 	knownQueue, newQueue       poolEntryQueue
-	knownSelect, newSelect     *weightedRandomSelect
+	knownSelect, newSelect     *utils.WeightedRandomSelect
 	knownSelected, newSelected int
 	fastDiscover               bool
+	connCh                     chan *connReq
+	disconnCh                  chan *disconnReq
+	registerCh                 chan *registerReq
+
+	closeCh chan struct{}
+	wg      sync.WaitGroup
 }
 
 // newServerPool creates a new serverPool instance
-func newServerPool(db ethdb.Database, quit chan struct{}, wg *sync.WaitGroup) *serverPool {
+func newServerPool(db ethdb.Database, ulcServers []string) *serverPool {
 	pool := &serverPool{
 		db:           db,
-		quit:         quit,
-		wg:           wg,
 		entries:      make(map[enode.ID]*poolEntry),
 		timeout:      make(chan *poolEntry, 1),
 		adjustStats:  make(chan poolStatAdjust, 100),
@@ -153,10 +152,13 @@ func newServerPool(db ethdb.Database, quit chan struct{}, wg *sync.WaitGroup) *s
 		connCh:       make(chan *connReq),
 		disconnCh:    make(chan *disconnReq),
 		registerCh:   make(chan *registerReq),
-		knownSelect:  newWeightedRandomSelect(),
-		newSelect:    newWeightedRandomSelect(),
+		closeCh:      make(chan struct{}),
+		knownSelect:  utils.NewWeightedRandomSelect(),
+		newSelect:    utils.NewWeightedRandomSelect(),
 		fastDiscover: true,
+		trustedNodes: parseTrustedNodes(ulcServers),
 	}
+
 	pool.knownQueue = newPoolEntryQueue(maxKnownEntries, pool.removeEntry)
 	pool.newQueue = newPoolEntryQueue(maxNewEntries, pool.removeEntry)
 	return pool
@@ -166,8 +168,8 @@ func (pool *serverPool) start(server *p2p.Server, topic discv5.Topic) {
 	pool.server = server
 	pool.topic = topic
 	pool.dbKey = append([]byte("serverPool/"), []byte(topic)...)
-	pool.wg.Add(1)
 	pool.loadNodes()
+	pool.connectToTrustedNodes()
 
 	if pool.server.DiscV5 != nil {
 		pool.discSetPeriod = make(chan time.Duration, 1)
@@ -176,7 +178,26 @@ func (pool *serverPool) start(server *p2p.Server, topic discv5.Topic) {
 		go pool.discoverNodes()
 	}
 	pool.checkDial()
+	pool.wg.Add(1)
 	go pool.eventLoop()
+
+	// Inject the bootstrap nodes as initial dial candiates.
+	pool.wg.Add(1)
+	go func() {
+		defer pool.wg.Done()
+		for _, n := range server.BootstrapNodes {
+			select {
+			case pool.discNodes <- n:
+			case <-pool.closeCh:
+				return
+			}
+		}
+	}()
+}
+
+func (pool *serverPool) stop() {
+	close(pool.closeCh)
+	pool.wg.Wait()
 }
 
 // discoverNodes wraps SearchTopic, converting result nodes to enode.Node.
@@ -200,12 +221,12 @@ func (pool *serverPool) discoverNodes() {
 // Otherwise, the connection should be rejected.
 // Note that whenever a connection has been accepted and a pool entry has been returned,
 // disconnect should also always be called.
-func (pool *serverPool) connect(p *peer, node *enode.Node) *poolEntry {
+func (pool *serverPool) connect(p *serverPeer, node *enode.Node) *poolEntry {
 	log.Debug("Connect new entry", "enode", p.id)
 	req := &connReq{p: p, node: node, result: make(chan *poolEntry, 1)}
 	select {
 	case pool.connCh <- req:
-	case <-pool.quit:
+	case <-pool.closeCh:
 		return nil
 	}
 	return <-req.result
@@ -217,7 +238,7 @@ func (pool *serverPool) registered(entry *poolEntry) {
 	req := &registerReq{entry: entry, done: make(chan struct{})}
 	select {
 	case pool.registerCh <- req:
-	case <-pool.quit:
+	case <-pool.closeCh:
 		return
 	}
 	<-req.done
@@ -229,7 +250,7 @@ func (pool *serverPool) registered(entry *poolEntry) {
 func (pool *serverPool) disconnect(entry *poolEntry) {
 	stopped := false
 	select {
-	case <-pool.quit:
+	case <-pool.closeCh:
 		stopped = true
 	default:
 	}
@@ -276,6 +297,7 @@ func (pool *serverPool) adjustResponseTime(entry *poolEntry, time time.Duration,
 
 // eventLoop handles pool events and mutex locking for all internal functions
 func (pool *serverPool) eventLoop() {
+	defer pool.wg.Done()
 	lookupCnt := 0
 	var convTime mclock.AbsTime
 	if pool.discSetPeriod != nil {
@@ -337,8 +359,10 @@ func (pool *serverPool) eventLoop() {
 			}
 
 		case node := <-pool.discNodes:
-			entry := pool.findOrNewNode(node)
-			pool.updateCheckDial(entry)
+			if pool.trustedNodes[node.ID()] == nil {
+				entry := pool.findOrNewNode(node)
+				pool.updateCheckDial(entry)
+			}
 
 		case conv := <-pool.discLookups:
 			if conv {
@@ -355,31 +379,39 @@ func (pool *serverPool) eventLoop() {
 			}
 
 		case req := <-pool.connCh:
-			// Handle peer connection requests.
-			entry := pool.entries[req.p.ID()]
-			if entry == nil {
-				entry = pool.findOrNewNode(req.node)
+			if pool.trustedNodes[req.p.ID()] != nil {
+				// ignore trusted nodes
+				req.result <- &poolEntry{trusted: true}
+			} else {
+				// Handle peer connection requests.
+				entry := pool.entries[req.p.ID()]
+				if entry == nil {
+					entry = pool.findOrNewNode(req.node)
+				}
+				if entry.state == psConnected || entry.state == psRegistered {
+					req.result <- nil
+					continue
+				}
+				pool.connWg.Add(1)
+				entry.peer = req.p
+				entry.state = psConnected
+				addr := &poolEntryAddress{
+					ip:       req.node.IP(),
+					port:     uint16(req.node.TCP()),
+					lastSeen: mclock.Now(),
+				}
+				entry.lastConnected = addr
+				entry.addr = make(map[string]*poolEntryAddress)
+				entry.addr[addr.strKey()] = addr
+				entry.addrSelect = *utils.NewWeightedRandomSelect()
+				entry.addrSelect.Update(addr)
+				req.result <- entry
 			}
-			if entry.state == psConnected || entry.state == psRegistered {
-				req.result <- nil
-				continue
-			}
-			pool.connWg.Add(1)
-			entry.peer = req.p
-			entry.state = psConnected
-			addr := &poolEntryAddress{
-				ip:       req.node.IP(),
-				port:     uint16(req.node.TCP()),
-				lastSeen: mclock.Now(),
-			}
-			entry.lastConnected = addr
-			entry.addr = make(map[string]*poolEntryAddress)
-			entry.addr[addr.strKey()] = addr
-			entry.addrSelect = *newWeightedRandomSelect()
-			entry.addrSelect.update(addr)
-			req.result <- entry
 
 		case req := <-pool.registerCh:
+			if req.entry.trusted {
+				continue
+			}
 			// Handle peer registration requests.
 			entry := req.entry
 			entry.state = psRegistered
@@ -393,10 +425,13 @@ func (pool *serverPool) eventLoop() {
 			close(req.done)
 
 		case req := <-pool.disconnCh:
+			if req.entry.trusted {
+				continue
+			}
 			// Handle peer disconnection requests.
 			disconnect(req, req.stopped)
 
-		case <-pool.quit:
+		case <-pool.closeCh:
 			if pool.discSetPeriod != nil {
 				close(pool.discSetPeriod)
 			}
@@ -412,7 +447,6 @@ func (pool *serverPool) eventLoop() {
 				disconnect(req, true)
 			}
 			pool.saveNodes()
-			pool.wg.Done()
 			return
 		}
 	}
@@ -426,7 +460,7 @@ func (pool *serverPool) findOrNewNode(node *enode.Node) *poolEntry {
 		entry = &poolEntry{
 			node:       node,
 			addr:       make(map[string]*poolEntryAddress),
-			addrSelect: *newWeightedRandomSelect(),
+			addrSelect: *utils.NewWeightedRandomSelect(),
 			shortRetry: shortRetryCnt,
 		}
 		pool.entries[node.ID()] = entry
@@ -444,7 +478,7 @@ func (pool *serverPool) findOrNewNode(node *enode.Node) *poolEntry {
 		entry.addr[addr.strKey()] = addr
 	}
 	addr.lastSeen = now
-	entry.addrSelect.update(addr)
+	entry.addrSelect.Update(addr)
 	if !entry.known {
 		pool.newQueue.setLatest(entry)
 	}
@@ -470,9 +504,40 @@ func (pool *serverPool) loadNodes() {
 			"response", fmt.Sprintf("%v/%v", time.Duration(e.responseStats.avg), e.responseStats.weight),
 			"timeout", fmt.Sprintf("%v/%v", e.timeoutStats.avg, e.timeoutStats.weight))
 		pool.entries[e.node.ID()] = e
-		pool.knownQueue.setLatest(e)
-		pool.knownSelect.update((*knownEntry)(e))
+		if pool.trustedNodes[e.node.ID()] == nil {
+			pool.knownQueue.setLatest(e)
+			pool.knownSelect.Update((*knownEntry)(e))
+		}
 	}
+}
+
+// connectToTrustedNodes adds trusted server nodes as static trusted peers.
+//
+// Note: trusted nodes are not handled by the server pool logic, they are not
+// added to either the known or new selection pools. They are connected/reconnected
+// by p2p.Server whenever possible.
+func (pool *serverPool) connectToTrustedNodes() {
+	//connect to trusted nodes
+	for _, node := range pool.trustedNodes {
+		pool.server.AddTrustedPeer(node)
+		pool.server.AddPeer(node)
+		log.Debug("Added trusted node", "id", node.ID().String())
+	}
+}
+
+// parseTrustedNodes returns valid and parsed enodes
+func parseTrustedNodes(trustedNodes []string) map[enode.ID]*enode.Node {
+	nodes := make(map[enode.ID]*enode.Node)
+
+	for _, node := range trustedNodes {
+		node, err := enode.Parse(enode.ValidSchemes, node)
+		if err != nil {
+			log.Warn("Trusted node URL invalid", "enode", node, "err", err)
+			continue
+		}
+		nodes[node.ID()] = node
+	}
+	return nodes
 }
 
 // saveNodes saves known nodes and their statistics into the database. Nodes are
@@ -492,8 +557,8 @@ func (pool *serverPool) saveNodes() {
 // Note that it is called by the new/known queues from which the entry has already
 // been removed so removing it from the queues is not necessary.
 func (pool *serverPool) removeEntry(entry *poolEntry) {
-	pool.newSelect.remove((*discoveredEntry)(entry))
-	pool.knownSelect.remove((*knownEntry)(entry))
+	pool.newSelect.Remove((*discoveredEntry)(entry))
+	pool.knownSelect.Remove((*knownEntry)(entry))
 	entry.removed = true
 	delete(pool.entries, entry.node.ID())
 }
@@ -509,10 +574,10 @@ func (pool *serverPool) setRetryDial(entry *poolEntry) {
 	entry.delayedRetry = true
 	go func() {
 		select {
-		case <-pool.quit:
+		case <-pool.closeCh:
 		case <-time.After(delay):
 			select {
-			case <-pool.quit:
+			case <-pool.closeCh:
 			case pool.enableRetry <- entry:
 			}
 		}
@@ -522,8 +587,8 @@ func (pool *serverPool) setRetryDial(entry *poolEntry) {
 // updateCheckDial is called when an entry can potentially be dialed again. It updates
 // its selection weights and checks if new dials can/should be made.
 func (pool *serverPool) updateCheckDial(entry *poolEntry) {
-	pool.newSelect.update((*discoveredEntry)(entry))
-	pool.knownSelect.update((*knownEntry)(entry))
+	pool.newSelect.Update((*discoveredEntry)(entry))
+	pool.knownSelect.Update((*knownEntry)(entry))
 	pool.checkDial()
 }
 
@@ -532,7 +597,7 @@ func (pool *serverPool) updateCheckDial(entry *poolEntry) {
 func (pool *serverPool) checkDial() {
 	fillWithKnownSelects := !pool.fastDiscover
 	for pool.knownSelected < targetKnownSelect {
-		entry := pool.knownSelect.choose()
+		entry := pool.knownSelect.Choose()
 		if entry == nil {
 			fillWithKnownSelects = false
 			break
@@ -540,7 +605,7 @@ func (pool *serverPool) checkDial() {
 		pool.dial((*poolEntry)(entry.(*knownEntry)), true)
 	}
 	for pool.knownSelected+pool.newSelected < targetServerCount {
-		entry := pool.newSelect.choose()
+		entry := pool.newSelect.Choose()
 		if entry == nil {
 			break
 		}
@@ -551,7 +616,7 @@ func (pool *serverPool) checkDial() {
 		// is over, we probably won't find more in the near future so select more
 		// known entries if possible
 		for pool.knownSelected < targetServerCount {
-			entry := pool.knownSelect.choose()
+			entry := pool.knownSelect.Choose()
 			if entry == nil {
 				break
 			}
@@ -572,16 +637,16 @@ func (pool *serverPool) dial(entry *poolEntry, knownSelected bool) {
 	} else {
 		pool.newSelected++
 	}
-	addr := entry.addrSelect.choose().(*poolEntryAddress)
+	addr := entry.addrSelect.Choose().(*poolEntryAddress)
 	log.Debug("Dialing new peer", "lesaddr", entry.node.ID().String()+"@"+addr.strKey(), "set", len(entry.addr), "known", knownSelected)
 	entry.dialed = addr
 	go func() {
 		pool.server.AddPeer(entry.node)
 		select {
-		case <-pool.quit:
+		case <-pool.closeCh:
 		case <-time.After(dialTimeout):
 			select {
-			case <-pool.quit:
+			case <-pool.closeCh:
 			case pool.timeout <- entry:
 			}
 		}
@@ -615,21 +680,21 @@ const (
 
 // poolEntry represents a server node and stores its current state and statistics.
 type poolEntry struct {
-	peer                  *peer
+	peer                  *serverPeer
 	pubkey                [64]byte // secp256k1 key of the node
 	addr                  map[string]*poolEntryAddress
 	node                  *enode.Node
 	lastConnected, dialed *poolEntryAddress
-	addrSelect            weightedRandomSelect
+	addrSelect            utils.WeightedRandomSelect
 
-	lastDiscovered              mclock.AbsTime
-	known, knownSelected        bool
-	connectStats, delayStats    poolStats
-	responseStats, timeoutStats poolStats
-	state                       int
-	regTime                     mclock.AbsTime
-	queueIdx                    int
-	removed                     bool
+	lastDiscovered                mclock.AbsTime
+	known, knownSelected, trusted bool
+	connectStats, delayStats      poolStats
+	responseStats, timeoutStats   poolStats
+	state                         int
+	regTime                       mclock.AbsTime
+	queueIdx                      int
+	removed                       bool
 
 	delayedRetry bool
 	shortRetry   int
@@ -670,8 +735,8 @@ func (e *poolEntry) DecodeRLP(s *rlp.Stream) error {
 	e.node = enode.NewV4(pubkey, entry.IP, int(entry.Port), int(entry.Port))
 	e.addr = make(map[string]*poolEntryAddress)
 	e.addr[addr.strKey()] = addr
-	e.addrSelect = *newWeightedRandomSelect()
-	e.addrSelect.update(addr)
+	e.addrSelect = *utils.NewWeightedRandomSelect()
+	e.addrSelect.Update(addr)
 	e.lastConnected = addr
 	e.connectStats = entry.CStat
 	e.delayStats = entry.DStat

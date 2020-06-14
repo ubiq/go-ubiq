@@ -16,6 +16,8 @@
 
 package params
 
+import "github.com/ubiq/go-ubiq/common"
+
 // MainnetBootnodes are the enode URLs of the P2P bootstrap nodes running on
 // the main Ubiq network.
 var MainnetBootnodes = []string{
@@ -38,6 +40,22 @@ var TestnetBootnodes = []string{
 	"enode://8cb060312b4667ed6a0f61dd6cc0cd5d39e70c17429cd5e8ca480fcd7caf72f1b9c92884ce1f8e06e84a7ed1580ba302df0e95ec2ce99f727297bd2787ed8149@45.76.90.144:30388",
 }
 
-// DiscoveryV5Bootnodes are the enode URLs of the P2P bootstrap nodes for the
-// experimental RLPx v5 topic-discovery network.
-var DiscoveryV5Bootnodes = []string{}
+/*
+// RinkebyBootnodes are the enode URLs of the P2P bootstrap nodes running on the
+// Rinkeby test network.
+var RinkebyBootnodes = []string{
+	"enode://81b11410a96e0ea6ecc927f7714a2c256c13e200bc73d087ad120e5a3fc3e1e098760c6fae3dcd7a3c393e49c205e636bacfc10adf6581672f6d3a66e2442248@45.77.7.41:30388",
+	"enode://0595ec507bb779873703f516072b37d07f3305271da3d9585ada3b1734535635eac50cffd8c9a413b87a77ede5f49af391a08ca9348d027fda74c38f1ea5ec91@108.61.188.12:30388",
+	"enode://8cb060312b4667ed6a0f61dd6cc0cd5d39e70c17429cd5e8ca480fcd7caf72f1b9c92884ce1f8e06e84a7ed1580ba302df0e95ec2ce99f727297bd2787ed8149@45.76.90.144:30388",
+}
+*/
+
+const dnsPrefix = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@"
+
+// These DNS names provide bootstrap connectivity for public testnets and the mainnet.
+// See https://github.com/ethereum/discv4-dns-lists for more information.
+var KnownDNSNetworks = map[common.Hash]string{
+	MainnetGenesisHash: dnsPrefix + "all.mainnet.ethdisco.net",
+	TestnetGenesisHash: dnsPrefix + "all.ropsten.ethdisco.net",
+	// RinkebyGenesisHash: dnsPrefix + "all.rinkeby.ethdisco.net",
+}

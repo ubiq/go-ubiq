@@ -41,7 +41,7 @@ var dashboardContent = `
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>{{.NetworkTitle}}: Ubiq Testnet</title>
+		<title>{{.NetworkTitle}}: Network Dashboard</title>
 
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -615,11 +615,11 @@ func deployDashboard(client *sshClient, network string, conf *config, config *da
 		"ExplorerPage":      config.explorer,
 		"WalletPage":        config.wallet,
 		"FaucetPage":        config.faucet,
-		"GubiqGenesis":       network + ".json",
+		"GubiqGenesis":      network + ".json",
 		"Bootnodes":         conf.bootnodes,
 		"BootnodesFlat":     strings.Join(conf.bootnodes, ","),
 		"Ethstats":          statsLogin,
-		"Ubqhash":            conf.Genesis.Config.Ubqhash != nil,
+		"Ubqhash":           conf.Genesis.Config.Ubqhash != nil,
 		"CppGenesis":        network + "-cpp.json",
 		"CppBootnodes":      strings.Join(bootCpp, " "),
 		"HarmonyGenesis":    network + "-harmony.json",
