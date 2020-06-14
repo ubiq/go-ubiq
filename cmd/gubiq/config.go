@@ -106,7 +106,7 @@ func defaultNodeConfig() node.Config {
 
 func makeConfigNode(ctx *cli.Context) (*node.Node, gubiqConfig) {
 	// Load defaults.
-	cfg := gethConfig{
+	cfg := gubiqConfig{
 		Eth:  eth.DefaultConfig,
 		Shh:  whisper.DefaultConfig,
 		Node: defaultNodeConfig(),

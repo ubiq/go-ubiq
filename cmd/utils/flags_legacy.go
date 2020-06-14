@@ -35,7 +35,7 @@ var ShowDeprecated = cli.Command{
 }
 
 var DeprecatedFlags = []cli.Flag{
-	LegacyTestnetFlag,
+	// LegacyTestnetFlag,
 	LegacyLightServFlag,
 	LegacyLightPeersFlag,
 	LegacyMinerThreadsFlag,
@@ -85,10 +85,10 @@ var (
 	}
 
 	// (Deprecated April 2020)
-	LegacyTestnetFlag = cli.BoolFlag{ // TODO(q9f): Remove after Ropsten is discontinued.
-		Name:  "testnet",
-		Usage: "Pre-configured test network (Deprecated: Please choose one of --goerli, --rinkeby, or --ropsten.)",
-	}
+	// LegacyTestnetFlag = cli.BoolFlag{ // TODO(q9f): Remove after Ropsten is discontinued.
+	//	Name:  "testnet",
+	//	Usage: "Pre-configured test network (Deprecated)", //": Please choose one of --goerli, --rinkeby, or --ropsten.)",
+	//}
 	LegacyRPCEnabledFlag = cli.BoolFlag{
 		Name:  "rpc",
 		Usage: "Enable the HTTP-RPC server (deprecated, use --http)",

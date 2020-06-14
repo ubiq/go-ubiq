@@ -32,6 +32,7 @@ import (
 	"text/template"
 	"time"
 
+	pcsclite "github.com/gballet/go-libpcsclite"
 	"github.com/ubiq/go-ubiq/accounts"
 	"github.com/ubiq/go-ubiq/accounts/keystore"
 	"github.com/ubiq/go-ubiq/common"
@@ -62,7 +63,6 @@ import (
 	"github.com/ubiq/go-ubiq/params"
 	"github.com/ubiq/go-ubiq/rpc"
 	whisper "github.com/ubiq/go-ubiq/whisper/whisperv6"
-	pcsclite "github.com/gballet/go-libpcsclite"
 	cli "gopkg.in/urfave/cli.v1"
 )
 
@@ -166,14 +166,14 @@ var (
 		Value: eth.DefaultConfig.NetworkId,
 	}
 	LegacyTestnetFlag = cli.BoolFlag{
-		Name: "testnet",
+		Name:  "testnet",
 		Usage: "testnet: pre-configured proof-of-work test network (legacy)",
 	}
 	/*
-	RinkebyFlag = cli.BoolFlag{
-		Name:  "rinkeby",
-		Usage: "Rinkeby network: pre-configured proof-of-authority test network",
-	}*/
+		RinkebyFlag = cli.BoolFlag{
+			Name:  "rinkeby",
+			Usage: "Rinkeby network: pre-configured proof-of-authority test network",
+		}*/
 	DeveloperFlag = cli.BoolFlag{
 		Name:  "dev",
 		Usage: "Ephemeral proof-of-authority network with a pre-funded developer account, mining enabled",
@@ -726,7 +726,7 @@ var (
 // then a subdirectory of the specified datadir will be used.
 func MakeDataDir(ctx *cli.Context) string {
 	if path := ctx.GlobalString(DataDirFlag.Name); path != "" {
-		if ctx.GlobalBool(LegacyTestnetFlag.Name) || ctx.GlobalBool(RopstenFlag.Name) {
+		if ctx.GlobalBool(LegacyTestnetFlag.Name) {
 			// Maintain compatibility with older Geth configurations storing the
 			// Ropsten database in `testnet` instead of `ropsten`.
 			legacyPath := filepath.Join(path, "testnet")
@@ -821,7 +821,7 @@ func setBootstrapNodesV5(ctx *cli.Context, cfg *p2p.Config) {
 			urls = splitAndTrim(ctx.GlobalString(BootnodesFlag.Name))
 		}
 	/*case ctx.GlobalBool(RinkebyFlag.Name):
-		urls = params.RinkebyBootnodes*/
+	urls = params.RinkebyBootnodes*/
 	case cfg.BootstrapNodesV5 != nil:
 		return // already set, don't apply defaults.
 	}
@@ -1238,10 +1238,10 @@ func setDataDir(ctx *cli.Context, cfg *node.Config) {
 		cfg.DataDir = ctx.GlobalString(DataDirFlag.Name)
 	case ctx.GlobalBool(DeveloperFlag.Name):
 		cfg.DataDir = "" // unless explicitly requested, use memory databases
-	case (ctx.GlobalBool(LegacyTestnetFlag.Name) && cfg.DataDir == node.DefaultDataDir():
+	case (ctx.GlobalBool(LegacyTestnetFlag.Name) && cfg.DataDir == node.DefaultDataDir()):
 		cfg.DataDir = filepath.Join(node.DefaultDataDir(), "testnet")
-	// case ctx.GlobalBool(RinkebyFlag.Name) && cfg.DataDir == node.DefaultDataDir():
-	//	cfg.DataDir = filepath.Join(node.DefaultDataDir(), "rinkeby")
+		// case ctx.GlobalBool(RinkebyFlag.Name) && cfg.DataDir == node.DefaultDataDir():
+		//	cfg.DataDir = filepath.Join(node.DefaultDataDir(), "rinkeby")
 	}
 }
 
@@ -1328,8 +1328,8 @@ func setUbqhash(ctx *cli.Context, cfg *eth.Config) {
 	if ctx.GlobalIsSet(UbqhashDatasetsOnDiskFlag.Name) {
 		cfg.Ubqhash.DatasetsOnDisk = ctx.GlobalInt(UbqhashDatasetsOnDiskFlag.Name)
 	}
-	if ctx.GlobalIsSet(EthashDatasetsLockMmapFlag.Name) {
-		cfg.Ethash.DatasetsLockMmap = ctx.GlobalBool(EthashDatasetsLockMmapFlag.Name)
+	if ctx.GlobalIsSet(UbqhashDatasetsLockMmapFlag.Name) {
+		cfg.Ubqhash.DatasetsLockMmap = ctx.GlobalBool(UbqhashDatasetsLockMmapFlag.Name)
 	}
 }
 
@@ -1464,7 +1464,7 @@ func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *eth.Config) {
 	setEtherbase(ctx, ks, cfg)
 	setGPO(ctx, &cfg.GPO)
 	setTxPool(ctx, &cfg.TxPool)
-	setEthash(ctx, cfg)
+	setUbqhash(ctx, cfg)
 	setMiner(ctx, &cfg.Miner)
 	setWhitelist(ctx, cfg)
 	setLes(ctx, cfg)
@@ -1543,11 +1543,11 @@ func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *eth.Config) {
 		cfg.Genesis = core.DefaultTestnetGenesisBlock()
 		setDNSDiscoveryDefaults(cfg, params.KnownDNSNetworks[params.TestnetGenesisHash])
 	/*case ctx.GlobalBool(RinkebyFlag.Name):
-		if !ctx.GlobalIsSet(NetworkIdFlag.Name) {
-			cfg.NetworkId = 4
-		}
-		cfg.Genesis = core.DefaultRinkebyGenesisBlock()
-		setDNSDiscoveryDefaults(cfg, params.KnownDNSNetworks[params.RinkebyGenesisHash])*/
+	if !ctx.GlobalIsSet(NetworkIdFlag.Name) {
+		cfg.NetworkId = 4
+	}
+	cfg.Genesis = core.DefaultRinkebyGenesisBlock()
+	setDNSDiscoveryDefaults(cfg, params.KnownDNSNetworks[params.RinkebyGenesisHash])*/
 	case ctx.GlobalBool(DeveloperFlag.Name):
 		if !ctx.GlobalIsSet(NetworkIdFlag.Name) {
 			cfg.NetworkId = 1337
@@ -1697,23 +1697,6 @@ func SplitTagsFlag(tagsFlag string) map[string]string {
 	return tagsMap
 }
 
-func SplitTagsFlag(tagsFlag string) map[string]string {
-	tags := strings.Split(tagsFlag, ",")
-	tagsMap := map[string]string{}
-
-	for _, t := range tags {
-		if t != "" {
-			kv := strings.Split(t, "=")
-
-			if len(kv) == 2 {
-				tagsMap[kv[0]] = kv[1]
-			}
-		}
-	}
-
-	return tagsMap
-}
-
 // MakeChainDatabase open an LevelDB using the flags passed to the client and will hard crash if it fails.
 func MakeChainDatabase(ctx *cli.Context, stack *node.Node) ethdb.Database {
 	var (
@@ -1737,7 +1720,7 @@ func MakeGenesis(ctx *cli.Context) *core.Genesis {
 	case ctx.GlobalBool(LegacyTestnetFlag.Name):
 		genesis = core.DefaultTestnetGenesisBlock()
 	/*case ctx.GlobalBool(RinkebyFlag.Name):
-		genesis = core.DefaultRinkebyGenesisBlock()*/
+	genesis = core.DefaultRinkebyGenesisBlock()*/
 	case ctx.GlobalBool(DeveloperFlag.Name):
 		Fatalf("Developer chains are ephemeral")
 	}

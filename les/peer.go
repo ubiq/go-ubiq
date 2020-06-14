@@ -67,11 +67,6 @@ const (
 	handshakeTimeout = 5 * time.Second
 )
 
-// if the total encoded size of a sent transaction batch is over txSizeCostLimit
-// per transaction then the request cost is calculated as proportional to the
-// encoded size instead of the transaction count
-const txSizeCostLimit = 0x4000
-
 const (
 	announceTypeNone = iota
 	announceTypeSimple

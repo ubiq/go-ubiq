@@ -30,7 +30,6 @@ var Modules = map[string]string{
 	"personal":   PersonalJs,
 	"rpc":        RpcJs,
 	"shh":        ShhJs,
-	"swarmfs":    SwarmfsJs,
 	"txpool":     TxpoolJs,
 	"les":        LESJs,
 	"lespay":     LESPayJs,
