@@ -25,12 +25,12 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/prometheus/tsdb/fileutil"
 	"github.com/ubiq/go-ubiq/common"
 	"github.com/ubiq/go-ubiq/ethdb"
 	"github.com/ubiq/go-ubiq/log"
 	"github.com/ubiq/go-ubiq/metrics"
 	"github.com/ubiq/go-ubiq/params"
-	"github.com/prometheus/tsdb/fileutil"
 )
 
 var (
@@ -51,7 +51,7 @@ const (
 	// freezerRecheckInterval is the frequency to check the key-value database for
 	// chain progression that might permit new blocks to be frozen into immutable
 	// storage.
-	freezerRecheckInterval = time.Minute
+	freezerRecheckInterval = time.Minute * 8
 
 	// freezerBatchLimit is the maximum number of blocks to freeze in one batch
 	// before doing an fsync and deleting it from the key-value store.
