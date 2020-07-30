@@ -60,7 +60,7 @@ func VersionWithCommit(gitCommit, gitDate string) string {
 	if len(gitCommit) >= 8 {
 		vsn += "-" + gitCommit[:8]
 	}
-	if (VersionMeta != "stable") && (gitDate != "") {
+	if (VersionMeta == "develop") && (gitDate != "") {
 		vsn += "-" + gitDate
 	}
 	return vsn
