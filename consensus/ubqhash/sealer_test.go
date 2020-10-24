@@ -97,16 +97,22 @@ func TestRemoteMultiNotify(t *testing.T) {
 	ubqhash.config.Log = testlog.Logger(t, log.LvlWarn)
 	defer ubqhash.Close()
 
+	// Provide a results reader.
+	// Otherwise the unread results will be logged asynchronously
+	// and this can happen after the test is finished, causing a panic.
+	results := make(chan *types.Block, cap(sink))
+
 	// Stream a lot of work task and ensure all the notifications bubble out.
 	for i := 0; i < cap(sink); i++ {
 		header := &types.Header{Number: big.NewInt(int64(i)), Difficulty: big.NewInt(100)}
 		block := types.NewBlockWithHeader(header)
-		ubqhash.Seal(nil, block, nil, nil)
+		ubqhash.Seal(nil, block, results, nil)
 	}
 
 	for i := 0; i < cap(sink); i++ {
 		select {
 		case <-sink:
+			<-results
 		case <-time.After(10 * time.Second):
 			t.Fatalf("notification %d timed out", i)
 		}

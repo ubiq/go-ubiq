@@ -30,6 +30,7 @@ import (
 	"github.com/ubiq/go-ubiq/cmd/utils"
 	"github.com/ubiq/go-ubiq/common/compiler"
 	"github.com/ubiq/go-ubiq/crypto"
+	"github.com/ubiq/go-ubiq/internal/flags"
 	"github.com/ubiq/go-ubiq/log"
 	"gopkg.in/urfave/cli.v1"
 )
@@ -100,7 +101,7 @@ var (
 )
 
 func init() {
-	app = utils.NewApp(gitCommit, gitDate, "ubiq checkpoint helper tool")
+	app = flags.NewApp(gitCommit, gitDate, "ubiq checkpoint helper tool")
 	app.Flags = []cli.Flag{
 		abiFlag,
 		binFlag,
@@ -117,7 +118,7 @@ func init() {
 		aliasFlag,
 	}
 	app.Action = utils.MigrateFlags(abigen)
-	cli.CommandHelpTemplate = utils.OriginCommandHelpTemplate
+	cli.CommandHelpTemplate = flags.OriginCommandHelpTemplate
 }
 
 func abigen(c *cli.Context) error {

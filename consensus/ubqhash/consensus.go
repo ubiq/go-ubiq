@@ -27,12 +27,12 @@ import (
 	mapset "github.com/deckarep/golang-set"
 	"github.com/ubiq/go-ubiq/common"
 	"github.com/ubiq/go-ubiq/consensus"
-	"github.com/ubiq/go-ubiq/consensus/misc"
 	"github.com/ubiq/go-ubiq/core/state"
 	"github.com/ubiq/go-ubiq/core/types"
 	"github.com/ubiq/go-ubiq/log"
 	"github.com/ubiq/go-ubiq/params"
 	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/trie"
 	"golang.org/x/crypto/sha3"
 )
 
@@ -100,7 +100,7 @@ func (ubqhash *Ubqhash) Author(header *types.Header) (common.Address, error) {
 
 // VerifyHeader checks whether a header conforms to the consensus rules of the
 // stock Ethereum ubqhash engine.
-func (ubqhash *Ubqhash) VerifyHeader(chain consensus.ChainReader, header *types.Header, seal bool) error {
+func (ubqhash *Ubqhash) VerifyHeader(chain consensus.ChainHeaderReader, header *types.Header, seal bool) error {
 	// If we're running a full engine faking, accept any input as valid
 	if ubqhash.config.PowMode == ModeFullFake {
 		return nil
@@ -121,7 +121,7 @@ func (ubqhash *Ubqhash) VerifyHeader(chain consensus.ChainReader, header *types.
 // VerifyHeaders is similar to VerifyHeader, but verifies a batch of headers
 // concurrently. The method returns a quit channel to abort the operations and
 // a results channel to retrieve the async verifications.
-func (ubqhash *Ubqhash) VerifyHeaders(chain consensus.ChainReader, headers []*types.Header, seals []bool) (chan<- struct{}, <-chan error) {
+func (ubqhash *Ubqhash) VerifyHeaders(chain consensus.ChainHeaderReader, headers []*types.Header, seals []bool) (chan<- struct{}, <-chan error) {
 	// If we're running a full engine faking, accept any input as valid
 	if ubqhash.config.PowMode == ModeFullFake || len(headers) == 0 {
 		abort, results := make(chan struct{}), make(chan error, len(headers))
@@ -183,7 +183,7 @@ func (ubqhash *Ubqhash) VerifyHeaders(chain consensus.ChainReader, headers []*ty
 	return abort, errorsOut
 }
 
-func (ubqhash *Ubqhash) verifyHeaderWorker(chain consensus.ChainReader, headers []*types.Header, seals []bool, index int) error {
+func (ubqhash *Ubqhash) verifyHeaderWorker(chain consensus.ChainHeaderReader, headers []*types.Header, seals []bool, index int) error {
 	var parent *types.Header
 	if index == 0 {
 		parent = chain.GetHeader(headers[0].ParentHash, headers[0].Number.Uint64()-1)
@@ -201,7 +201,7 @@ func (ubqhash *Ubqhash) verifyHeaderWorker(chain consensus.ChainReader, headers 
 
 // VerifyUncles verifies that the given block's uncles conform to the consensus
 // rules of the stock Ethereum ubqhash engine.
-func (ubqhash *Ubqhash) VerifyUncles(chain consensus.ChainReader, block *types.Block) error {
+func (ubqhash *Ubqhash) VerifyUncles(chain consensus.ChainHeaderReader, block *types.Block) error {
 	// If we're running a full engine faking, accept any input as valid
 	if ubqhash.config.PowMode == ModeFullFake {
 		return nil
@@ -254,7 +254,7 @@ func (ubqhash *Ubqhash) VerifyUncles(chain consensus.ChainReader, block *types.B
 // verifyHeader checks whether a header conforms to the consensus rules of the
 // stock Ethereum ubqhash engine.
 // See YP section 4.3.4. "Block Header Validity"
-func (ubqhash *Ubqhash) verifyHeader(chain consensus.ChainReader, header, parent *types.Header, uncle bool, seal bool) error {
+func (ubqhash *Ubqhash) verifyHeader(chain consensus.ChainHeaderReader, header, parent *types.Header, uncle bool, seal bool) error {
 	// Ensure that the header's extra-data section is of a reasonable size
 	if uint64(len(header.Extra)) > params.MaximumExtraDataSize {
 		return fmt.Errorf("extra-data too long: %d > %d", len(header.Extra), params.MaximumExtraDataSize)
@@ -304,10 +304,6 @@ func (ubqhash *Ubqhash) verifyHeader(chain consensus.ChainReader, header, parent
 			return err
 		}
 	}
-	// If all checks passed, validate any special fields for hard forks
-	if err := misc.VerifyForkHashes(chain.Config(), header, uncle); err != nil {
-		return err
-	}
 	return nil
 }
 
@@ -352,12 +348,12 @@ func maxActualTimespan(config *diffConfig, dampen bool) *big.Int {
 // CalcDifficulty is the difficulty adjustment algorithm. It returns the difficulty
 // that a new block should have when created at time given the parent block's time
 // and difficulty.
-func (ubqhash *Ubqhash) CalcDifficulty(chain consensus.ChainReader, time uint64, parent *types.Header) *big.Int {
+func (ubqhash *Ubqhash) CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *types.Header) *big.Int {
 	return CalcDifficulty(chain, time, parent)
 }
 
 // CalcDifficulty determines which difficulty algorithm to use for calculating a new block
-func CalcDifficulty(chain consensus.ChainReader, time uint64, parent *types.Header) *big.Int {
+func CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *types.Header) *big.Int {
 	parentTime := parent.Time
 	parentNumber := parent.Number
 	parentDiff := parent.Difficulty
@@ -381,7 +377,7 @@ func CalcDifficulty(chain consensus.ChainReader, time uint64, parent *types.Head
 // It returns the difficulty that a new block should have when created at time
 // given the parent block's time and difficulty.
 // Based on Digibyte's Digishield v3 retargeting
-func calcDifficultyDigishieldV3(chain consensus.ChainReader, parentNumber, parentDiff *big.Int, parent *types.Header, digishield *diffConfig) *big.Int {
+func calcDifficultyDigishieldV3(chain consensus.ChainHeaderReader, parentNumber, parentDiff *big.Int, parent *types.Header, digishield *diffConfig) *big.Int {
 	// holds intermediate values to make the algo easier to read & audit
 	x := new(big.Int)
 	nFirstBlock := new(big.Int)
@@ -434,7 +430,7 @@ func calcDifficultyDigishieldV3(chain consensus.ChainReader, parentNumber, paren
 	return x
 }
 
-func calcDifficultyFlux(chain consensus.ChainReader, time, parentTime, parentNumber, parentDiff *big.Int, parent *types.Header) *big.Int {
+func calcDifficultyFlux(chain consensus.ChainHeaderReader, time, parentTime, parentNumber, parentDiff *big.Int, parent *types.Header) *big.Int {
 	x := new(big.Int)
 	nFirstBlock := new(big.Int)
 	nFirstBlock.Sub(parentNumber, fluxConfig.AveragingWindow)
@@ -489,14 +485,14 @@ func calcDifficultyFlux(chain consensus.ChainReader, time, parentTime, parentNum
 
 // VerifySeal implements consensus.Engine, checking whether the given block satisfies
 // the PoW difficulty requirements.
-func (ubqhash *Ubqhash) VerifySeal(chain consensus.ChainReader, header *types.Header) error {
+func (ubqhash *Ubqhash) VerifySeal(chain consensus.ChainHeaderReader, header *types.Header) error {
 	return ubqhash.verifySeal(chain, header, false)
 }
 
 // verifySeal checks whether a block satisfies the PoW difficulty requirements,
 // either using the usual ethash cache for it, or alternatively using a full DAG
 // to make remote mining fast.
-func (ubqhash *Ubqhash) verifySeal(chain consensus.ChainReader, header *types.Header, fulldag bool) error {
+func (ubqhash *Ubqhash) verifySeal(chain consensus.ChainHeaderReader, header *types.Header, fulldag bool) error {
 	// If we're running a fake PoW, accept any seal as valid
 	if ubqhash.config.PowMode == ModeFake || ubqhash.config.PowMode == ModeFullFake {
 		time.Sleep(ubqhash.fakeDelay)
@@ -561,7 +557,7 @@ func (ubqhash *Ubqhash) verifySeal(chain consensus.ChainReader, header *types.He
 
 // Prepare implements consensus.Engine, initializing the difficulty field of a
 // header to conform to the ubqhash protocol. The changes are done inline.
-func (ubqhash *Ubqhash) Prepare(chain consensus.ChainReader, header *types.Header) error {
+func (ubqhash *Ubqhash) Prepare(chain consensus.ChainHeaderReader, header *types.Header) error {
 	parent := chain.GetHeader(header.ParentHash, header.Number.Uint64()-1)
 	if parent == nil {
 		return consensus.ErrUnknownAncestor
@@ -572,7 +568,7 @@ func (ubqhash *Ubqhash) Prepare(chain consensus.ChainReader, header *types.Heade
 
 // Finalize implements consensus.Engine, accumulating the block and uncle rewards,
 // setting the final state and assembling the block.
-func (ubqhash *Ubqhash) Finalize(chain consensus.ChainReader, header *types.Header, state *state.StateDB, txs []*types.Transaction, uncles []*types.Header) {
+func (ubqhash *Ubqhash) Finalize(chain consensus.ChainHeaderReader, header *types.Header, state *state.StateDB, txs []*types.Transaction, uncles []*types.Header) {
 	// Accumulate any block and uncle rewards and commit the final state root
 	accumulateRewards(chain.Config(), state, header, uncles)
 	header.Root = state.IntermediateRoot(chain.Config().IsEIP158(header.Number))
@@ -580,13 +576,13 @@ func (ubqhash *Ubqhash) Finalize(chain consensus.ChainReader, header *types.Head
 
 // FinalizeAndAssemble implements consensus.Engine, accumulating the block and
 // uncle rewards, setting the final state and assembling the block.
-func (ubqhash *Ubqhash) FinalizeAndAssemble(chain consensus.ChainReader, header *types.Header, state *state.StateDB, txs []*types.Transaction, uncles []*types.Header, receipts []*types.Receipt) (*types.Block, error) {
+func (ubqhash *Ubqhash) FinalizeAndAssemble(chain consensus.ChainHeaderReader, header *types.Header, state *state.StateDB, txs []*types.Transaction, uncles []*types.Header, receipts []*types.Receipt) (*types.Block, error) {
 	// Accumulate any block and uncle rewards and commit the final state root
 	accumulateRewards(chain.Config(), state, header, uncles)
 	header.Root = state.IntermediateRoot(chain.Config().IsEIP158(header.Number))
 
 	// Header seems complete, assemble into a block and return
-	return types.NewBlock(header, txs, uncles, receipts), nil
+	return types.NewBlock(header, txs, uncles, receipts, new(trie.Trie)), nil
 }
 
 // Some weird constants to avoid constant memory allocs for them.

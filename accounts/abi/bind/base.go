@@ -49,7 +49,7 @@ type TransactOpts struct {
 	Nonce  *big.Int       // Nonce to use for the transaction execution (nil = use pending state)
 	Signer SignerFn       // Method to use for signing the transaction (mandatory)
 
-	Value    *big.Int // Funds to transfer along along the transaction (nil = 0 = no funds)
+	Value    *big.Int // Funds to transfer along the transaction (nil = 0 = no funds)
 	GasPrice *big.Int // Gas price to use for the transaction execution (nil = gas price oracle)
 	GasLimit uint64   // Gas limit to set for the transaction execution (0 = estimate)
 
@@ -177,7 +177,7 @@ func (c *BoundContract) Transact(opts *TransactOpts, method string, params ...in
 }
 
 // RawTransact initiates a transaction with the given raw calldata as the input.
-// It's usually used to initiates transaction for invoking **Fallback** function.
+// It's usually used to initiate transactions for invoking **Fallback** function.
 func (c *BoundContract) RawTransact(opts *TransactOpts, calldata []byte) (*types.Transaction, error) {
 	// todo(rjl493456442) check the method is payable or not,
 	// reject invalid transaction at the first place

@@ -22,7 +22,6 @@ import (
 	"math/big"
 	"os"
 	"os/signal"
-	"strings"
 	"time"
 
 	"github.com/ubiq/go-ubiq/cmd/utils"
@@ -198,23 +197,23 @@ func (e *NoRewardEngine) Author(header *types.Header) (common.Address, error) {
 	return e.inner.Author(header)
 }
 
-func (e *NoRewardEngine) VerifyHeader(chain consensus.ChainReader, header *types.Header, seal bool) error {
+func (e *NoRewardEngine) VerifyHeader(chain consensus.ChainHeaderReader, header *types.Header, seal bool) error {
 	return e.inner.VerifyHeader(chain, header, seal)
 }
 
-func (e *NoRewardEngine) VerifyHeaders(chain consensus.ChainReader, headers []*types.Header, seals []bool) (chan<- struct{}, <-chan error) {
+func (e *NoRewardEngine) VerifyHeaders(chain consensus.ChainHeaderReader, headers []*types.Header, seals []bool) (chan<- struct{}, <-chan error) {
 	return e.inner.VerifyHeaders(chain, headers, seals)
 }
 
-func (e *NoRewardEngine) VerifyUncles(chain consensus.ChainReader, block *types.Block) error {
+func (e *NoRewardEngine) VerifyUncles(chain consensus.ChainHeaderReader, block *types.Block) error {
 	return e.inner.VerifyUncles(chain, block)
 }
 
-func (e *NoRewardEngine) VerifySeal(chain consensus.ChainReader, header *types.Header) error {
+func (e *NoRewardEngine) VerifySeal(chain consensus.ChainHeaderReader, header *types.Header) error {
 	return e.inner.VerifySeal(chain, header)
 }
 
-func (e *NoRewardEngine) Prepare(chain consensus.ChainReader, header *types.Header) error {
+func (e *NoRewardEngine) Prepare(chain consensus.ChainHeaderReader, header *types.Header) error {
 	return e.inner.Prepare(chain, header)
 }
 
@@ -227,7 +226,7 @@ func (e *NoRewardEngine) accumulateRewards(config *params.ChainConfig, state *st
 	state.AddBalance(header.Coinbase, reward)
 }
 
-func (e *NoRewardEngine) Finalize(chain consensus.ChainReader, header *types.Header, statedb *state.StateDB, txs []*types.Transaction,
+func (e *NoRewardEngine) Finalize(chain consensus.ChainHeaderReader, header *types.Header, statedb *state.StateDB, txs []*types.Transaction,
 	uncles []*types.Header) {
 	if e.rewardsOn {
 		e.inner.Finalize(chain, header, statedb, txs, uncles)
@@ -237,7 +236,7 @@ func (e *NoRewardEngine) Finalize(chain consensus.ChainReader, header *types.Hea
 	}
 }
 
-func (e *NoRewardEngine) FinalizeAndAssemble(chain consensus.ChainReader, header *types.Header, statedb *state.StateDB, txs []*types.Transaction,
+func (e *NoRewardEngine) FinalizeAndAssemble(chain consensus.ChainHeaderReader, header *types.Header, statedb *state.StateDB, txs []*types.Transaction,
 	uncles []*types.Header, receipts []*types.Receipt) (*types.Block, error) {
 	if e.rewardsOn {
 		return e.inner.FinalizeAndAssemble(chain, header, statedb, txs, uncles, receipts)
@@ -246,11 +245,11 @@ func (e *NoRewardEngine) FinalizeAndAssemble(chain consensus.ChainReader, header
 		header.Root = statedb.IntermediateRoot(chain.Config().IsEIP158(header.Number))
 
 		// Header seems complete, assemble into a block and return
-		return types.NewBlock(header, txs, uncles, receipts), nil
+		return types.NewBlock(header, txs, uncles, receipts, new(trie.Trie)), nil
 	}
 }
 
-func (e *NoRewardEngine) Seal(chain consensus.ChainReader, block *types.Block, results chan<- *types.Block, stop <-chan struct{}) error {
+func (e *NoRewardEngine) Seal(chain consensus.ChainHeaderReader, block *types.Block, results chan<- *types.Block, stop <-chan struct{}) error {
 	return e.inner.Seal(chain, block, results, stop)
 }
 
@@ -258,11 +257,11 @@ func (e *NoRewardEngine) SealHash(header *types.Header) common.Hash {
 	return e.inner.SealHash(header)
 }
 
-func (e *NoRewardEngine) CalcDifficulty(chain consensus.ChainReader, time uint64, parent *types.Header) *big.Int {
+func (e *NoRewardEngine) CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *types.Header) *big.Int {
 	return e.inner.CalcDifficulty(chain, time, parent)
 }
 
-func (e *NoRewardEngine) APIs(chain consensus.ChainReader) []rpc.API {
+func (e *NoRewardEngine) APIs(chain consensus.ChainHeaderReader) []rpc.API {
 	return e.inner.APIs(chain)
 }
 
@@ -816,16 +815,6 @@ func (api *RetestethAPI) ClientVersion(ctx context.Context) (string, error) {
 	return "Geth-" + params.VersionWithCommit(gitCommit, gitDate), nil
 }
 
-// splitAndTrim splits input separated by a comma
-// and trims excessive white space from the substrings.
-func splitAndTrim(input string) []string {
-	result := strings.Split(input, ",")
-	for i, r := range result {
-		result[i] = strings.TrimSpace(r)
-	}
-	return result
-}
-
 func retesteth(ctx *cli.Context) error {
 	log.Info("Welcome to retesteth!")
 	// register signer API with server
@@ -863,8 +852,8 @@ func retesteth(ctx *cli.Context) error {
 			Version:   "1.0",
 		},
 	}
-	vhosts := splitAndTrim(ctx.GlobalString(utils.HTTPVirtualHostsFlag.Name))
-	cors := splitAndTrim(ctx.GlobalString(utils.HTTPCORSDomainFlag.Name))
+	vhosts := utils.SplitAndTrim(ctx.GlobalString(utils.HTTPVirtualHostsFlag.Name))
+	cors := utils.SplitAndTrim(ctx.GlobalString(utils.HTTPCORSDomainFlag.Name))
 
 	// register apis and create handler stack
 	srv := rpc.NewServer()

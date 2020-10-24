@@ -26,6 +26,7 @@ import (
 	"os"
 	"reflect"
 	"runtime"
+	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -63,6 +64,33 @@ func TestClientResponseType(t *testing.T) {
 	err := client.Call(resultVar, "test_echo", "hello", 10, &echoArgs{"world"})
 	if err == nil {
 		t.Error("Passing a var as result should be an error")
+	}
+}
+
+// This test checks that server-returned errors with code and data come out of Client.Call.
+func TestClientErrorData(t *testing.T) {
+	server := newTestServer()
+	defer server.Stop()
+	client := DialInProc(server)
+	defer client.Close()
+
+	var resp interface{}
+	err := client.Call(&resp, "test_returnError")
+	if err == nil {
+		t.Fatal("expected error")
+	}
+
+	// Check code.
+	if e, ok := err.(Error); !ok {
+		t.Fatalf("client did not return rpc.Error, got %#v", e)
+	} else if e.ErrorCode() != (testError{}.ErrorCode()) {
+		t.Fatalf("wrong error code %d, want %d", e.ErrorCode(), testError{}.ErrorCode())
+	}
+	// Check data.
+	if e, ok := err.(DataError); !ok {
+		t.Fatalf("client did not return rpc.DataError, got %#v", e)
+	} else if e.ErrorData() != (testError{}.ErrorData()) {
+		t.Fatalf("wrong error data %#v, want %#v", e.ErrorData(), testError{}.ErrorData())
 	}
 }
 
@@ -400,6 +428,42 @@ func TestClientNotificationStorm(t *testing.T) {
 
 	doTest(8000, false)
 	doTest(23000, true)
+}
+
+func TestClientSetHeader(t *testing.T) {
+	var gotHeader bool
+	srv := newTestServer()
+	httpsrv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("test") == "ok" {
+			gotHeader = true
+		}
+		srv.ServeHTTP(w, r)
+	}))
+	defer httpsrv.Close()
+	defer srv.Stop()
+
+	client, err := Dial(httpsrv.URL)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	client.SetHeader("test", "ok")
+	if _, err := client.SupportedModules(); err != nil {
+		t.Fatal(err)
+	}
+	if !gotHeader {
+		t.Fatal("client did not set custom header")
+	}
+
+	// Check that Content-Type can be replaced.
+	client.SetHeader("content-type", "application/x-garbage")
+	_, err = client.SupportedModules()
+	if err == nil {
+		t.Fatal("no error for invalid content-type header")
+	} else if !strings.Contains(err.Error(), "Unsupported Media Type") {
+		t.Fatalf("error is not related to content-type: %q", err)
+	}
 }
 
 func TestClientHTTP(t *testing.T) {

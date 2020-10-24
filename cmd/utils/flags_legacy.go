@@ -158,6 +158,17 @@ var (
 		Usage: "Comma separated enode URLs for P2P v5 discovery bootstrap (light server, light nodes) (deprecated, use --bootnodes)",
 		Value: "",
 	}
+
+	// (Deprecated July 2020, shown in aliased flags section)
+	LegacyGraphQLListenAddrFlag = cli.StringFlag{
+		Name:  "graphql.addr",
+		Usage: "GraphQL server listening interface (deprecated, graphql can only be enabled on the HTTP-RPC server endpoint, use --graphql)",
+	}
+	LegacyGraphQLPortFlag = cli.IntFlag{
+		Name:  "graphql.port",
+		Usage: "GraphQL server listening port (deprecated, graphql can only be enabled on the HTTP-RPC server endpoint, use --graphql)",
+		Value: node.DefaultHTTPPort,
+	}
 )
 
 // showDeprecated displays deprecated flags that will be soon removed from the codebase.

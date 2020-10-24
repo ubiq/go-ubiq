@@ -199,7 +199,6 @@ func (cs *chainSyncer) loop() {
 	cs.pm.txFetcher.Start()
 	defer cs.pm.blockFetcher.Stop()
 	defer cs.pm.txFetcher.Stop()
-	defer cs.pm.downloader.Terminate()
 
 	// The force timer lowers the peer count threshold down to one when it fires.
 	// This ensures we'll always start sync even if there aren't enough peers.
@@ -222,8 +221,13 @@ func (cs *chainSyncer) loop() {
 			cs.forced = true
 
 		case <-cs.pm.quitSync:
+			// Disable all insertion on the blockchain. This needs to happen before
+			// terminating the downloader because the downloader waits for blockchain
+			// inserts, and these can take a long time to finish.
+			cs.pm.blockchain.StopInsert()
+			cs.pm.downloader.Terminate()
 			if cs.doneCh != nil {
-				cs.pm.downloader.Terminate() // Double term is fine, Cancel would block until queue is emptied
+				// Wait for the current sync to end.
 				<-cs.doneCh
 			}
 			return
@@ -237,7 +241,7 @@ func (cs *chainSyncer) nextSyncOp() *chainSyncOp {
 		return nil // Sync already running.
 	}
 
-	// Ensure we're at mininum peer count.
+	// Ensure we're at minimum peer count.
 	minPeers := defaultMinSyncPeers
 	if cs.forced {
 		minPeers = 1
@@ -267,15 +271,25 @@ func peerToSyncOp(mode downloader.SyncMode, p *peer) *chainSyncOp {
 }
 
 func (cs *chainSyncer) modeAndLocalHead() (downloader.SyncMode, *big.Int) {
+	// If we're in fast sync mode, return that directly
 	if atomic.LoadUint32(&cs.pm.fastSync) == 1 {
 		block := cs.pm.blockchain.CurrentFastBlock()
 		td := cs.pm.blockchain.GetTdByHash(block.Hash())
 		return downloader.FastSync, td
-	} else {
-		head := cs.pm.blockchain.CurrentHeader()
-		td := cs.pm.blockchain.GetTd(head.Hash(), head.Number.Uint64())
-		return downloader.FullSync, td
 	}
+	// We are probably in full sync, but we might have rewound to before the
+	// fast sync pivot, check if we should reenable
+	if pivot := rawdb.ReadLastPivotNumber(cs.pm.chaindb); pivot != nil {
+		if head := cs.pm.blockchain.CurrentBlock(); head.NumberU64() < *pivot {
+			block := cs.pm.blockchain.CurrentFastBlock()
+			td := cs.pm.blockchain.GetTdByHash(block.Hash())
+			return downloader.FastSync, td
+		}
+	}
+	// Nope, we're really full syncing
+	head := cs.pm.blockchain.CurrentHeader()
+	td := cs.pm.blockchain.GetTd(head.Hash(), head.Number.Uint64())
+	return downloader.FullSync, td
 }
 
 // startSync launches doSync in a new goroutine.

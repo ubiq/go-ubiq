@@ -29,9 +29,10 @@ import (
 	"github.com/naoina/toml"
 	"github.com/ubiq/go-ubiq/cmd/utils"
 	"github.com/ubiq/go-ubiq/eth"
+	"github.com/ubiq/go-ubiq/internal/ethapi"
+	"github.com/ubiq/go-ubiq/log"
 	"github.com/ubiq/go-ubiq/node"
 	"github.com/ubiq/go-ubiq/params"
-	whisper "github.com/ubiq/go-ubiq/whisper/whisperv6"
 )
 
 var (
@@ -72,9 +73,19 @@ type ethstatsConfig struct {
 	URL string `toml:",omitempty"`
 }
 
+// whisper has been deprecated, but clients out there might still have [Shh]
+// in their config, which will crash. Cut them some slack by keeping the
+// config, and displaying a message that those config switches are ineffectual.
+// To be removed circa Q1 2021 -- @gballet.
+type whisperDeprecatedConfig struct {
+	MaxMessageSize                        uint32  `toml:",omitempty"`
+	MinimumAcceptedPOW                    float64 `toml:",omitempty"`
+	RestrictConnectionBetweenLightClients bool    `toml:",omitempty"`
+}
+
 type gubiqConfig struct {
 	Eth      eth.Config
-	Shh      whisper.Config
+	Shh      whisperDeprecatedConfig
 	Node     node.Config
 	Ethstats ethstatsConfig
 }
@@ -104,11 +115,11 @@ func defaultNodeConfig() node.Config {
 	return cfg
 }
 
+// makeConfigNode loads geth configuration and creates a blank node instance.
 func makeConfigNode(ctx *cli.Context) (*node.Node, gubiqConfig) {
 	// Load defaults.
 	cfg := gubiqConfig{
 		Eth:  eth.DefaultConfig,
-		Shh:  whisper.DefaultConfig,
 		Node: defaultNodeConfig(),
 	}
 
@@ -116,6 +127,10 @@ func makeConfigNode(ctx *cli.Context) (*node.Node, gubiqConfig) {
 	if file := ctx.GlobalString(configFileFlag.Name); file != "" {
 		if err := loadConfig(file, &cfg); err != nil {
 			utils.Fatalf("%v", err)
+		}
+
+		if cfg.Shh != (whisperDeprecatedConfig{}) {
+			log.Warn("Deprecated whisper config detected. Whisper has been moved to github.com/ethereum/whisper")
 		}
 	}
 
@@ -129,49 +144,36 @@ func makeConfigNode(ctx *cli.Context) (*node.Node, gubiqConfig) {
 	if ctx.GlobalIsSet(utils.EthStatsURLFlag.Name) {
 		cfg.Ethstats.URL = ctx.GlobalString(utils.EthStatsURLFlag.Name)
 	}
-	utils.SetShhConfig(ctx, stack, &cfg.Shh)
+	utils.SetShhConfig(ctx, stack)
 
 	return stack, cfg
 }
 
 // enableWhisper returns true in case one of the whisper flags is set.
-func enableWhisper(ctx *cli.Context) bool {
+func checkWhisper(ctx *cli.Context) {
 	for _, flag := range whisperFlags {
 		if ctx.GlobalIsSet(flag.GetName()) {
-			return true
+			log.Warn("deprecated whisper flag detected. Whisper has been moved to github.com/ethereum/whisper")
 		}
 	}
-	return false
 }
 
-func makeFullNode(ctx *cli.Context) *node.Node {
+// makeFullNode loads geth configuration and creates the Ethereum backend.
+func makeFullNode(ctx *cli.Context) (*node.Node, ethapi.Backend) {
 	stack, cfg := makeConfigNode(ctx)
-	utils.RegisterEthService(stack, &cfg.Eth)
 
-	// Whisper must be explicitly enabled by specifying at least 1 whisper flag or in dev mode
-	shhEnabled := enableWhisper(ctx)
-	shhAutoEnabled := !ctx.GlobalIsSet(utils.WhisperEnabledFlag.Name) && ctx.GlobalIsSet(utils.DeveloperFlag.Name)
-	if shhEnabled || shhAutoEnabled {
-		if ctx.GlobalIsSet(utils.WhisperMaxMessageSizeFlag.Name) {
-			cfg.Shh.MaxMessageSize = uint32(ctx.Int(utils.WhisperMaxMessageSizeFlag.Name))
-		}
-		if ctx.GlobalIsSet(utils.WhisperMinPOWFlag.Name) {
-			cfg.Shh.MinimumAcceptedPOW = ctx.Float64(utils.WhisperMinPOWFlag.Name)
-		}
-		if ctx.GlobalIsSet(utils.WhisperRestrictConnectionBetweenLightClientsFlag.Name) {
-			cfg.Shh.RestrictConnectionBetweenLightClients = true
-		}
-		utils.RegisterShhService(stack, &cfg.Shh)
-	}
+	backend := utils.RegisterEthService(stack, &cfg.Eth)
+
+	checkWhisper(ctx)
 	// Configure GraphQL if requested
 	if ctx.GlobalIsSet(utils.GraphQLEnabledFlag.Name) {
-		utils.RegisterGraphQLService(stack, cfg.Node.GraphQLEndpoint(), cfg.Node.GraphQLCors, cfg.Node.GraphQLVirtualHosts, cfg.Node.HTTPTimeouts)
+		utils.RegisterGraphQLService(stack, backend, cfg.Node)
 	}
 	// Add the Ethereum Stats daemon if requested.
 	if cfg.Ethstats.URL != "" {
-		utils.RegisterEthStatsService(stack, cfg.Ethstats.URL)
+		utils.RegisterEthStatsService(stack, backend, cfg.Ethstats.URL)
 	}
-	return stack
+	return stack, backend
 }
 
 // dumpConfig is the dumpconfig command.

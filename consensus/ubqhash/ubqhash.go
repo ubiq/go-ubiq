@@ -656,7 +656,7 @@ func (ubqhash *Ubqhash) Hashrate() float64 {
 }
 
 // APIs implements consensus.Engine, returning the user facing RPC APIs.
-func (ubqhash *Ubqhash) APIs(chain consensus.ChainReader) []rpc.API {
+func (ubqhash *Ubqhash) APIs(chain consensus.ChainHeaderReader) []rpc.API {
 	// In order to ensure backward compatibility, we exposes ubqhash RPC APIs
 	// to both eth and ubqhash namespaces.
 	return []rpc.API{

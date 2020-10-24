@@ -1,5 +1,5 @@
 # Build Gubiq in a stock Go builder container
-FROM golang:1.14-alpine as builder
+FROM golang:1.15-alpine as builder
 
 RUN apk add --no-cache make gcc musl-dev linux-headers git
 
@@ -12,5 +12,5 @@ FROM alpine:latest
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /go-ubiq/build/bin/gubiq /usr/local/bin/
 
-EXPOSE 8588 8589 8590 30388 30388/udp
+EXPOSE 8588 8589 30388 30388/udp
 ENTRYPOINT ["gubiq"]
