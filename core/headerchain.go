@@ -131,7 +131,6 @@ func (hc *HeaderChain) GetBlockNumber(hash common.Hash) *uint64 {
 	number := rawdb.ReadHeaderNumber(hc.chainDb, hash)
 	if number != nil {
 		hc.numberCache.Add(hash, *number)
-		hc.hashCache.Add(*number, hash)
 	}
 	return number
 }
@@ -532,6 +531,9 @@ func (hc *HeaderChain) GetHeaderByNumber(number uint64) *types.Header {
 	if hash == (common.Hash{}) {
 		return nil
 	}
+
+	// cache for next time and return
+	hc.hashCache.Add(number, hash)
 	return hc.GetHeader(hash, number)
 }
 
