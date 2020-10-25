@@ -454,7 +454,7 @@ func copyDb(ctx *cli.Context) error {
 	if syncMode == downloader.FastSync {
 		syncBloom = trie.NewSyncBloom(uint64(ctx.GlobalInt(utils.CacheFlag.Name)/2), chainDb)
 	}
-	dl := downloader.New(0, chainDb, syncBloom, new(event.TypeMux), chain, nil, nil)
+	dl := downloader.New(0, chainDb, syncBloom, new(event.TypeMux), chain, nil)
 
 	// Create a source peer to satisfy downloader requests from
 	db, err := rawdb.NewLevelDBDatabaseWithFreezer(ctx.Args().First(), ctx.GlobalInt(utils.CacheFlag.Name)/2, 256, ctx.Args().Get(1), "")
