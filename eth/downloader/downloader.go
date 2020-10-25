@@ -55,11 +55,10 @@ var (
 	qosConfidenceCap = 10   // Number of peers above which not to modify RTT confidence
 	qosTuningImpact  = 0.25 // Impact that a new tuning target has on the previous value
 
-	maxQueuedHeaders            = 32 * 1024                         // [eth/62] Maximum number of headers to queue for import (DOS protection)
-	maxHeadersProcess           = 1                                 // 2048 TODO - iquidus                             // Number of header download results to import at once into the chain
-	maxResultsProcess           = 1                                 // 2048                              // Number of content download results to import at once into the chain
-	fullMaxForkAncestry  uint64 = params.FullImmutabilityThreshold  // Maximum chain reorganisation (locally redeclared so tests can reduce it)
-	lightMaxForkAncestry uint64 = params.LightImmutabilityThreshold // Maximum chain reorganisation (locally redeclared so tests can reduce it)
+	maxQueuedHeaders           = 32 * 1024                        // [eth/62] Maximum number of headers to queue for import (DOS protection)
+	maxHeadersProcess          = 1                                // 2048 TODO - iquidus                             // Number of header download results to import at once into the chain
+	maxResultsProcess          = 1                                // 2048                              // Number of content download results to import at once into the chain
+	fullMaxForkAncestry uint64 = params.FullImmutabilityThreshold // Maximum chain reorganisation (locally redeclared so tests can reduce it)
 
 	reorgProtThreshold   = 48 // Threshold number of recent blocks to disable mini reorg protection
 	reorgProtHeaderDelay = 2  // Number of headers to delay delivering to cover mini reorgs
@@ -421,6 +420,13 @@ func (d *Downloader) synchronise(id string, hash common.Hash, td *big.Int, mode 
 
 	// Atomically set the requested sync mode
 	atomic.StoreUint32(&d.mode, uint32(mode))
+
+	// If FastSync its safe to increase maxResultsProcess - iquidus
+	if mode == FastSync {
+		maxResultsProcess = 2048
+	} else {
+		maxResultsProcess = 1
+	}
 
 	// Retrieve the origin peer and initiate the downloading process
 	p := d.peers.Peer(id)

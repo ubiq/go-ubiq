@@ -41,7 +41,7 @@ const (
 	headerCacheLimit = 512
 	tdCacheLimit     = 1024
 	numberCacheLimit = 2048
-	hashCacheLimit   = 64
+	hashCacheLimit   = 2048
 	medianTimeBlocks = 11
 )
 
@@ -70,7 +70,7 @@ type HeaderChain struct {
 	headerCache *lru.Cache // Cache for the most recent block headers
 	tdCache     *lru.Cache // Cache for the most recent block total difficulties
 	numberCache *lru.Cache // Cache for the most recent block numbers
-	hashCache   *lru.Cache
+	hashCache   *lru.Cache // Cache of the most recent block hashes
 
 	procInterrupt func() bool
 
@@ -131,6 +131,7 @@ func (hc *HeaderChain) GetBlockNumber(hash common.Hash) *uint64 {
 	number := rawdb.ReadHeaderNumber(hc.chainDb, hash)
 	if number != nil {
 		hc.numberCache.Add(hash, *number)
+		hc.hashCache.Add(*number, hash)
 	}
 	return number
 }
@@ -522,6 +523,11 @@ func (hc *HeaderChain) HasHeader(hash common.Hash, number uint64) bool {
 // GetHeaderByNumber retrieves a block header from the database by number,
 // caching it (associated with its hash) if found.
 func (hc *HeaderChain) GetHeaderByNumber(number uint64) *types.Header {
+	// check cache
+	if cache, ok := hc.hashCache.Get(number); ok {
+		return hc.GetHeader(cache.(common.Hash), number)
+	}
+
 	hash := rawdb.ReadCanonicalHash(hc.chainDb, number)
 	if hash == (common.Hash{}) {
 		return nil
