@@ -18,6 +18,7 @@ package rpc
 
 import (
 	"context"
+	openrpc "github.com/octanolabs/g0penrpc"
 	"io"
 	"sync/atomic"
 
@@ -53,7 +54,7 @@ func NewServer() *Server {
 	server := &Server{idgen: randomIDGenerator(), codecs: mapset.NewSet(), run: 1}
 	// Register the default service providing meta information about the RPC service such
 	// as the services and methods it offers.
-	rpcService := &RPCService{server}
+	rpcService := &RPCService{server, nil}
 	server.RegisterName(MetadataApi, rpcService)
 	return server
 }
@@ -131,7 +132,8 @@ func (s *Server) Stop() {
 // RPCService gives meta information about the server.
 // e.g. gives information about the loaded modules.
 type RPCService struct {
-	server *Server
+	server     *Server
+	openrpcDoc *openrpc.DocumentSpec1
 }
 
 // Modules returns the list of RPC services with their version number
@@ -144,4 +146,19 @@ func (s *RPCService) Modules() map[string]string {
 		modules[name] = "1.0"
 	}
 	return modules
+}
+
+func (s *RPCService) Discover() openrpc.DocumentSpec1 {
+	s.server.services.mu.Lock()
+	defer s.server.services.mu.Unlock()
+
+	if s.openrpcDoc == nil {
+		doc, err := makeOpenRpcSpecV1(s.server)
+		if err != nil {
+			log.Error("couldn't create openrpc object", "err", err)
+		}
+		s.openrpcDoc = doc
+	}
+
+	return *s.openrpcDoc
 }
