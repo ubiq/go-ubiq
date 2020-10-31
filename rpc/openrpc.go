@@ -34,7 +34,7 @@ func makeOpenRpcSpecV1(server *Server) (*openrpc.DocumentSpec1, error) {
 			for methodName, callback := range service.callbacks {
 				method, err := methodObjectFromCallback(reg, service.name, methodName, callback)
 				if err != nil {
-					log.Error("openrpc: error making content", "service", serviceName, "method", methodName, "err", err)
+					log.Warn("openrpc: error making content", "service", serviceName, "method", methodName, "err", err)
 					continue
 				}
 				methods = append(methods, method)
@@ -94,25 +94,24 @@ func methodObjectFromCallback(reg *openrpc.SchemaRegistry, service, methodName s
 	}
 	method.Params = params
 
-	var (
-		returnPtr  openrpc.Pointer
-		returnName string
-		err        error
-	)
+	var err error
 
-	returnType := cb.fn.Type().Out(0)
+	if cb.fn.Type().NumOut() > 0 {
 
-	unmarshalable := checkUnmarshalable(returnType)
+		returnType := cb.fn.Type().Out(0)
 
-	returnPtr, returnName, err = reg.RegisterType(returnType, unmarshalable)
-	if err != nil {
-		return nil, errors.New("error handling type: " + returnType.String() + " : " + err.Error())
-	}
+		unmarshalable := checkUnmarshalable(returnType)
 
-	method.Result = &openrpc.ContentDescriptor{
-		Name:     returnName,
-		Required: returnType.Kind() != reflect.Ptr,
-		Schema:   returnPtr,
+		returnPtr, returnName, err := reg.RegisterType(returnType, unmarshalable)
+		if err != nil {
+			return nil, errors.New("error handling type: " + returnType.String() + " : " + err.Error())
+		}
+
+		method.Result = &openrpc.ContentDescriptor{
+			Name:     returnName,
+			Required: returnType.Kind() != reflect.Ptr,
+			Schema:   returnPtr,
+		}
 	}
 
 	return method, err
