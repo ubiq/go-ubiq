@@ -108,6 +108,17 @@ func Execute(code, input []byte, cfg *Config) ([]byte, *state.StateDB, error) {
 		vmenv   = NewEnv(cfg)
 		sender  = vm.AccountRef(cfg.Origin)
 	)
+<<<<<<< HEAD
+=======
+	if cfg.ChainConfig.IsYoloV2(vmenv.Context.BlockNumber) {
+		cfg.State.AddAddressToAccessList(cfg.Origin)
+		cfg.State.AddAddressToAccessList(address)
+		for _, addr := range vmenv.ActivePrecompiles() {
+			cfg.State.AddAddressToAccessList(addr)
+			cfg.State.AddAddressToAccessList(addr)
+		}
+	}
+>>>>>>> 2045a2bba... core, all: split vm.Context into BlockContext and TxContext (#21672)
 	cfg.State.CreateAccount(address)
 	// set the receiver's (the executing contract) code for execution.
 	cfg.State.SetCode(address, code)

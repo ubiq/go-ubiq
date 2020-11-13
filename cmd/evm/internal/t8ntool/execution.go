@@ -109,7 +109,7 @@ func (pre *Prestate) Apply(vmConfig vm.Config, chainConfig *params.ChainConfig,
 		txIndex     = 0
 	)
 	gaspool.AddGas(pre.Env.GasLimit)
-	vmContext := vm.Context{
+	vmContext := vm.BlockContext{
 		CanTransfer: core.CanTransfer,
 		Transfer:    core.Transfer,
 		Coinbase:    pre.Env.Coinbase,
@@ -118,7 +118,6 @@ func (pre *Prestate) Apply(vmConfig vm.Config, chainConfig *params.ChainConfig,
 		Difficulty:  pre.Env.Difficulty,
 		GasLimit:    pre.Env.GasLimit,
 		GetHash:     getHash,
-		// GasPrice and Origin needs to be set per transaction
 	}
 
 	for i, tx := range txs {
@@ -135,10 +134,9 @@ func (pre *Prestate) Apply(vmConfig vm.Config, chainConfig *params.ChainConfig,
 		vmConfig.Tracer = tracer
 		vmConfig.Debug = (tracer != nil)
 		statedb.Prepare(tx.Hash(), blockHash, txIndex)
-		vmContext.GasPrice = msg.GasPrice()
-		vmContext.Origin = msg.From()
+		txContext := core.NewEVMTxContext(msg)
 
-		evm := vm.NewEVM(vmContext, statedb, chainConfig, vmConfig)
+		evm := vm.NewEVM(vmContext, txContext, statedb, chainConfig, vmConfig)
 		snapshot := statedb.Snapshot()
 		// (ret []byte, usedGas uint64, failed bool, err error)
 		msgResult, err := core.ApplyMessage(evm, msg, gaspool)
@@ -167,7 +165,7 @@ func (pre *Prestate) Apply(vmConfig vm.Config, chainConfig *params.ChainConfig,
 			receipt.GasUsed = msgResult.UsedGas
 			// if the transaction created a contract, store the creation address in the receipt.
 			if msg.To() == nil {
-				receipt.ContractAddress = crypto.CreateAddress(evm.Context.Origin, tx.Nonce())
+				receipt.ContractAddress = crypto.CreateAddress(evm.TxContext.Origin, tx.Nonce())
 			}
 			// Set the receipt logs and create a bloom for filtering
 			receipt.Logs = statedb.GetLogs(tx.Hash())
