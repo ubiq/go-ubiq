@@ -44,6 +44,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/ubiq/go-ubiq/accounts"
 	"github.com/ubiq/go-ubiq/accounts/keystore"
+	"github.com/ubiq/go-ubiq/cmd/utils"
 	"github.com/ubiq/go-ubiq/common"
 	"github.com/ubiq/go-ubiq/core"
 	"github.com/ubiq/go-ubiq/core/types"
@@ -240,6 +241,7 @@ func newFaucet(genesis *core.Genesis, port int, enodes []*discv5.Node, network u
 	cfg.SyncMode = downloader.FastSync
 	cfg.NetworkId = network
 	cfg.Genesis = genesis
+	utils.SetDNSDiscoveryDefaults(&cfg, genesis.ToBlock(nil).Hash())
 	Backend, err := eth.New(stack, &cfg)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to register the Ubiq service: %w", err)
