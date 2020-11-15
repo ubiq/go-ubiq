@@ -70,4 +70,5 @@ require (
 	gopkg.in/olebedev/go-duktape.v3 v3.0.0-20200619000410-60c24ae608a6
 	gopkg.in/urfave/cli.v1 v1.20.0
 	gotest.tools v2.2.0+incompatible
+	src.techknowlogick.com/xgo v1.1.1-0.20201113032224-51945c0192ab // indirect
 )
