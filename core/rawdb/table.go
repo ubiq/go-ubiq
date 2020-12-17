@@ -17,7 +17,7 @@
 package rawdb
 
 import (
-	"github.com/ubiq/go-ubiq/ethdb"
+	"github.com/ubiq/go-ubiq/v3/ethdb"
 )
 
 // table is a wrapper around a database that prefixes each key access with a pre-

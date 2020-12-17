@@ -26,11 +26,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/core"
-	"github.com/ubiq/go-ubiq/core/forkid"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/params"
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/core"
+	"github.com/ubiq/go-ubiq/v3/core/forkid"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 )
 
 type Chain struct {

@@ -17,13 +17,13 @@
 package core
 
 import (
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/consensus"
-	"github.com/ubiq/go-ubiq/core/state"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/core/vm"
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/consensus"
+	"github.com/ubiq/go-ubiq/v3/core/state"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/core/vm"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 // StateProcessor is a basic Processor, which takes care of transitioning

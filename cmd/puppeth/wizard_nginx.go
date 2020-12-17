@@ -19,7 +19,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // ensureVirtualHost checks whether a reverse-proxy is running on the specified

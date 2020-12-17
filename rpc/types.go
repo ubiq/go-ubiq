@@ -23,8 +23,8 @@ import (
 	"math"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/common/hexutil"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/common/hexutil"
 )
 
 // API describes the set of methods offered over the RPC interface

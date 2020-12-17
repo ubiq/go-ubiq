@@ -19,7 +19,7 @@ package core
 import (
 	"runtime"
 
-	"github.com/ubiq/go-ubiq/core/types"
+	"github.com/ubiq/go-ubiq/v3/core/types"
 )
 
 // senderCacher is a concurrent transaction sender recoverer and cacher.

@@ -27,8 +27,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/crypto"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/crypto"
 )
 
 func tmpKeyStoreIface(t *testing.T, encrypted bool) (dir string, ks keyStore) {

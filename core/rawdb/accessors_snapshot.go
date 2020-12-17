@@ -19,9 +19,9 @@ package rawdb
 import (
 	"encoding/binary"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/ethdb"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/ethdb"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // ReadSnapshotRoot retrieves the root of the block whose state is contained in

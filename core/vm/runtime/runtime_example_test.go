@@ -19,8 +19,8 @@ package runtime_test
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/core/vm/runtime"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/core/vm/runtime"
 )
 
 func ExampleExecute() {

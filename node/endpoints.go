@@ -21,8 +21,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/rpc"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/rpc"
 )
 
 // StartHTTPEndpoint starts the HTTP RPC endpoint.

@@ -21,10 +21,10 @@ import (
 	"net"
 	"time"
 
-	"github.com/ubiq/go-ubiq/core/forkid"
-	"github.com/ubiq/go-ubiq/p2p/enr"
-	"github.com/ubiq/go-ubiq/params"
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/core/forkid"
+	"github.com/ubiq/go-ubiq/v3/p2p/enr"
+	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 	"gopkg.in/urfave/cli.v1"
 )
 

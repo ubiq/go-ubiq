@@ -23,7 +23,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/log"
 	"gopkg.in/urfave/cli.v1"
 )
 

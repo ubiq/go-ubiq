@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/common/mclock"
+	"github.com/ubiq/go-ubiq/v3/common/mclock"
 )
 
 func TestExpHeap(t *testing.T) {

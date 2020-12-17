@@ -24,9 +24,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/ethdb/memorydb"
 )
 
 func init() {

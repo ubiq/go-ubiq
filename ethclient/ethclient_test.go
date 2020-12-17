@@ -25,16 +25,16 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/consensus/ubqhash"
-	"github.com/ubiq/go-ubiq/core"
-	"github.com/ubiq/go-ubiq/core/rawdb"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/eth"
-	"github.com/ubiq/go-ubiq/node"
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v3/core"
+	"github.com/ubiq/go-ubiq/v3/core/rawdb"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/eth"
+	"github.com/ubiq/go-ubiq/v3/node"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 // Verify that Client implements the ethereum interfaces.

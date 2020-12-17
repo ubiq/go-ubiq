@@ -26,14 +26,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/consensus/ubqhash"
-	"github.com/ubiq/go-ubiq/console/prompt"
-	"github.com/ubiq/go-ubiq/core"
-	"github.com/ubiq/go-ubiq/eth"
-	"github.com/ubiq/go-ubiq/internal/jsre"
-	"github.com/ubiq/go-ubiq/miner"
-	"github.com/ubiq/go-ubiq/node"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v3/console/prompt"
+	"github.com/ubiq/go-ubiq/v3/core"
+	"github.com/ubiq/go-ubiq/v3/eth"
+	"github.com/ubiq/go-ubiq/v3/internal/jsre"
+	"github.com/ubiq/go-ubiq/v3/miner"
+	"github.com/ubiq/go-ubiq/v3/node"
 )
 
 const (

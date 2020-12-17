@@ -3,8 +3,8 @@ package openrpc_test
 import (
 	"testing"
 
-	"github.com/ubiq/go-ubiq/internal/openrpc"
-	"github.com/ubiq/go-ubiq/rpc"
+	"github.com/ubiq/go-ubiq/v3/internal/openrpc"
+	"github.com/ubiq/go-ubiq/v3/rpc"
 )
 
 func TestDefaultSchema(t *testing.T) {

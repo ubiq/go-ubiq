@@ -28,10 +28,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/consensus/ethash"
-	"github.com/ubiq/go-ubiq/core/rawdb"
-	"github.com/ubiq/go-ubiq/core/vm"
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/consensus/ethash"
+	"github.com/ubiq/go-ubiq/v3/core/rawdb"
+	"github.com/ubiq/go-ubiq/v3/core/vm"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 // snapshotTest is a test case for snapshot recovery. It can be used for

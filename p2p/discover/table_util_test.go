@@ -27,10 +27,10 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/p2p/enode"
-	"github.com/ubiq/go-ubiq/p2p/enr"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/p2p/enr"
 )
 
 var nullNode *enode.Node

@@ -42,10 +42,10 @@ import (
 	"time"
 
 	pcsc "github.com/gballet/go-libpcsclite"
-	"github.com/ubiq/go-ubiq/accounts"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/event"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/accounts"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/event"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // Scheme is the URI prefix for smartcard wallets.

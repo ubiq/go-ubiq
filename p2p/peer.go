@@ -25,13 +25,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/common/mclock"
-	"github.com/ubiq/go-ubiq/event"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/metrics"
-	"github.com/ubiq/go-ubiq/p2p/enode"
-	"github.com/ubiq/go-ubiq/p2p/enr"
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/common/mclock"
+	"github.com/ubiq/go-ubiq/v3/event"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/metrics"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/p2p/enr"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 )
 
 var (

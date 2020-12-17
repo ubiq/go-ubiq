@@ -19,10 +19,10 @@ package clique
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/consensus"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/rpc"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/consensus"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/rpc"
 )
 
 // API is a user facing RPC API to allow controlling the signer and voting

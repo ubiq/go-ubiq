@@ -21,7 +21,7 @@ import (
 	"sort"
 
 	"github.com/holiman/uint256"
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 var activators = map[int]func(*JumpTable){

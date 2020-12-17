@@ -26,9 +26,9 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/metrics"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/metrics"
 	"github.com/golang/snappy"
 )
 

@@ -22,8 +22,8 @@ import (
 	"net/http"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/metrics"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/metrics"
 )
 
 // Handler returns an HTTP handler which dump metrics in Prometheus format.

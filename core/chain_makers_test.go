@@ -20,12 +20,12 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/consensus/ubqhash"
-	"github.com/ubiq/go-ubiq/core/rawdb"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/core/vm"
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v3/core/rawdb"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/core/vm"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 func ExampleGenerateChain() {

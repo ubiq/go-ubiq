@@ -26,12 +26,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/accounts/keystore"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/common/hexutil"
-	"github.com/ubiq/go-ubiq/common/math"
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/signer/core"
+	"github.com/ubiq/go-ubiq/v3/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/common/hexutil"
+	"github.com/ubiq/go-ubiq/v3/common/math"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/signer/core"
 )
 
 var typesStandard = core.Types{

@@ -10,8 +10,8 @@ import (
 	"bytes"
 	"math/big"
 
-	cloudflare "github.com/ubiq/go-ubiq/crypto/bn256/cloudflare"
-	google "github.com/ubiq/go-ubiq/crypto/bn256/google"
+	cloudflare "github.com/ubiq/go-ubiq/v3/crypto/bn256/cloudflare"
+	google "github.com/ubiq/go-ubiq/v3/crypto/bn256/google"
 )
 
 // FuzzAdd fuzzez bn256 addition between the Google and Cloudflare libraries.

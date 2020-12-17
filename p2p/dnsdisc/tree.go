@@ -26,10 +26,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/p2p/enode"
-	"github.com/ubiq/go-ubiq/p2p/enr"
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/p2p/enr"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 	"golang.org/x/crypto/sha3"
 )
 

@@ -20,7 +20,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/core/asm"
+	"github.com/ubiq/go-ubiq/v3/core/asm"
 )
 
 func Compile(fn string, src []byte, debug bool) (string, error) {

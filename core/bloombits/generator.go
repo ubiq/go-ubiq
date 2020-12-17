@@ -19,7 +19,7 @@ package bloombits
 import (
 	"errors"
 
-	"github.com/ubiq/go-ubiq/core/types"
+	"github.com/ubiq/go-ubiq/v3/core/types"
 )
 
 var (

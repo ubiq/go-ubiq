@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/ubiq/go-ubiq/tests/fuzzers/stacktrie"
+	"github.com/ubiq/go-ubiq/v3/tests/fuzzers/stacktrie"
 )
 
 func main() {

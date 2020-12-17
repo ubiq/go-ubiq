@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // deployExplorer creates a new block explorer based on some user input.

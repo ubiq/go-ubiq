@@ -19,15 +19,15 @@ package main
 import (
 	"strconv"
 
-	"github.com/ubiq/go-ubiq/accounts"
-	"github.com/ubiq/go-ubiq/accounts/abi/bind"
-	"github.com/ubiq/go-ubiq/accounts/external"
-	"github.com/ubiq/go-ubiq/cmd/utils"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/contracts/checkpointoracle"
-	"github.com/ubiq/go-ubiq/ethclient"
-	"github.com/ubiq/go-ubiq/params"
-	"github.com/ubiq/go-ubiq/rpc"
+	"github.com/ubiq/go-ubiq/v3/accounts"
+	"github.com/ubiq/go-ubiq/v3/accounts/abi/bind"
+	"github.com/ubiq/go-ubiq/v3/accounts/external"
+	"github.com/ubiq/go-ubiq/v3/cmd/utils"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/contracts/checkpointoracle"
+	"github.com/ubiq/go-ubiq/v3/ethclient"
+	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v3/rpc"
 	"gopkg.in/urfave/cli.v1"
 )
 

@@ -21,8 +21,8 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/common/hexutil"
-	"github.com/ubiq/go-ubiq/crypto"
+	"github.com/ubiq/go-ubiq/v3/common/hexutil"
+	"github.com/ubiq/go-ubiq/v3/crypto"
 )
 
 type bytesBacked interface {

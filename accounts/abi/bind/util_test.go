@@ -23,12 +23,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/accounts/abi/bind"
-	"github.com/ubiq/go-ubiq/accounts/abi/bind/backends"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/core"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/crypto"
+	"github.com/ubiq/go-ubiq/v3/accounts/abi/bind"
+	"github.com/ubiq/go-ubiq/v3/accounts/abi/bind/backends"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/core"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/crypto"
 )
 
 var testKey, _ = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")

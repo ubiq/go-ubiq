@@ -28,9 +28,9 @@ import (
 	"time"
 
 	mapset "github.com/deckarep/golang-set"
-	"github.com/ubiq/go-ubiq/accounts"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/accounts"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // Minimum amount of time between cache reloads. This limit applies if the platform does

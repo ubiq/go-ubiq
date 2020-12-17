@@ -22,9 +22,9 @@ import (
 	"io"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/cmd/utils"
-	"github.com/ubiq/go-ubiq/internal/debug"
-	"github.com/ubiq/go-ubiq/internal/flags"
+	"github.com/ubiq/go-ubiq/v3/cmd/utils"
+	"github.com/ubiq/go-ubiq/v3/internal/debug"
+	"github.com/ubiq/go-ubiq/v3/internal/flags"
 	cli "gopkg.in/urfave/cli.v1"
 )
 

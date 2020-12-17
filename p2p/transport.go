@@ -25,10 +25,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/common/bitutil"
-	"github.com/ubiq/go-ubiq/metrics"
-	"github.com/ubiq/go-ubiq/p2p/rlpx"
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/common/bitutil"
+	"github.com/ubiq/go-ubiq/v3/metrics"
+	"github.com/ubiq/go-ubiq/v3/p2p/rlpx"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 )
 
 const (

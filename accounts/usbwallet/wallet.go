@@ -26,12 +26,12 @@ import (
 	"time"
 
 	"github.com/karalabe/usb"
-	ethereum "github.com/ubiq/go-ubiq"
-	"github.com/ubiq/go-ubiq/accounts"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/log"
+	ethereum "github.com/ubiq/go-ubiq/v3"
+	"github.com/ubiq/go-ubiq/v3/accounts"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // Maximum time between wallet health checks to detect USB unplugs.

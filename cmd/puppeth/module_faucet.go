@@ -26,8 +26,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // faucetDockerfile is the Dockerfile required to build a faucet container to

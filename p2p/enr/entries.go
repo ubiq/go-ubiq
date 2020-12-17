@@ -21,7 +21,7 @@ import (
 	"io"
 	"net"
 
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 )
 
 // Entry is implemented by known node record entry types.

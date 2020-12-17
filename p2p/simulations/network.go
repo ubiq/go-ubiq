@@ -27,11 +27,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/event"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/p2p"
-	"github.com/ubiq/go-ubiq/p2p/enode"
-	"github.com/ubiq/go-ubiq/p2p/simulations/adapters"
+	"github.com/ubiq/go-ubiq/v3/event"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/p2p"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/p2p/simulations/adapters"
 )
 
 var DialBanTimeout = 200 * time.Millisecond

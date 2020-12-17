@@ -23,7 +23,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/core/vm"
+	"github.com/ubiq/go-ubiq/v3/core/vm"
 )
 
 func TestState(t *testing.T) {

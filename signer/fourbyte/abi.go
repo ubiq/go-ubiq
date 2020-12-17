@@ -23,8 +23,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/accounts/abi"
-	"github.com/ubiq/go-ubiq/common"
+	"github.com/ubiq/go-ubiq/v3/accounts/abi"
+	"github.com/ubiq/go-ubiq/v3/common"
 )
 
 // decodedCallData is an internal type to represent a method call parsed according

@@ -20,7 +20,7 @@ import (
 	"math/big"
 
 	"github.com/holiman/uint256"
-	"github.com/ubiq/go-ubiq/common"
+	"github.com/ubiq/go-ubiq/v3/common"
 )
 
 // ContractRef is a reference to the contract's backing object

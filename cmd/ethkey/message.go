@@ -21,10 +21,10 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/ubiq/go-ubiq/accounts/keystore"
-	"github.com/ubiq/go-ubiq/cmd/utils"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/crypto"
+	"github.com/ubiq/go-ubiq/v3/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v3/cmd/utils"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/crypto"
 	"gopkg.in/urfave/cli.v1"
 )
 

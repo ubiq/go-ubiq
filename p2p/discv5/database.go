@@ -28,9 +28,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/errors"
 	"github.com/syndtr/goleveldb/leveldb/iterator"

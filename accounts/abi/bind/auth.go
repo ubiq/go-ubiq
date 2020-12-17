@@ -22,12 +22,12 @@ import (
 	"io"
 	"io/ioutil"
 
-	"github.com/ubiq/go-ubiq/accounts"
-	"github.com/ubiq/go-ubiq/accounts/external"
-	"github.com/ubiq/go-ubiq/accounts/keystore"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/crypto"
+	"github.com/ubiq/go-ubiq/v3/accounts"
+	"github.com/ubiq/go-ubiq/v3/accounts/external"
+	"github.com/ubiq/go-ubiq/v3/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/crypto"
 )
 
 // NewTransactor is a utility method to easily create a transaction signer from

@@ -27,12 +27,12 @@ import (
 	cli "gopkg.in/urfave/cli.v1"
 
 	"github.com/naoina/toml"
-	"github.com/ubiq/go-ubiq/cmd/utils"
-	"github.com/ubiq/go-ubiq/eth"
-	"github.com/ubiq/go-ubiq/internal/ethapi"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/node"
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/cmd/utils"
+	"github.com/ubiq/go-ubiq/v3/eth"
+	"github.com/ubiq/go-ubiq/v3/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/node"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 var (

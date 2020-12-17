@@ -40,7 +40,7 @@ import (
 	"io"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 )
 
 const SizeLimit = 300 // maximum encoded size of a node record in bytes

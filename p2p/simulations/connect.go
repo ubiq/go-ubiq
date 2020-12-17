@@ -20,7 +20,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
 )
 
 var (

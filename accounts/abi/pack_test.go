@@ -27,7 +27,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/common"
+	"github.com/ubiq/go-ubiq/v3/common"
 )
 
 // TestPack tests the general pack/unpack tests in packing_test.go

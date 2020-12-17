@@ -25,14 +25,14 @@ import (
 	"time"
 
 	mapset "github.com/deckarep/golang-set"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/consensus"
-	"github.com/ubiq/go-ubiq/core/state"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/params"
-	"github.com/ubiq/go-ubiq/rlp"
-	"github.com/ubiq/go-ubiq/trie"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/consensus"
+	"github.com/ubiq/go-ubiq/v3/core/state"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v3/rlp"
+	"github.com/ubiq/go-ubiq/v3/trie"
 	"golang.org/x/crypto/sha3"
 )
 

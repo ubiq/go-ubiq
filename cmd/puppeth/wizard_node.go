@@ -21,9 +21,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ubiq/go-ubiq/accounts/keystore"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // deployNode creates a new node configuration based on some user input.

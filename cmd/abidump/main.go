@@ -23,8 +23,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/signer/core"
-	"github.com/ubiq/go-ubiq/signer/fourbyte"
+	"github.com/ubiq/go-ubiq/v3/signer/core"
+	"github.com/ubiq/go-ubiq/v3/signer/fourbyte"
 )
 
 func init() {

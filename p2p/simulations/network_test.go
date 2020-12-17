@@ -27,10 +27,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/node"
-	"github.com/ubiq/go-ubiq/p2p/enode"
-	"github.com/ubiq/go-ubiq/p2p/simulations/adapters"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/node"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/p2p/simulations/adapters"
 )
 
 // Tests that a created snapshot with a minimal service only contains the expected connections

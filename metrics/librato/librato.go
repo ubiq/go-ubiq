@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/ubiq/go-ubiq/metrics"
+	"github.com/ubiq/go-ubiq/v3/metrics"
 )
 
 // a regexp for extracting the unit from time.Duration.String

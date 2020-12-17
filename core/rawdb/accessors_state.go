@@ -17,9 +17,9 @@
 package rawdb
 
 import (
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/ethdb"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/ethdb"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // ReadPreimage retrieves a single preimage of the provided hash.

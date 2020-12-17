@@ -45,12 +45,12 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/p2p"
-	"github.com/ubiq/go-ubiq/p2p/enode"
-	"github.com/ubiq/go-ubiq/p2p/simulations"
-	"github.com/ubiq/go-ubiq/p2p/simulations/adapters"
-	"github.com/ubiq/go-ubiq/rpc"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/p2p"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/p2p/simulations"
+	"github.com/ubiq/go-ubiq/v3/p2p/simulations/adapters"
+	"github.com/ubiq/go-ubiq/v3/rpc"
 	"gopkg.in/urfave/cli.v1"
 )
 

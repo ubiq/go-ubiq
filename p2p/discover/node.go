@@ -24,9 +24,9 @@ import (
 	"net"
 	"time"
 
-	"github.com/ubiq/go-ubiq/common/math"
-	"github.com/ubiq/go-ubiq/crypto"
-	"github.com/ubiq/go-ubiq/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/common/math"
+	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
 )
 
 // node represents a host on the network.

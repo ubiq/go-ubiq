@@ -26,7 +26,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/common/math"
+	"github.com/ubiq/go-ubiq/v3/common/math"
 )
 
 type testEncoder struct {

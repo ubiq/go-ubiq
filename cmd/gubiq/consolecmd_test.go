@@ -27,7 +27,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 const (

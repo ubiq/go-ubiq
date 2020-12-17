@@ -30,8 +30,8 @@ import (
 	"text/template"
 	"unicode"
 
-	"github.com/ubiq/go-ubiq/accounts/abi"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/accounts/abi"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // Lang is a target programming language selector to generate bindings for.

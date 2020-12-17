@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/common"
+	"github.com/ubiq/go-ubiq/v3/common"
 )
 
 // weightedIterator is a iterator with an assigned weight. It is used to prioritise

@@ -25,7 +25,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // ethstatsDockerfile is the Dockerfile required to build an ethstats backend

@@ -23,8 +23,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/core"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/core"
+	"github.com/ubiq/go-ubiq/v3/log"
 	"github.com/olekukonko/tablewriter"
 )
 

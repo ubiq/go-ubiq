@@ -22,9 +22,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ubiq/go-ubiq/common/fdlimit"
-	"github.com/ubiq/go-ubiq/internal/flags"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/common/fdlimit"
+	"github.com/ubiq/go-ubiq/v3/internal/flags"
+	"github.com/ubiq/go-ubiq/v3/log"
 	"gopkg.in/urfave/cli.v1"
 )
 

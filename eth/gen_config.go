@@ -5,13 +5,13 @@ package eth
 import (
 	"time"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/consensus/ubqhash"
-	"github.com/ubiq/go-ubiq/core"
-	"github.com/ubiq/go-ubiq/eth/downloader"
-	"github.com/ubiq/go-ubiq/eth/gasprice"
-	"github.com/ubiq/go-ubiq/miner"
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v3/core"
+	"github.com/ubiq/go-ubiq/v3/eth/downloader"
+	"github.com/ubiq/go-ubiq/v3/eth/gasprice"
+	"github.com/ubiq/go-ubiq/v3/miner"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 // MarshalTOML marshals as TOML.

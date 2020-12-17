@@ -22,9 +22,9 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/ubiq/go-ubiq/p2p"
-	"github.com/ubiq/go-ubiq/p2p/nat"
-	"github.com/ubiq/go-ubiq/rpc"
+	"github.com/ubiq/go-ubiq/v3/p2p"
+	"github.com/ubiq/go-ubiq/v3/p2p/nat"
+	"github.com/ubiq/go-ubiq/v3/rpc"
 )
 
 const (

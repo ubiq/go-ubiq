@@ -22,7 +22,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/ubiq/go-ubiq/p2p"
+	"github.com/ubiq/go-ubiq/v3/p2p"
 )
 
 // TestEthProtocolNegotiation tests whether the test suite

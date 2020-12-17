@@ -25,10 +25,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/core/types"
-	"github.com/ubiq/go-ubiq/internal/testlog"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v3/internal/testlog"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // Tests whether remote HTTP servers are correctly notified of new work.

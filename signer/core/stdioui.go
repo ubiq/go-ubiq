@@ -19,9 +19,9 @@ package core
 import (
 	"context"
 
-	"github.com/ubiq/go-ubiq/internal/ethapi"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/rpc"
+	"github.com/ubiq/go-ubiq/v3/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/rpc"
 )
 
 type StdIOUI struct {

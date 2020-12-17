@@ -21,9 +21,9 @@ import (
 	"testing"
 
 	"github.com/holiman/uint256"
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/core/state"
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/core/state"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 type dummyContractRef struct {

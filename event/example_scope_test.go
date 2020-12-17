@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/event"
+	"github.com/ubiq/go-ubiq/v3/event"
 )
 
 // This example demonstrates how SubscriptionScope can be used to control the lifetime of

@@ -30,8 +30,8 @@ import (
 	"sync/atomic"
 
 	"github.com/rs/cors"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/rpc"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/rpc"
 )
 
 // httpConfig is the JSON-RPC/HTTP configuration.

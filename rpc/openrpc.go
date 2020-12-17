@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	openrpc "github.com/octanolabs/g0penrpc"
-	"github.com/ubiq/go-ubiq/common/hexutil"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/common/hexutil"
+	"github.com/ubiq/go-ubiq/v3/log"
 	"reflect"
 )
 

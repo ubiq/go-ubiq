@@ -19,7 +19,7 @@ package snapshot
 import (
 	"bytes"
 
-	"github.com/ubiq/go-ubiq/common"
+	"github.com/ubiq/go-ubiq/v3/common"
 )
 
 // binaryIterator is a simplistic iterator to step over the accounts or storage

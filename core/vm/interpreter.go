@@ -20,9 +20,9 @@ import (
 	"hash"
 	"sync/atomic"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/common/math"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/common/math"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // Config are the configuration options for the Interpreter

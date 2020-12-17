@@ -23,7 +23,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/p2p/simulations/pipes"
+	"github.com/ubiq/go-ubiq/v3/p2p/simulations/pipes"
 )
 
 func TestTCPPipe(t *testing.T) {

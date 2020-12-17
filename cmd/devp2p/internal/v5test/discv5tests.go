@@ -22,10 +22,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/internal/utesting"
-	"github.com/ubiq/go-ubiq/p2p/discover/v5wire"
-	"github.com/ubiq/go-ubiq/p2p/enode"
-	"github.com/ubiq/go-ubiq/p2p/netutil"
+	"github.com/ubiq/go-ubiq/v3/internal/utesting"
+	"github.com/ubiq/go-ubiq/v3/p2p/discover/v5wire"
+	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v3/p2p/netutil"
 )
 
 // Suite is the discv5 test suite.

@@ -23,11 +23,11 @@ import (
 	"strings"
 
 	"github.com/dop251/goja"
-	"github.com/ubiq/go-ubiq/internal/ethapi"
-	"github.com/ubiq/go-ubiq/log"
-	"github.com/ubiq/go-ubiq/signer/core"
-	"github.com/ubiq/go-ubiq/signer/rules/deps"
-	"github.com/ubiq/go-ubiq/signer/storage"
+	"github.com/ubiq/go-ubiq/v3/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v3/signer/core"
+	"github.com/ubiq/go-ubiq/v3/signer/rules/deps"
+	"github.com/ubiq/go-ubiq/v3/signer/storage"
 )
 
 var (

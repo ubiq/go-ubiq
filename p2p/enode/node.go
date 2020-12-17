@@ -26,8 +26,8 @@ import (
 	"net"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/p2p/enr"
-	"github.com/ubiq/go-ubiq/rlp"
+	"github.com/ubiq/go-ubiq/v3/p2p/enr"
+	"github.com/ubiq/go-ubiq/v3/rlp"
 )
 
 var errMissingPrefix = errors.New("missing 'enr:' prefix for base64-encoded record")

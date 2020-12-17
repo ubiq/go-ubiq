@@ -26,7 +26,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // dashboardContent is the actual dashboard HTML content to serve up when users

@@ -19,7 +19,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/ubiq/go-ubiq/params"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 func TestTransaction(t *testing.T) {

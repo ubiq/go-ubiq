@@ -8,7 +8,7 @@ import (
 
 	jaeger "github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/log"
 	cli "gopkg.in/urfave/cli.v1"
 )
 

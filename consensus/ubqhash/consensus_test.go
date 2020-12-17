@@ -23,12 +23,12 @@ import (
 	// "path/filepath"
 	"testing"
 
-	// "github.com/ubiq/go-ubiq/common/math"
-	// "github.com/ubiq/go-ubiq/core"
-	// "github.com/ubiq/go-ubiq/core/types"
-	// "github.com/ubiq/go-ubiq/core/vm"
-	// "github.com/ubiq/go-ubiq/ethdb"
-	"github.com/ubiq/go-ubiq/params"
+	// "github.com/ubiq/go-ubiq/v3/common/math"
+	// "github.com/ubiq/go-ubiq/v3/core"
+	// "github.com/ubiq/go-ubiq/v3/core/types"
+	// "github.com/ubiq/go-ubiq/v3/core/vm"
+	// "github.com/ubiq/go-ubiq/v3/ethdb"
+	"github.com/ubiq/go-ubiq/v3/params"
 )
 
 // TODO: write new difficulty tests

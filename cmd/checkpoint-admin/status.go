@@ -19,8 +19,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/cmd/utils"
-	"github.com/ubiq/go-ubiq/common"
+	"github.com/ubiq/go-ubiq/v3/cmd/utils"
+	"github.com/ubiq/go-ubiq/v3/common"
 	"gopkg.in/urfave/cli.v1"
 )
 

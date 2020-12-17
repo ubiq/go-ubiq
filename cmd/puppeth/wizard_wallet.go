@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ubiq/go-ubiq/log"
+	"github.com/ubiq/go-ubiq/v3/log"
 )
 
 // deployWallet creates a new web wallet based on some user input.

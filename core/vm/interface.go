@@ -19,8 +19,8 @@ package vm
 import (
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/common"
-	"github.com/ubiq/go-ubiq/core/types"
+	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v3/core/types"
 )
 
 // StateDB is an EVM database for full state querying.
