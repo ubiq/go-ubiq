@@ -1,4 +1,4 @@
-module github.com/ubiq/go-ubiq
+module github.com/ubiq/go-ubiq/v3
 
 go 1.13
 
