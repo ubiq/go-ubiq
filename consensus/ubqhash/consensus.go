@@ -645,10 +645,8 @@ func CalcUncleBlockReward(config *params.ChainConfig, blockHeight *big.Int, uncl
 	return reward
 }
 
-// AccumulateRewards credits the coinbase of the given block with the mining
-// reward. The total reward consists of the static block reward and rewards for
-// included uncles. The coinbase of each uncle block is also rewarded.
-func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
+// GetRewards returns calculated block rewards
+func GetRewards(config *params.ChainConfig, header *types.Header, uncles []*types.Header) (*big.Int, []*big.Int) {
 	// block reward (miner)
 	initialReward, currentReward := CalcBaseBlockReward(config.Ubqhash, header.Number)
 
@@ -658,15 +656,25 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		ufixReward = currentReward
 	}
 
-	for _, uncle := range uncles {
+	uncleRewards := make([]*big.Int, len(uncles))
+	for i, uncle := range uncles {
 		// uncle block miner reward (depth === 1 ? baseBlockReward * 0.5 : 0)
 		uncleReward := CalcUncleBlockReward(config, header.Number, uncle.Number, ufixReward)
-		// update uncle miner balance
-		state.AddBalance(uncle.Coinbase, uncleReward)
+		ur := new(big.Int).Set(uncleReward)
+		uncleRewards[i] = ur
 		// include uncle bonus reward (baseBlockReward/32)
 		uncleReward.Div(ufixReward, big32)
 		currentReward.Add(currentReward, uncleReward)
 	}
-	// update block miner balance
-	state.AddBalance(header.Coinbase, currentReward)
+	return currentReward, uncleRewards
+}
+
+// accumulateRewards credits the coinbase of the given block with the mining
+// reward. The coinbase of each uncle block is also rewarded.
+func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
+	minerReward, uncleRewards := GetRewards(config, header, uncles)
+	for i, uncle := range uncles {
+		state.AddBalance(uncle.Coinbase, uncleRewards[i])
+	}
+	state.AddBalance(header.Coinbase, minerReward)
 }
