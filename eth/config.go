@@ -186,4 +186,11 @@ type Config struct {
 
 	// CheckpointOracle is the configuration for checkpoint oracle.
 	CheckpointOracle *params.CheckpointOracleConfig `toml:",omitempty"`
+
+	// Manual configuration field for ECBP1100 activation number. Used for modifying genesis config via CLI flag.
+	ECBP1100 *big.Int
+
+	// ECBP1100NoDisable overrides
+	// When this value is *true, ECBP100 will not (ever) be disabled; when *false, it will never be enabled.
+	ECBP1100NoDisable *bool `toml:",omitempty"`
 }

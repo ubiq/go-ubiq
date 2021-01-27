@@ -31,17 +31,58 @@ import (
 )
 
 const (
-	forceSyncCycle      = 10 * time.Second // Time interval to force syncs, even if few peers are available
-	defaultMinSyncPeers = 5                // Amount of peers desired to start syncing
-
+	forceSyncCycle             = 10 * time.Second // Time interval to force syncs, even if few peers are available
+	defaultMinSyncPeers        = 5                // Amount of peers desired to start syncing
+	targetTime          uint64 = 88               // Target time for blocks (used by artificial finality)
 	// This is the target size for the packs of transactions sent by txsyncLoop64.
 	// A pack can get larger than this if a single transactions exceeds this size.
 	txsyncPackSize = 100 * 1024
 )
 
+var (
+	// minArtificialFinalityPeers defines the minimum number of peers our node must be connected
+	// to in order to enable artificial finality features.
+	// A minimum number of peer connections mitigates the risk of lower-powered eclipse attacks.
+	minArtificialFinalityPeers = defaultMinSyncPeers
+
+	// artificialFinalitySafetyInterval defines the interval at which the local head is checked for staleness.
+	// If the head is found to be stale across this interval, artificial finality features are disabled.
+	// This prevents an abandoned victim of an eclipse attack from being forever destitute.
+	artificialFinalitySafetyInterval = time.Second * time.Duration(30*targetTime)
+)
+
 type txsync struct {
 	p   *peer
 	txs []*types.Transaction
+}
+
+// artificialFinalitySafetyLoop compares our local head across timer intervals.
+// If it changes, assuming the interval is sufficiently long,
+// it means we're syncing ok: there has been a steady flow of blocks.
+// If it doesn't change, it means that we've stalled syncing for some reason,
+// and should disable the permapoint feature in case that's keeping
+// us on a dead chain.
+func (pm *ProtocolManager) artificialFinalitySafetyLoop() {
+	defer pm.wg.Done()
+
+	t := time.NewTicker(artificialFinalitySafetyInterval)
+	defer t.Stop()
+
+	for {
+		select {
+		case <-t.C:
+			if pm.blockchain.IsArtificialFinalityEnabled() {
+				// Check if your chain has grown stale.
+				// If it has, disable artificial finality, we could be on an attacker's
+				// chain getting starved.
+				if time.Since(time.Unix(int64(pm.blockchain.CurrentHeader().Time), 0)) > artificialFinalitySafetyInterval {
+					pm.blockchain.EnableArtificialFinality(false, "reason", "stale safety interval", "interval", artificialFinalitySafetyInterval)
+				}
+			}
+		case <-pm.quitSync:
+			return
+		}
+	}
 }
 
 // syncTransactions starts sending all currently pending transactions to the given peer.
@@ -248,6 +289,12 @@ func (cs *chainSyncer) nextSyncOp() *chainSyncOp {
 	} else if minPeers > cs.pm.maxPeers {
 		minPeers = cs.pm.maxPeers
 	}
+	if cs.pm.peers.Len() < minArtificialFinalityPeers {
+		if cs.pm.blockchain.IsArtificialFinalityEnabled() {
+			// If artificial finality state is forcefully set (overridden) this will just be a noop.
+			cs.pm.blockchain.EnableArtificialFinality(false, "reason", "low peers", "peers", cs.pm.peers.Len())
+		}
+	}
 	if cs.pm.peers.Len() < minPeers {
 		return nil
 	}
@@ -260,6 +307,12 @@ func (cs *chainSyncer) nextSyncOp() *chainSyncOp {
 	mode, ourTD := cs.modeAndLocalHead()
 	op := peerToSyncOp(mode, peer)
 	if op.td.Cmp(ourTD) <= 0 {
+		// Enable artificial finality if parameters if should.
+		if op.mode == downloader.FullSync &&
+			cs.pm.peers.Len() >= minArtificialFinalityPeers &&
+			!cs.pm.blockchain.IsArtificialFinalityEnabled() {
+			cs.pm.blockchain.EnableArtificialFinality(true, "reason", "synced", "peers", cs.pm.peers.Len())
+		}
 		return nil // We're in sync.
 	}
 	return op

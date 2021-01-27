@@ -657,6 +657,10 @@ var (
 		Usage: "External EVM configuration (default = built-in interpreter)",
 		Value: "",
 	}
+	ECBP1100NoDisableFlag = cli.BoolFlag{
+		Name:  "ecbp1100.nodisable",
+		Usage: "Short-circuit ECBP-1100 (MESS) disable mechanisms; (yields a permanent-once-activated state, deactivating auto-shutoff mechanisms)",
+	}
 )
 
 // MakeDataDir retrieves the currently requested data directory, terminating

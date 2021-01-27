@@ -143,6 +143,7 @@ var (
 		utils.GpoMaxGasPriceFlag,
 		utils.EWASMInterpreterFlag,
 		utils.EVMInterpreterFlag,
+		utils.ECBP1100NoDisableFlag,
 		configFileFlag,
 	}
 

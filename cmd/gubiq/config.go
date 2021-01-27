@@ -152,6 +152,12 @@ func makeConfigNode(ctx *cli.Context) (*node.Node, gubiqConfig) {
 func makeFullNode(ctx *cli.Context) (*node.Node, ethapi.Backend) {
 	stack, cfg := makeConfigNode(ctx)
 
+	if ctx.GlobalIsSet(utils.ECBP1100NoDisableFlag.Name) {
+		if enable := ctx.GlobalBool(utils.ECBP1100NoDisableFlag.Name); enable {
+			cfg.Eth.ECBP1100NoDisable = &enable
+		}
+	}
+
 	backend := utils.RegisterEthService(stack, &cfg.Eth)
 
 	// Configure GraphQL if requested

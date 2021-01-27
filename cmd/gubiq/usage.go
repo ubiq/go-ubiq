@@ -49,6 +49,7 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 			utils.EthStatsURLFlag,
 			utils.IdentityFlag,
 			utils.WhitelistFlag,
+			utils.ECBP1100NoDisableFlag,
 		},
 	},
 	{
