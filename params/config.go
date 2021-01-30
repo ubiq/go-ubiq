@@ -61,7 +61,7 @@ var (
 		ByzantiumBlock:      big.NewInt(1075090), // Andromeda
 		ConstantinopleBlock: big.NewInt(1075090), // Andromeda
 		PetersburgBlock:     big.NewInt(1075090), // Andromeda
-		IstanbulBlock:       big.NewInt(math.MaxInt64),
+		IstanbulBlock:       big.NewInt(1500000),
 		Ubqhash: &UbqhashConfig{
 			DigishieldModBlock: big.NewInt(4088),
 			FluxBlock:          big.NewInt(8000),
