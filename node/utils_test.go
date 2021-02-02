@@ -20,8 +20,8 @@
 package node
 
 import (
-	"github.com/ubiq/go-ubiq/v3/p2p"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5/p2p"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 )
 
 // NoopLifecycle is a trivial implementation of the Service interface.

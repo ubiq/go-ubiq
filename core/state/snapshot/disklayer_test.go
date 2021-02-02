@@ -23,12 +23,12 @@ import (
 	"testing"
 
 	"github.com/VictoriaMetrics/fastcache"
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/core/rawdb"
-	"github.com/ubiq/go-ubiq/v3/ethdb"
-	"github.com/ubiq/go-ubiq/v3/ethdb/leveldb"
-	"github.com/ubiq/go-ubiq/v3/ethdb/memorydb"
-	"github.com/ubiq/go-ubiq/v3/rlp"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/core/rawdb"
+	"github.com/ubiq/go-ubiq/v5/ethdb"
+	"github.com/ubiq/go-ubiq/v5/ethdb/leveldb"
+	"github.com/ubiq/go-ubiq/v5/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v5/rlp"
 )
 
 // reverse reverses the contents of a byte slice. It's used to update random accs

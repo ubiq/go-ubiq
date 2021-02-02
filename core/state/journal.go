@@ -19,7 +19,7 @@ package state
 import (
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v5/common"
 )
 
 // journalEntry is a modification entry in the state change journal that can be

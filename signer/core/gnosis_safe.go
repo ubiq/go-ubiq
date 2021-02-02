@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/common/math"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/common/math"
 )
 
 // GnosisSafeTx is a type to parse the safe-tx returned by the relayer,

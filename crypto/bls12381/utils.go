@@ -20,7 +20,7 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v5/common"
 )
 
 func bigFromHex(hex string) *big.Int {

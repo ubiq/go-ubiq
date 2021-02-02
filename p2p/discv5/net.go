@@ -24,12 +24,12 @@ import (
 	"net"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/mclock"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/log"
-	"github.com/ubiq/go-ubiq/v3/p2p/netutil"
-	"github.com/ubiq/go-ubiq/v3/rlp"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/mclock"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v5/p2p/netutil"
+	"github.com/ubiq/go-ubiq/v5/rlp"
 	"golang.org/x/crypto/sha3"
 )
 

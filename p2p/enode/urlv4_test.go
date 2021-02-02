@@ -24,8 +24,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/p2p/enr"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/p2p/enr"
 )
 
 func init() {

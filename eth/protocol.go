@@ -21,12 +21,12 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/core"
-	"github.com/ubiq/go-ubiq/v3/core/forkid"
-	"github.com/ubiq/go-ubiq/v3/core/types"
-	"github.com/ubiq/go-ubiq/v3/event"
-	"github.com/ubiq/go-ubiq/v3/rlp"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/core"
+	"github.com/ubiq/go-ubiq/v5/core/forkid"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/event"
+	"github.com/ubiq/go-ubiq/v5/rlp"
 )
 
 // Constants to match up protocol versions and messages

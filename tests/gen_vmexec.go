@@ -7,9 +7,9 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/common/math"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/common/math"
 )
 
 var _ = (*vmExecMarshaling)(nil)

@@ -27,17 +27,17 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/common/math"
-	"github.com/ubiq/go-ubiq/v3/core"
-	"github.com/ubiq/go-ubiq/v3/core/rawdb"
-	"github.com/ubiq/go-ubiq/v3/core/types"
-	"github.com/ubiq/go-ubiq/v3/core/vm"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/params"
-	"github.com/ubiq/go-ubiq/v3/rlp"
-	"github.com/ubiq/go-ubiq/v3/tests"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/common/math"
+	"github.com/ubiq/go-ubiq/v5/core"
+	"github.com/ubiq/go-ubiq/v5/core/rawdb"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/core/vm"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/params"
+	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v5/tests"
 )
 
 // To generate a new callTracer test, copy paste the makeTest method below into

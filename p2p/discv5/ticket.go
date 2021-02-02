@@ -24,10 +24,10 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/mclock"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/mclock"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 const (

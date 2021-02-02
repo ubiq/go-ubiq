@@ -25,13 +25,13 @@ import (
 	"sync"
 	"time"
 
-	ethereum "github.com/ubiq/go-ubiq/v3"
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/core/types"
-	"github.com/ubiq/go-ubiq/v3/ethdb"
-	"github.com/ubiq/go-ubiq/v3/event"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	ethereum "github.com/ubiq/go-ubiq/v5"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/ethdb"
+	"github.com/ubiq/go-ubiq/v5/event"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 )
 
 var (

@@ -28,10 +28,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/ethdb"
-	"github.com/ubiq/go-ubiq/v3/p2p"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/ethdb"
+	"github.com/ubiq/go-ubiq/v5/p2p"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 
 	"github.com/stretchr/testify/assert"
 )

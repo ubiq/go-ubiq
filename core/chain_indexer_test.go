@@ -24,9 +24,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/core/rawdb"
-	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/core/rawdb"
+	"github.com/ubiq/go-ubiq/v5/core/types"
 )
 
 // Runs multiple tests with randomized parameters.

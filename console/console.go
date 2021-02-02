@@ -31,11 +31,11 @@ import (
 	"github.com/dop251/goja"
 	"github.com/mattn/go-colorable"
 	"github.com/peterh/liner"
-	"github.com/ubiq/go-ubiq/v3/console/prompt"
-	"github.com/ubiq/go-ubiq/v3/internal/jsre"
-	"github.com/ubiq/go-ubiq/v3/internal/jsre/deps"
-	"github.com/ubiq/go-ubiq/v3/internal/web3ext"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5/console/prompt"
+	"github.com/ubiq/go-ubiq/v5/internal/jsre"
+	"github.com/ubiq/go-ubiq/v5/internal/jsre/deps"
+	"github.com/ubiq/go-ubiq/v5/internal/web3ext"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 )
 
 var (

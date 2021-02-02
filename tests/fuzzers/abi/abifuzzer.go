@@ -23,8 +23,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v3/accounts/abi"
-	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v5/accounts/abi"
+	"github.com/ubiq/go-ubiq/v5/crypto"
 	fuzz "github.com/google/gofuzz"
 )
 

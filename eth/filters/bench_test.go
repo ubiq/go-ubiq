@@ -22,13 +22,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/bitutil"
-	"github.com/ubiq/go-ubiq/v3/core/bloombits"
-	"github.com/ubiq/go-ubiq/v3/core/rawdb"
-	"github.com/ubiq/go-ubiq/v3/core/types"
-	"github.com/ubiq/go-ubiq/v3/ethdb"
-	"github.com/ubiq/go-ubiq/v3/node"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/bitutil"
+	"github.com/ubiq/go-ubiq/v5/core/bloombits"
+	"github.com/ubiq/go-ubiq/v5/core/rawdb"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/ethdb"
+	"github.com/ubiq/go-ubiq/v5/node"
 )
 
 func BenchmarkBloomBits512(b *testing.B) {

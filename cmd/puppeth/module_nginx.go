@@ -24,7 +24,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // nginxDockerfile is theis the Dockerfile required to build an nginx reverse-

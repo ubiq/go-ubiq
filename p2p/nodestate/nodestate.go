@@ -23,13 +23,13 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/ubiq/go-ubiq/v3/common/mclock"
-	"github.com/ubiq/go-ubiq/v3/ethdb"
-	"github.com/ubiq/go-ubiq/v3/log"
-	"github.com/ubiq/go-ubiq/v3/metrics"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
-	"github.com/ubiq/go-ubiq/v3/p2p/enr"
-	"github.com/ubiq/go-ubiq/v3/rlp"
+	"github.com/ubiq/go-ubiq/v5/common/mclock"
+	"github.com/ubiq/go-ubiq/v5/ethdb"
+	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v5/metrics"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/p2p/enr"
+	"github.com/ubiq/go-ubiq/v5/rlp"
 )
 
 var (

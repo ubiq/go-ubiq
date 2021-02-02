@@ -22,17 +22,17 @@ import (
 	"errors"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3"
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/core/rawdb"
-	"github.com/ubiq/go-ubiq/v3/core/state"
-	"github.com/ubiq/go-ubiq/v3/core/types"
-	"github.com/ubiq/go-ubiq/v3/core/vm"
-	"github.com/ubiq/go-ubiq/v3/eth/filters"
-	"github.com/ubiq/go-ubiq/v3/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v3/rlp"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/core/rawdb"
+	"github.com/ubiq/go-ubiq/v5/core/state"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/core/vm"
+	"github.com/ubiq/go-ubiq/v5/eth/filters"
+	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 )
 
 var (

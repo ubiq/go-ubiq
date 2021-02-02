@@ -25,7 +25,7 @@ import (
 	"net"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v5/common"
 )
 
 const (

@@ -21,7 +21,7 @@ package metrics
 import (
 	"syscall"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // getProcessCPUTime retrieves the process' CPU time since program startup.

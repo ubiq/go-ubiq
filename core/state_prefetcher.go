@@ -19,12 +19,12 @@ package core
 import (
 	"sync/atomic"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/consensus"
-	"github.com/ubiq/go-ubiq/v3/core/state"
-	"github.com/ubiq/go-ubiq/v3/core/types"
-	"github.com/ubiq/go-ubiq/v3/core/vm"
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/consensus"
+	"github.com/ubiq/go-ubiq/v5/core/state"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/core/vm"
+	"github.com/ubiq/go-ubiq/v5/params"
 )
 
 // statePrefetcher is a basic Prefetcher, which blindly executes a block on top

@@ -19,8 +19,8 @@ package graphql
 import (
 	"github.com/graph-gophers/graphql-go"
 	"github.com/graph-gophers/graphql-go/relay"
-	"github.com/ubiq/go-ubiq/v3/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v3/node"
+	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v5/node"
 )
 
 // New constructs a new GraphQL service instance.

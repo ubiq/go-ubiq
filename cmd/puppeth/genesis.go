@@ -22,12 +22,12 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	math2 "github.com/ubiq/go-ubiq/v3/common/math"
-	"github.com/ubiq/go-ubiq/v3/core"
-	"github.com/ubiq/go-ubiq/v3/core/types"
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	math2 "github.com/ubiq/go-ubiq/v5/common/math"
+	"github.com/ubiq/go-ubiq/v5/core"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/params"
 )
 
 // Block reward in wei for successfully mining a block

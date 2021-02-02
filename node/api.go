@@ -21,12 +21,12 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/internal/debug"
-	"github.com/ubiq/go-ubiq/v3/p2p"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/internal/debug"
+	"github.com/ubiq/go-ubiq/v5/p2p"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 )
 
 // apis returns the collection of built-in RPC APIs.

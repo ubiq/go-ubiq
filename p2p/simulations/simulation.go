@@ -20,7 +20,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
 )
 
 // Simulation provides a framework for running actions in a simulated network

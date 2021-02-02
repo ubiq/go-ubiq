@@ -25,7 +25,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 	"github.com/stretchr/testify/assert"
 )
 

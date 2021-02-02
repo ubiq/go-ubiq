@@ -17,7 +17,7 @@
 package vm
 
 import (
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/params"
 )
 
 type (

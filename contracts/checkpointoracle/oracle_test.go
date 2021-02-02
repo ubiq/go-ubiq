@@ -27,13 +27,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/accounts/abi/bind"
-	"github.com/ubiq/go-ubiq/v3/accounts/abi/bind/backends"
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/contracts/checkpointoracle/contract"
-	"github.com/ubiq/go-ubiq/v3/core"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/accounts/abi/bind"
+	"github.com/ubiq/go-ubiq/v5/accounts/abi/bind/backends"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/contracts/checkpointoracle/contract"
+	"github.com/ubiq/go-ubiq/v5/core"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/params"
 )
 
 var (

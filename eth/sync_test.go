@@ -21,9 +21,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/eth/downloader"
-	"github.com/ubiq/go-ubiq/v3/p2p"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/eth/downloader"
+	"github.com/ubiq/go-ubiq/v5/p2p"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
 )
 
 func TestFastSyncDisabling63(t *testing.T) { testFastSyncDisabling(t, 63) }

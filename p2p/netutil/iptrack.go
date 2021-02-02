@@ -19,7 +19,7 @@ package netutil
 import (
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/common/mclock"
+	"github.com/ubiq/go-ubiq/v5/common/mclock"
 )
 
 // IPTracker predicts the external endpoint, i.e. IP address and port, of the local host

@@ -22,9 +22,9 @@ import (
 	"net"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/p2p/discover/v4wire"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/p2p/discover/v4wire"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
 )
 
 const waitTime = 300 * time.Millisecond

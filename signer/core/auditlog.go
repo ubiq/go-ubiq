@@ -20,10 +20,10 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 type AuditLogger struct {

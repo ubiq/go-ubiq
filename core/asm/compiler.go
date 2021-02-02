@@ -22,8 +22,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v3/common/math"
-	"github.com/ubiq/go-ubiq/v3/core/vm"
+	"github.com/ubiq/go-ubiq/v5/common/math"
+	"github.com/ubiq/go-ubiq/v5/core/vm"
 )
 
 // Compiler contains information about the parsed source

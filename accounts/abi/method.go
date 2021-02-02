@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v3/crypto"
+	"github.com/ubiq/go-ubiq/v5/crypto"
 )
 
 // FunctionType represents different types of functions a contract might have.

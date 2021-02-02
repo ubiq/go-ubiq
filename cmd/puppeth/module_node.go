@@ -26,8 +26,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // nodeDockerfile is the Dockerfile required to run an Ethereum node.

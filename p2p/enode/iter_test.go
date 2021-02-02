@@ -23,7 +23,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/p2p/enr"
+	"github.com/ubiq/go-ubiq/v5/p2p/enr"
 )
 
 func TestReadNodes(t *testing.T) {

@@ -20,9 +20,9 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/core/rawdb"
-	"github.com/ubiq/go-ubiq/v3/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/core/rawdb"
+	"github.com/ubiq/go-ubiq/v5/ethdb/memorydb"
 )
 
 // Tests that given a database with random data content, all parts of a snapshot

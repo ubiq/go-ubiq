@@ -16,7 +16,7 @@
 
 package core
 
-import "github.com/ubiq/go-ubiq/v3/common"
+import "github.com/ubiq/go-ubiq/v5/common"
 
 // BadHashes represent a set of manually tracked bad hashes (usually hard forks)
 var BadHashes = map[common.Hash]bool{

@@ -21,7 +21,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/ubiq/go-ubiq/v3/core/types"
+	"github.com/ubiq/go-ubiq/v5/core/types"
 )
 
 // resultStore implements a structure for maintaining fetchResults, tracking their

@@ -20,7 +20,7 @@ package utils
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v3/console/prompt"
+	"github.com/ubiq/go-ubiq/v5/console/prompt"
 )
 
 // GetPassPhrase displays the given text(prompt) to the user and requests some textual

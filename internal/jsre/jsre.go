@@ -27,7 +27,7 @@ import (
 	"time"
 
 	"github.com/dop251/goja"
-	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v5/common"
 )
 
 // JSRE is a JS runtime environment embedding the goja interpreter.

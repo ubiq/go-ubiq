@@ -18,8 +18,8 @@ package vm
 
 import (
 	"github.com/holiman/uint256"
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/math"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/math"
 )
 
 // calcMemSize64 calculates the required memory size, and returns

@@ -24,14 +24,14 @@ import (
 	"net"
 	"os"
 
-	"github.com/ubiq/go-ubiq/v3/cmd/utils"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/log"
-	"github.com/ubiq/go-ubiq/v3/p2p/discover"
-	"github.com/ubiq/go-ubiq/v3/p2p/discv5"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
-	"github.com/ubiq/go-ubiq/v3/p2p/nat"
-	"github.com/ubiq/go-ubiq/v3/p2p/netutil"
+	"github.com/ubiq/go-ubiq/v5/cmd/utils"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v5/p2p/discover"
+	"github.com/ubiq/go-ubiq/v5/p2p/discv5"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/p2p/nat"
+	"github.com/ubiq/go-ubiq/v5/p2p/netutil"
 )
 
 func main() {

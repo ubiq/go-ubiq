@@ -20,8 +20,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v3/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // deployFaucet queries the user for various input on deploying a faucet, after

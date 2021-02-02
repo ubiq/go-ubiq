@@ -23,14 +23,14 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3"
-	"github.com/ubiq/go-ubiq/v3/accounts/abi"
-	"github.com/ubiq/go-ubiq/v3/accounts/abi/bind"
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/core/types"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/rlp"
+	"github.com/ubiq/go-ubiq/v5"
+	"github.com/ubiq/go-ubiq/v5/accounts/abi"
+	"github.com/ubiq/go-ubiq/v5/accounts/abi/bind"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/rlp"
 )
 
 type mockCaller struct {

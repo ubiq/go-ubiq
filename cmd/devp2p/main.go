@@ -22,9 +22,9 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/v3/internal/debug"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/internal/debug"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/params"
 	"gopkg.in/urfave/cli.v1"
 )
 

@@ -22,7 +22,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v3/metrics"
+	"github.com/ubiq/go-ubiq/v5/metrics"
 )
 
 var (

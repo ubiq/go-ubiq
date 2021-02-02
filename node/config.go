@@ -26,17 +26,17 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v3/accounts"
-	"github.com/ubiq/go-ubiq/v3/accounts/external"
-	"github.com/ubiq/go-ubiq/v3/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v3/accounts/scwallet"
-	"github.com/ubiq/go-ubiq/v3/accounts/usbwallet"
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/log"
-	"github.com/ubiq/go-ubiq/v3/p2p"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5/accounts"
+	"github.com/ubiq/go-ubiq/v5/accounts/external"
+	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v5/accounts/scwallet"
+	"github.com/ubiq/go-ubiq/v5/accounts/usbwallet"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v5/p2p"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 )
 
 const (

@@ -19,9 +19,9 @@ package vm
 import (
 	"errors"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/common/math"
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/common/math"
+	"github.com/ubiq/go-ubiq/v5/params"
 )
 
 const (

@@ -34,7 +34,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // Handler is the global debugging handler.

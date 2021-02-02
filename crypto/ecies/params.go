@@ -42,7 +42,7 @@ import (
 	"fmt"
 	"hash"
 
-	ethcrypto "github.com/ubiq/go-ubiq/v3/crypto"
+	ethcrypto "github.com/ubiq/go-ubiq/v5/crypto"
 )
 
 var (

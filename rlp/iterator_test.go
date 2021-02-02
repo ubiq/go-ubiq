@@ -19,7 +19,7 @@ package rlp
 import (
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
 )
 
 // TestIterator tests some basic things about the ListIterator. A more

@@ -24,9 +24,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/log"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
-	"github.com/ubiq/go-ubiq/v3/p2p/simulations/adapters"
+	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/p2p/simulations/adapters"
 )
 
 //a map of mocker names to its function

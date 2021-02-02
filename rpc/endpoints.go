@@ -19,7 +19,7 @@ package rpc
 import (
 	"net"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // StartIPCEndpoint starts an IPC endpoint.

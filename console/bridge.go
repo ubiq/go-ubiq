@@ -25,12 +25,12 @@ import (
 	"time"
 
 	"github.com/dop251/goja"
-	"github.com/ubiq/go-ubiq/v3/accounts/scwallet"
-	"github.com/ubiq/go-ubiq/v3/accounts/usbwallet"
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
-	"github.com/ubiq/go-ubiq/v3/console/prompt"
-	"github.com/ubiq/go-ubiq/v3/internal/jsre"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5/accounts/scwallet"
+	"github.com/ubiq/go-ubiq/v5/accounts/usbwallet"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/console/prompt"
+	"github.com/ubiq/go-ubiq/v5/internal/jsre"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 )
 
 // bridge is a collection of JavaScript utility methods to bride the .js runtime

@@ -24,13 +24,13 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/consensus/ubqhash"
-	"github.com/ubiq/go-ubiq/v3/core"
-	"github.com/ubiq/go-ubiq/v3/eth/downloader"
-	"github.com/ubiq/go-ubiq/v3/eth/gasprice"
-	"github.com/ubiq/go-ubiq/v3/miner"
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v5/core"
+	"github.com/ubiq/go-ubiq/v5/eth/downloader"
+	"github.com/ubiq/go-ubiq/v5/eth/gasprice"
+	"github.com/ubiq/go-ubiq/v5/miner"
+	"github.com/ubiq/go-ubiq/v5/params"
 )
 
 // DefaultFullGPOConfig contains default gasprice oracle settings for full node.

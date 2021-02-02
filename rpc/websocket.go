@@ -29,7 +29,7 @@ import (
 
 	mapset "github.com/deckarep/golang-set"
 	"github.com/gorilla/websocket"
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 const (

@@ -19,7 +19,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // deployDashboard queries the user for various input on deploying a web-service

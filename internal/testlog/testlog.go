@@ -21,7 +21,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // Handler returns a log handler which logs to the unit test log of t.

@@ -23,9 +23,9 @@ import (
 	"time"
 
 	"github.com/hashicorp/golang-lru/simplelru"
-	"github.com/ubiq/go-ubiq/v3/common/mclock"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/p2p/enode"
+	"github.com/ubiq/go-ubiq/v5/common/mclock"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/p2p/enode"
 )
 
 const handshakeTimeout = time.Second

@@ -21,7 +21,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/common/hexutil"
+	"github.com/ubiq/go-ubiq/v5/common/hexutil"
 )
 
 // Tests that data bitset encoding and decoding works and is bijective.

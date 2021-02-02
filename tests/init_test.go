@@ -31,7 +31,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/params"
 )
 
 // Command line flags to configure the interpreters.

@@ -21,9 +21,9 @@ import (
 	"encoding/binary"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/ethdb/memorydb"
-	"github.com/ubiq/go-ubiq/v3/trie"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v5/trie"
 )
 
 // randTest performs random trie operations.

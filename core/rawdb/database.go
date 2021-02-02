@@ -24,11 +24,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/ethdb"
-	"github.com/ubiq/go-ubiq/v3/ethdb/leveldb"
-	"github.com/ubiq/go-ubiq/v3/ethdb/memorydb"
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/ethdb"
+	"github.com/ubiq/go-ubiq/v5/ethdb/leveldb"
+	"github.com/ubiq/go-ubiq/v5/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/olekukonko/tablewriter"
 )
 

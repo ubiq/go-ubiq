@@ -26,7 +26,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // makeWizard creates and returns a new puppeth wizard.

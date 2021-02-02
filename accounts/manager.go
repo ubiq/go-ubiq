@@ -21,8 +21,8 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/event"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/event"
 )
 
 // Config contains the settings of the global account manager.

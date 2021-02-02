@@ -26,7 +26,7 @@ import (
 	"sync"
 	"unicode"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 var (

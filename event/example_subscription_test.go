@@ -19,7 +19,7 @@ package event_test
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v3/event"
+	"github.com/ubiq/go-ubiq/v5/event"
 )
 
 func ExampleNewSubscription() {

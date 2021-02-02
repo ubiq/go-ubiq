@@ -20,11 +20,11 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/ubiq/go-ubiq/v3/cmd/devp2p/internal/ethtest"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/p2p"
-	"github.com/ubiq/go-ubiq/v3/p2p/rlpx"
-	"github.com/ubiq/go-ubiq/v3/rlp"
+	"github.com/ubiq/go-ubiq/v5/cmd/devp2p/internal/ethtest"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/p2p"
+	"github.com/ubiq/go-ubiq/v5/p2p/rlpx"
+	"github.com/ubiq/go-ubiq/v5/rlp"
 	"gopkg.in/urfave/cli.v1"
 )
 

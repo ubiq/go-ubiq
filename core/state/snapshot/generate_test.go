@@ -21,10 +21,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/ethdb/memorydb"
-	"github.com/ubiq/go-ubiq/v3/rlp"
-	"github.com/ubiq/go-ubiq/v3/trie"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v5/trie"
 )
 
 // Tests that snapshot generation errors out correctly in case of a missing trie

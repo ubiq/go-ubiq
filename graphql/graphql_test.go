@@ -23,8 +23,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/eth"
-	"github.com/ubiq/go-ubiq/v3/node"
+	"github.com/ubiq/go-ubiq/v5/eth"
+	"github.com/ubiq/go-ubiq/v5/node"
 	"github.com/stretchr/testify/assert"
 )
 

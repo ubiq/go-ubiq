@@ -19,7 +19,7 @@
 package metrics
 
 import (
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/shirou/gopsutil/cpu"
 )
 

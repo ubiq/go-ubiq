@@ -19,7 +19,7 @@ package abi
 import (
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v5/common"
 )
 
 type packUnpackTest struct {

@@ -17,8 +17,8 @@
 package types
 
 import (
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/rlp"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/rlp"
 )
 
 type DerivableList interface {

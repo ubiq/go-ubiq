@@ -23,10 +23,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v3/cmd/utils"
-	"github.com/ubiq/go-ubiq/v3/consensus/ubqhash"
-	"github.com/ubiq/go-ubiq/v3/eth"
-	"github.com/ubiq/go-ubiq/v3/params"
+	"github.com/ubiq/go-ubiq/v5/cmd/utils"
+	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v5/eth"
+	"github.com/ubiq/go-ubiq/v5/params"
 	"gopkg.in/urfave/cli.v1"
 )
 

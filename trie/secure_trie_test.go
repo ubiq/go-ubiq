@@ -22,9 +22,9 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v3/common"
-	"github.com/ubiq/go-ubiq/v3/crypto"
-	"github.com/ubiq/go-ubiq/v3/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/ethdb/memorydb"
 )
 
 func newEmptySecure() *SecureTrie {

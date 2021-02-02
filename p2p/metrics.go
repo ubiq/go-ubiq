@@ -21,7 +21,7 @@ package p2p
 import (
 	"net"
 
-	"github.com/ubiq/go-ubiq/v3/metrics"
+	"github.com/ubiq/go-ubiq/v5/metrics"
 )
 
 const (

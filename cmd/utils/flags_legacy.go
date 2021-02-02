@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v3/eth"
-	"github.com/ubiq/go-ubiq/v3/node"
+	"github.com/ubiq/go-ubiq/v5/eth"
+	"github.com/ubiq/go-ubiq/v5/node"
 	"gopkg.in/urfave/cli.v1"
 )
 

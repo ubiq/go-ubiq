@@ -24,10 +24,10 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/ubiq/go-ubiq/v3/cmd/utils"
-	"github.com/ubiq/go-ubiq/v3/console"
-	"github.com/ubiq/go-ubiq/v3/node"
-	"github.com/ubiq/go-ubiq/v3/rpc"
+	"github.com/ubiq/go-ubiq/v5/cmd/utils"
+	"github.com/ubiq/go-ubiq/v5/console"
+	"github.com/ubiq/go-ubiq/v5/node"
+	"github.com/ubiq/go-ubiq/v5/rpc"
 	"gopkg.in/urfave/cli.v1"
 )
 

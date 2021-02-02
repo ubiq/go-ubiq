@@ -21,7 +21,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/ubiq/go-ubiq/v3/eth/tracers/internal/tracers"
+	"github.com/ubiq/go-ubiq/v5/eth/tracers/internal/tracers"
 )
 
 // all contains all the built in JavaScript tracers by name.

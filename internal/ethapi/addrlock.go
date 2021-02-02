@@ -19,7 +19,7 @@ package ethapi
 import (
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v3/common"
+	"github.com/ubiq/go-ubiq/v5/common"
 )
 
 type AddrLocker struct {

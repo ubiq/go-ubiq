@@ -25,7 +25,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // handler handles JSON-RPC messages. There is one handler per connection. Note that

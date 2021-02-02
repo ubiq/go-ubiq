@@ -24,9 +24,9 @@ import (
 	"time"
 
 	"github.com/karalabe/usb"
-	"github.com/ubiq/go-ubiq/v3/accounts"
-	"github.com/ubiq/go-ubiq/v3/event"
-	"github.com/ubiq/go-ubiq/v3/log"
+	"github.com/ubiq/go-ubiq/v5/accounts"
+	"github.com/ubiq/go-ubiq/v5/event"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 // LedgerScheme is the protocol scheme prefixing account and wallet URLs.
