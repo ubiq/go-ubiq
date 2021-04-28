@@ -40,7 +40,6 @@ import (
 	"github.com/ubiq/go-ubiq/v5/eth/downloader"
 	ethproto "github.com/ubiq/go-ubiq/v5/eth/protocols/eth"
 	"github.com/ubiq/go-ubiq/v5/event"
-	"github.com/ubiq/go-ubiq/v5/les"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/miner"
 	"github.com/ubiq/go-ubiq/v5/node"
@@ -450,7 +449,6 @@ func (s *Service) login(conn *connWrapper) error {
 		protocols = append(protocols, fmt.Sprintf("%s/%d", proto.Name, proto.Version))
 	}
 
-	info := infos.Protocols["eth"]
 	network := fmt.Sprintf("%d", info.(*ethproto.NodeInfo).Network)
 
 	auth := &authMsg{

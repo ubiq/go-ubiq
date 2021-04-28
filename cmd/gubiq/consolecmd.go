@@ -18,7 +18,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 	"strings"
 
@@ -120,13 +119,11 @@ func remoteConsole(ctx *cli.Context) error {
 		if ctx.GlobalIsSet(utils.DataDirFlag.Name) {
 			path = ctx.GlobalString(utils.DataDirFlag.Name)
 		}
-		if path != "" { // TODO - iquidus
-			} else if ctx.GlobalBool(utils.RinkebyFlag.Name) {
+		if path != "" {
+			if ctx.GlobalBool(utils.RinkebyFlag.Name) {
 				path = filepath.Join(path, "rinkeby")
 			} else if ctx.GlobalBool(utils.GoerliFlag.Name) {
 				path = filepath.Join(path, "goerli")
-			} else if ctx.GlobalBool(utils.YoloV3Flag.Name) {
-				path = filepath.Join(path, "yolo-v3")
 			}
 		}
 		endpoint = fmt.Sprintf("%s/gubiq.ipc", path)

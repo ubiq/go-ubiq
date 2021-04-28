@@ -28,7 +28,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/consensus"
 	"github.com/ubiq/go-ubiq/v5/consensus/clique"
-	"github.com/ubiq/go-ubiq/v5/consensus/ethash"
+	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/eth/downloader"
 	"github.com/ubiq/go-ubiq/v5/eth/gasprice"
@@ -204,21 +204,21 @@ type Config struct {
 }
 
 // CreateConsensusEngine creates a consensus engine for the given chain configuration.
-func CreateConsensusEngine(stack *node.Node, chainConfig *params.ChainConfig, config *ethash.Config, notify []string, noverify bool, db ethdb.Database) consensus.Engine {
+func CreateConsensusEngine(stack *node.Node, chainConfig *params.ChainConfig, config *ubqhash.Config, notify []string, noverify bool, db ethdb.Database) consensus.Engine {
 	// If proof-of-authority is requested, set it up
 	if chainConfig.Clique != nil {
 		return clique.New(chainConfig.Clique, db)
 	}
 	// Otherwise assume proof-of-work
 	switch config.PowMode {
-	case ethash.ModeFake:
-		log.Warn("Ethash used in fake mode")
-	case ethash.ModeTest:
-		log.Warn("Ethash used in test mode")
-	case ethash.ModeShared:
-		log.Warn("Ethash used in shared mode")
+	case ubqhash.ModeFake:
+		log.Warn("Ubqhash used in fake mode")
+	case ubqhash.ModeTest:
+		log.Warn("Ubqhash used in test mode")
+	case ubqhash.ModeShared:
+		log.Warn("Ubqhash used in shared mode")
 	}
-	engine := ethash.New(ethash.Config{
+	engine := ubqhash.New(ubqhash.Config{
 		PowMode:          config.PowMode,
 		CacheDir:         stack.ResolvePath(config.CacheDir),
 		CachesInMem:      config.CachesInMem,

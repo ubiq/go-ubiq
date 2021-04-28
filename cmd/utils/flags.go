@@ -41,7 +41,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/common/fdlimit"
 	"github.com/ubiq/go-ubiq/v5/consensus"
 	"github.com/ubiq/go-ubiq/v5/consensus/clique"
-	"github.com/ubiq/go-ubiq/v5/consensus/ethash"
+	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
 	"github.com/ubiq/go-ubiq/v5/core/vm"
@@ -50,13 +50,11 @@ import (
 	"github.com/ubiq/go-ubiq/v5/eth/downloader"
 	"github.com/ubiq/go-ubiq/v5/eth/ethconfig"
 	"github.com/ubiq/go-ubiq/v5/eth/gasprice"
-	"github.com/ubiq/go-ubiq/v5/eth/tracers"
 	"github.com/ubiq/go-ubiq/v5/ethdb"
 	"github.com/ubiq/go-ubiq/v5/ethstats"
 	"github.com/ubiq/go-ubiq/v5/graphql"
 	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
 	"github.com/ubiq/go-ubiq/v5/internal/flags"
-	"github.com/ubiq/go-ubiq/v5/les"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/metrics"
 	"github.com/ubiq/go-ubiq/v5/metrics/exp"
@@ -237,12 +235,12 @@ var (
 	UbqhashCachesInMemoryFlag = cli.IntFlag{
 		Name:  "ubqhash.cachesinmem",
 		Usage: "Number of recent ubqhash caches to keep in memory (16MB each)",
-		Value: eth.DefaultConfig.Ubqhash.CachesInMem,
+		Value: ethconfig.Defaults.Ubqhash.CachesInMem,
 	}
 	UbqhashCachesOnDiskFlag = cli.IntFlag{
 		Name:  "ubqhash.cachesondisk",
 		Usage: "Number of recent ubqhash caches to keep on disk (16MB each)",
-		Value: eth.DefaultConfig.Ubqhash.CachesOnDisk,
+		Value: ethconfig.Defaults.Ubqhash.CachesOnDisk,
 	}
 	UbqhashCachesLockMmapFlag = cli.BoolFlag{
 		Name:  "ubqhash.cacheslockmmap",
@@ -251,21 +249,21 @@ var (
 	UbqhashDatasetDirFlag = DirectoryFlag{
 		Name:  "ubqhash.dagdir",
 		Usage: "Directory to store the ubqhash mining DAGs",
-		Value: DirectoryString(eth.DefaultConfig.Ubqhash.DatasetDir),
+		Value: DirectoryString(ethconfig.Defaults.Ubqhash.DatasetDir),
 	}
 	UbqhashDatasetsInMemoryFlag = cli.IntFlag{
 		Name:  "ubqhash.dagsinmem",
 		Usage: "Number of recent ubqhash mining DAGs to keep in memory (1+GB each)",
-		Value: eth.DefaultConfig.Ubqhash.DatasetsInMem,
+		Value: ethconfig.Defaults.Ubqhash.DatasetsInMem,
 	}
 	UbqhashDatasetsOnDiskFlag = cli.IntFlag{
 		Name:  "ubqhash.dagsondisk",
 		Usage: "Number of recent ubqhash mining DAGs to keep on disk (1+GB each)",
-		Value: eth.DefaultConfig.Ubqhash.DatasetsOnDisk,
+		Value: ethconfig.Defaults.Ubqhash.DatasetsOnDisk,
 	}
 	UbqhashDatasetsLockMmapFlag = cli.BoolFlag{
 		Name:  "ubqhash.dagslockmmap",
-		Usage: "Lock memory maps for recent ethash mining DAGs",
+		Usage: "Lock memory maps for recent ubqhash mining DAGs",
 	}
 	// Transaction pool settings
 	TxPoolLocalsFlag = cli.StringFlag{
@@ -946,9 +944,9 @@ func setIPC(ctx *cli.Context, cfg *node.Config) {
 	}
 }
 
-// makeDatabaseHandles raises out the number of allowed file handles per process
-// for Gubiq and returns half of the allowance to assign to the database.
-func makeDatabaseHandles() int {
+// MakeDatabaseHandles raises out the number of allowed file handles per process
+// for Geth and returns half of the allowance to assign to the database.
+func MakeDatabaseHandles() int {
 	limit, err := fdlimit.Maximum()
 	if err != nil {
 		Fatalf("Failed to retrieve file descriptor allowance: %v", err)
@@ -1645,7 +1643,7 @@ func MakeChain(ctx *cli.Context, stack *node.Node) (chain *core.BlockChain, chai
 		engine = ubqhash.NewFaker()
 		if !ctx.GlobalBool(FakePoWFlag.Name) {
 			engine = ubqhash.New(ubqhash.Config{
-				CacheDir:         stack.ResolvePath(ethconfig.Defaults.Ethash.CacheDir),
+				CacheDir:         stack.ResolvePath(ethconfig.Defaults.Ubqhash.CacheDir),
 				CachesInMem:      ethconfig.Defaults.Ubqhash.CachesInMem,
 				CachesOnDisk:     ethconfig.Defaults.Ubqhash.CachesOnDisk,
 				CachesLockMmap:   ethconfig.Defaults.Ubqhash.CachesLockMmap,

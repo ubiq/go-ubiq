@@ -32,7 +32,6 @@ import (
 	"github.com/ubiq/go-ubiq/v5/crypto"
 	"github.com/ubiq/go-ubiq/v5/ethdb"
 	"github.com/ubiq/go-ubiq/v5/event"
-	"github.com/ubiq/go-ubiq/v5/light"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/rlp"
 	"github.com/ubiq/go-ubiq/v5/trie"
@@ -128,7 +127,7 @@ type accountResponse struct {
 	trie  *trie.Trie          // Reconstructed trie to reject incomplete account paths
 
 	bounds   map[common.Hash]struct{} // Boundary nodes to avoid persisting incomplete accounts
-	overflow *light.NodeSet           // Overflow nodes to avoid persisting across chunk boundaries
+	overflow *NodeSet                 // Overflow nodes to avoid persisting across chunk boundaries
 
 	cont bool // Whether the account range has a continuation
 }
@@ -206,7 +205,7 @@ type storageResponse struct {
 
 	// Fields relevant for the last account only
 	bounds   map[common.Hash]struct{} // Boundary nodes to avoid persisting (incomplete)
-	overflow *light.NodeSet           // Overflow nodes to avoid persisting across chunk boundaries
+	overflow *NodeSet                 // Overflow nodes to avoid persisting across chunk boundaries
 	cont     bool                     // Whether the last storage range has a continuation
 }
 
@@ -1932,7 +1931,7 @@ func (s *Syncer) forwardAccountTask(task *accountTask) {
 	// node is incomplete if we haven't yet filled it (sync was interrupted), or
 	// if we filled it in multiple chunks (storage trie), in which case the few
 	// nodes on the chunk boundaries are missing.
-	incompletes := light.NewNodeSet()
+	incompletes := NewNodeSet()
 	for i := range res.accounts {
 		// If the filling was interrupted, mark everything after as incomplete
 		if task.needCode[i] || task.needState[i] {
@@ -2066,7 +2065,7 @@ func (s *Syncer) OnAccounts(peer SyncPeer, id uint64, hashes []common.Hash, acco
 	for i, key := range hashes {
 		keys[i] = common.CopyBytes(key[:])
 	}
-	nodes := make(light.NodeList, len(proof))
+	nodes := make(NodeList, len(proof))
 	for i, node := range proof {
 		nodes[i] = node
 	}
@@ -2107,7 +2106,7 @@ func (s *Syncer) OnAccounts(peer SyncPeer, id uint64, hashes []common.Hash, acco
 		nodes:    db,
 		trie:     tr,
 		bounds:   bounds,
-		overflow: light.NewNodeSet(),
+		overflow: NewNodeSet(),
 		cont:     cont,
 	}
 	select {
@@ -2318,7 +2317,7 @@ func (s *Syncer) OnStorage(peer SyncPeer, id uint64, hashes [][]common.Hash, slo
 		for j, key := range hashes[i] {
 			keys[j] = common.CopyBytes(key[:])
 		}
-		nodes := make(light.NodeList, 0, len(proof))
+		nodes := make(NodeList, 0, len(proof))
 		if i == len(hashes)-1 {
 			for _, node := range proof {
 				nodes = append(nodes, node)
@@ -2371,7 +2370,7 @@ func (s *Syncer) OnStorage(peer SyncPeer, id uint64, hashes [][]common.Hash, slo
 		nodes:    dbs,
 		tries:    tries,
 		bounds:   bounds,
-		overflow: light.NewNodeSet(),
+		overflow: NewNodeSet(),
 		cont:     cont,
 	}
 	select {

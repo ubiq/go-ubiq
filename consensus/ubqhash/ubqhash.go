@@ -63,7 +63,7 @@ func init() {
 		CachesInMem:   3,
 		DatasetsInMem: 1,
 	}
-	sharedEthash = New(sharedConfig, nil, false)
+	sharedUbqhash = New(sharedConfig, nil, false)
 }
 
 // isLittleEndian returns whether the local system is running in little or big
@@ -479,7 +479,7 @@ func New(config Config, notify []string, noverify bool) *Ubqhash {
 		ubqhash.shared = sharedUbqhash
 	}
 	ubqhash.remote = startRemoteSealer(ubqhash, notify, noverify)
-	return ethash
+	return ubqhash
 }
 
 // NewTester creates a small sized ubqhash PoW scheme useful only for testing
@@ -544,7 +544,7 @@ func NewShared() *Ubqhash {
 }
 
 // Close closes the exit channel to notify all backend threads exiting.
-func (ethash *Ubqhash) Close() error {
+func (ubqhash *Ubqhash) Close() error {
 	ubqhash.closeOnce.Do(func() {
 		// Short circuit if the exit channel is not allocated.
 		if ubqhash.remote == nil {

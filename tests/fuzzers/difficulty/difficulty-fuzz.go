@@ -23,7 +23,6 @@ import (
 	"io"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v5/consensus/ethash"
 	"github.com/ubiq/go-ubiq/v5/core/types"
 )
 

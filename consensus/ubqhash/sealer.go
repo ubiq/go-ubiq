@@ -361,7 +361,7 @@ func (s *remoteSealer) notifyWork() {
 	// Encode the JSON payload of the notification. When NotifyFull is set,
 	// this is the complete block header, otherwise it is a JSON array.
 	var blob []byte
-	if s.ethash.config.NotifyFull {
+	if s.ubqhash.config.NotifyFull {
 		blob, _ = json.Marshal(s.currentBlock.Header())
 	} else {
 		blob, _ = json.Marshal(work)

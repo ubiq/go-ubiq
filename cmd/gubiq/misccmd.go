@@ -24,7 +24,7 @@ import (
 	"strings"
 
 	"github.com/ubiq/go-ubiq/v5/cmd/utils"
-	"github.com/ubiq/go-ubiq/v5/consensus/ethash"
+	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v5/params"
 	"gopkg.in/urfave/cli.v1"
 )

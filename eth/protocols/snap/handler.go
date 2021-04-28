@@ -24,7 +24,6 @@ import (
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/state"
-	"github.com/ubiq/go-ubiq/v5/light"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/metrics"
 	"github.com/ubiq/go-ubiq/v5/p2p"
@@ -193,7 +192,7 @@ func handleMessage(backend Backend, peer *Peer) error {
 		it.Release()
 
 		// Generate the Merkle proofs for the first and last account
-		proof := light.NewNodeSet()
+		proof := NewNodeSet()
 		if err := tr.Prove(req.Origin[:], 0, proof); err != nil {
 			log.Warn("Failed to prove account range", "origin", req.Origin, "err", err)
 			return p2p.Send(peer.rw, AccountRangeMsg, &AccountRangePacket{ID: req.ID})
@@ -319,7 +318,7 @@ func handleMessage(backend Backend, peer *Peer) error {
 				if err != nil {
 					return p2p.Send(peer.rw, StorageRangesMsg, &StorageRangesPacket{ID: req.ID})
 				}
-				proof := light.NewNodeSet()
+				proof := NewNodeSet()
 				if err := stTrie.Prove(origin[:], 0, proof); err != nil {
 					log.Warn("Failed to prove storage range", "origin", req.Origin, "err", err)
 					return p2p.Send(peer.rw, StorageRangesMsg, &StorageRangesPacket{ID: req.ID})

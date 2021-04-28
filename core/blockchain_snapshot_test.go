@@ -28,8 +28,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/ethereum/go-ethereum/consensus/ethash"
 	"github.com/ubiq/go-ubiq/v5/consensus"
-	"github.com/ubiq/go-ubiq/v5/consensus/ethash"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
 	"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/core/vm"

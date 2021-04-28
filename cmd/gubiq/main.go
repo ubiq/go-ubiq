@@ -127,7 +127,6 @@ var (
 		utils.DeveloperPeriodFlag,
 		utils.RinkebyFlag,
 		utils.GoerliFlag,
-		utils.YoloV3Flag,
 		utils.VMEnableDebugFlag,
 		utils.NetworkIdFlag,
 		utils.EthStatsURLFlag,
@@ -263,9 +262,6 @@ func prepare(ctx *cli.Context) {
 
 	case ctx.GlobalIsSet(utils.GoerliFlag.Name):
 		log.Info("Starting Gubiq on Görli testnet...")
-
-	case ctx.GlobalIsSet(utils.YoloV3Flag.Name):
-		log.Info("Starting Gubiq on YOLOv3 testnet...")
 
 	case ctx.GlobalIsSet(utils.DeveloperFlag.Name):
 		log.Info("Starting Gubiq in ephemeral dev mode...")

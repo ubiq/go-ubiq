@@ -188,9 +188,9 @@ type Config struct {
 	// Logger is a custom logger to use with the p2p.Server.
 	Logger log.Logger `toml:",omitempty"`
 
-	staticNodesWarning     bool
-	trustedNodesWarning    bool
-	oldGethResourceWarning bool
+	staticNodesWarning      bool
+	trustedNodesWarning     bool
+	oldGubiqResourceWarning bool
 
 	// AllowUnprotectedTxs allows non EIP-155 protected transactions to be send over RPC.
 	AllowUnprotectedTxs bool `toml:",omitempty"`

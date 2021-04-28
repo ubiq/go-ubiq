@@ -58,7 +58,6 @@ import (
 	"time"
 
 	"github.com/cespare/cp"
-	"github.com/ubiq/go-ubiq/v5/crypto/signify"
 	"github.com/ubiq/go-ubiq/v5/internal/build"
 	"github.com/ubiq/go-ubiq/v5/params"
 )
@@ -449,7 +448,7 @@ func archiveBasename(arch string, archiveVersion string) string {
 	return platform + "-" + archiveVersion
 }
 
-func archiveUpload(archive string, blobstore string, signer string, signifyVar string) error {
+func archiveUpload(archive string, blobstore string, signer string) error {
 	// If signing was requested, generate the signature files
 	/*if signer != "" {
 		key := getenvBase64(signer)
@@ -878,7 +877,7 @@ func doWindowsInstaller(cmdline []string) {
 		filepath.Join(*workdir, "gubiq.nsi"),
 	)
 	// Sign and publish installer.
-	if err := archiveUpload(installer, *upload, *signer, *signify); err != nil {
+	if err := archiveUpload(installer, *upload, *signer); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -919,7 +918,7 @@ func doAndroidArchive(cmdline []string) {
 	archive := "gubiq-" + archiveBasename("android", params.ArchiveVersion(env.Commit)) + ".aar"
 	os.Rename("gubiq.aar", archive)
 
-	if err := archiveUpload(archive, *upload, *signer, *signify); err != nil {
+	if err := archiveUpload(archive, *upload, *signer); err != nil {
 		log.Fatal(err)
 	}
 	// Sign and upload all the artifacts to Maven Central
@@ -1043,7 +1042,7 @@ func doXCodeFramework(cmdline []string) {
 	maybeSkipArchive(env)
 
 	// Sign and upload the framework to Azure
-	if err := archiveUpload(archive+".tar.gz", *upload, *signer, *signify); err != nil {
+	if err := archiveUpload(archive+".tar.gz", *upload, *signer); err != nil {
 		log.Fatal(err)
 	}
 	// Prepare and upload a PodSpec to CocoaPods
