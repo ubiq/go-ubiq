@@ -102,6 +102,7 @@ func TestAccountImport(t *testing.T) {
 		},
 	}
 	for _, test := range tests {
+		test := test
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 			importAccountWithExpect(t, test.key, test.output)
@@ -178,11 +179,8 @@ Fatal: could not decrypt key with given password
 }
 
 func TestUnlockFlag(t *testing.T) {
-	datadir := tmpDatadirWithKeystore(t)
-	gubiq := runGubiq(t,
-		"--datadir", datadir, "--nat", "none", "--nodiscover", "--maxpeers", "0", "--port", "0",
-		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a",
-		"js", "testdata/empty.js")
+	gubiq := runMinimalGubiq(t, "--port", "0", "--ipcdisable", "--datadir", tmpDatadirWithKeystore(t),
+		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a", "js", "testdata/empty.js")
 	gubiq.Expect(`
 Unlocking account f466859ead1932d743d622cb74fc058882e8648a | Attempt 1/3
 !! Unsupported terminal, password will be echoed.
@@ -202,10 +200,9 @@ Password: {{.InputLine "foobar"}}
 }
 
 func TestUnlockFlagWrongPassword(t *testing.T) {
-	datadir := tmpDatadirWithKeystore(t)
-	gubiq := runGubiq(t,
-		"--datadir", datadir, "--nat", "none", "--nodiscover", "--maxpeers", "0", "--port", "0",
-		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a")
+	gubiq := runMinimalGubiq(t, "--port", "0", "--ipcdisable", "--datadir", tmpDatadirWithKeystore(t),
+		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a", "js", "testdata/empty.js")
+
 	defer gubiq.ExpectExit()
 	gubiq.Expect(`
 Unlocking account f466859ead1932d743d622cb74fc058882e8648a | Attempt 1/3
@@ -221,11 +218,9 @@ Fatal: Failed to unlock account f466859ead1932d743d622cb74fc058882e8648a (could 
 
 // https://github.com/ubiq/go-ubiq/issues/1785
 func TestUnlockFlagMultiIndex(t *testing.T) {
-	datadir := tmpDatadirWithKeystore(t)
-	gubiq := runGubiq(t,
-		"--datadir", datadir, "--nat", "none", "--nodiscover", "--maxpeers", "0", "--port", "0",
-		"--unlock", "0,2",
-		"js", "testdata/empty.js")
+	gubiq := runMinimalGubiq(t, "--port", "0", "--ipcdisable", "--datadir", tmpDatadirWithKeystore(t),
+		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a", "--unlock", "0,2", "js", "testdata/empty.js")
+
 	gubiq.Expect(`
 Unlocking account 0 | Attempt 1/3
 !! Unsupported terminal, password will be echoed.
@@ -248,11 +243,9 @@ Password: {{.InputLine "foobar"}}
 }
 
 func TestUnlockFlagPasswordFile(t *testing.T) {
-	datadir := tmpDatadirWithKeystore(t)
-	gubiq := runGubiq(t,
-		"--datadir", datadir, "--nat", "none", "--nodiscover", "--maxpeers", "0", "--port", "0",
-		"--password", "testdata/passwords.txt", "--unlock", "0,2",
-		"js", "testdata/empty.js")
+	gubiq := runMinimalGubiq(t, "--port", "0", "--ipcdisable", "--datadir", tmpDatadirWithKeystore(t),
+		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a", "--password", "testdata/passwords.txt", "--unlock", "0,2", "js", "testdata/empty.js")
+
 	gubiq.ExpectExit()
 
 	wantMessages := []string{
@@ -268,10 +261,9 @@ func TestUnlockFlagPasswordFile(t *testing.T) {
 }
 
 func TestUnlockFlagPasswordFileWrongPassword(t *testing.T) {
-	datadir := tmpDatadirWithKeystore(t)
-	gubiq := runGubiq(t,
-		"--datadir", datadir, "--nat", "none", "--nodiscover", "--maxpeers", "0", "--port", "0",
-		"--password", "testdata/wrong-passwords.txt", "--unlock", "0,2")
+	gubiq := runMinimalGubiq(t, "--port", "0", "--ipcdisable", "--datadir", tmpDatadirWithKeystore(t),
+		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a", "--password",
+		"testdata/wrong-passwords.txt", "--unlock", "0,2")
 	defer gubiq.ExpectExit()
 	gubiq.Expect(`
 Fatal: Failed to unlock account 0 (could not decrypt key with given password)
@@ -280,9 +272,9 @@ Fatal: Failed to unlock account 0 (could not decrypt key with given password)
 
 func TestUnlockFlagAmbiguous(t *testing.T) {
 	store := filepath.Join("..", "..", "accounts", "keystore", "testdata", "dupes")
-	gubiq := runGubiq(t,
-		"--keystore", store, "--nat", "none", "--nodiscover", "--maxpeers", "0", "--port", "0",
-		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a",
+	gubiq := runMinimalGubiq(t, "--port", "0", "--ipcdisable", "--datadir", tmpDatadirWithKeystore(t),
+		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a", "--keystore",
+		store, "--unlock", "f466859ead1932d743d622cb74fc058882e8648a",
 		"js", "testdata/empty.js")
 	defer gubiq.ExpectExit()
 
@@ -318,9 +310,10 @@ In order to avoid this warning, you need to remove the following duplicate key f
 
 func TestUnlockFlagAmbiguousWrongPassword(t *testing.T) {
 	store := filepath.Join("..", "..", "accounts", "keystore", "testdata", "dupes")
-	gubiq := runGubiq(t,
-		"--keystore", store, "--nat", "none", "--nodiscover", "--maxpeers", "0", "--port", "0",
-		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a")
+	gubiq := runMinimalGubiq(t, "--port", "0", "--ipcdisable", "--datadir", tmpDatadirWithKeystore(t),
+		"--unlock", "f466859ead1932d743d622cb74fc058882e8648a", "--keystore",
+		store, "--unlock", "f466859ead1932d743d622cb74fc058882e8648a")
+
 	defer gubiq.ExpectExit()
 
 	// Helper for the expect template, returns absolute keystore path.

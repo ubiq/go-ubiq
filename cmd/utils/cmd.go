@@ -26,17 +26,20 @@ import (
 	"runtime"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
 	"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/eth/ethconfig"
 	"github.com/ubiq/go-ubiq/v5/ethdb"
 	"github.com/ubiq/go-ubiq/v5/internal/debug"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/node"
 	"github.com/ubiq/go-ubiq/v5/rlp"
+	"gopkg.in/urfave/cli.v1"
 )
 
 const (
@@ -63,7 +66,7 @@ func Fatalf(format string, args ...interface{}) {
 	os.Exit(1)
 }
 
-func StartNode(stack *node.Node) {
+func StartNode(ctx *cli.Context, stack *node.Node) {
 	if err := stack.Start(); err != nil {
 		Fatalf("Error starting protocol stack: %v", err)
 	}
@@ -71,6 +74,17 @@ func StartNode(stack *node.Node) {
 		sigc := make(chan os.Signal, 1)
 		signal.Notify(sigc, syscall.SIGINT, syscall.SIGTERM)
 		defer signal.Stop(sigc)
+
+		minFreeDiskSpace := ethconfig.Defaults.TrieDirtyCache
+		if ctx.GlobalIsSet(MinFreeDiskSpaceFlag.Name) {
+			minFreeDiskSpace = ctx.GlobalInt(MinFreeDiskSpaceFlag.Name)
+		} else if ctx.GlobalIsSet(CacheFlag.Name) || ctx.GlobalIsSet(CacheGCFlag.Name) {
+			minFreeDiskSpace = ctx.GlobalInt(CacheFlag.Name) * ctx.GlobalInt(CacheGCFlag.Name) / 100
+		}
+		if minFreeDiskSpace > 0 {
+			go monitorFreeDiskSpace(sigc, stack.InstanceDir(), uint64(minFreeDiskSpace)*1024*1024)
+		}
+
 		<-sigc
 		log.Info("Got interrupt, shutting down...")
 		go stack.Close()
@@ -83,6 +97,24 @@ func StartNode(stack *node.Node) {
 		debug.Exit() // ensure trace and CPU profile data is flushed.
 		debug.LoudPanic("boom")
 	}()
+}
+
+func monitorFreeDiskSpace(sigc chan os.Signal, path string, freeDiskSpaceCritical uint64) {
+	for {
+		freeSpace, err := getFreeDiskSpace(path)
+		if err != nil {
+			log.Warn("Failed to get free disk space", "path", path, "err", err)
+			break
+		}
+		if freeSpace < freeDiskSpaceCritical {
+			log.Error("Low disk space. Gracefully shutting down Geth to prevent database corruption.", "available", common.StorageSize(freeSpace))
+			sigc <- syscall.SIGTERM
+			break
+		} else if freeSpace < 2*freeDiskSpaceCritical {
+			log.Warn("Disk space is running low. Geth will shutdown if disk space runs below critical level.", "available", common.StorageSize(freeSpace), "critical_level", common.StorageSize(freeDiskSpaceCritical))
+		}
+		time.Sleep(60 * time.Second)
+	}
 }
 
 func ImportChain(chain *core.BlockChain, fn string) error {

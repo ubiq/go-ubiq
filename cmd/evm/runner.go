@@ -38,7 +38,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/core/vm/runtime"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/params"
-	cli "gopkg.in/urfave/cli.v1"
+	"gopkg.in/urfave/cli.v1"
 )
 
 var runCommand = cli.Command{

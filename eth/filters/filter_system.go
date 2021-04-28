@@ -24,7 +24,7 @@ import (
 	"sync"
 	"time"
 
-	ethereum "github.com/ubiq/go-ubiq/v5"
+	"github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"

@@ -23,10 +23,10 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/google/uuid"
 	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
 	"github.com/ubiq/go-ubiq/v5/cmd/utils"
 	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/pborman/uuid"
 	"gopkg.in/urfave/cli.v1"
 )
 
@@ -86,9 +86,12 @@ If you want to encrypt an existing private key, it can be specified by setting
 		}
 
 		// Create the keyfile object with a random UUID.
-		id := uuid.NewRandom()
+		UUID, err := uuid.NewRandom()
+		if err != nil {
+			utils.Fatalf("Failed to generate random uuid: %v", err)
+		}
 		key := &keystore.Key{
-			Id:         id,
+			Id:         UUID,
 			Address:    crypto.PubkeyToAddress(privateKey.PublicKey),
 			PrivateKey: privateKey,
 		}

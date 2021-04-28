@@ -25,7 +25,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/cmd/utils"
 	"github.com/ubiq/go-ubiq/v5/internal/debug"
 	"github.com/ubiq/go-ubiq/v5/internal/flags"
-	cli "gopkg.in/urfave/cli.v1"
+	"gopkg.in/urfave/cli.v1"
 )
 
 // AppHelpFlagGroups is the application flags, grouped by functionality.
@@ -36,12 +36,15 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 			configFileFlag,
 			utils.DataDirFlag,
 			utils.AncientFlag,
+			utils.MinFreeDiskSpaceFlag,
 			utils.KeyStoreDirFlag,
-			utils.NoUSBFlag,
+			utils.USBFlag,
 			utils.SmartCardDaemonPathFlag,
 			utils.NetworkIdFlag,
-			utils.LegacyTestnetFlag,
-			// utils.RinkebyFlag,
+			utils.MainnetFlag,
+			utils.GoerliFlag,
+			utils.RinkebyFlag,
+			utils.YoloV3Flag,
 			utils.SyncModeFlag,
 			utils.ExitWhenSyncedFlag,
 			utils.GCModeFlag,
@@ -98,6 +101,7 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 			utils.CacheGCFlag,
 			utils.CacheSnapshotFlag,
 			utils.CacheNoPrefetchFlag,
+			utils.CachePreimagesFlag,
 		},
 	},
 	{
@@ -118,18 +122,21 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 			utils.HTTPListenAddrFlag,
 			utils.HTTPPortFlag,
 			utils.HTTPApiFlag,
+			utils.HTTPPathPrefixFlag,
 			utils.HTTPCORSDomainFlag,
 			utils.HTTPVirtualHostsFlag,
 			utils.WSEnabledFlag,
 			utils.WSListenAddrFlag,
 			utils.WSPortFlag,
 			utils.WSApiFlag,
+			utils.WSPathPrefixFlag,
 			utils.WSAllowedOriginsFlag,
 			utils.GraphQLEnabledFlag,
 			utils.GraphQLCORSDomainFlag,
 			utils.GraphQLVirtualHostsFlag,
 			utils.RPCGlobalGasCapFlag,
 			utils.RPCGlobalTxFeeCapFlag,
+			utils.AllowUnprotectedTxs,
 			utils.JSpathFlag,
 			utils.ExecFlag,
 			utils.PreloadJSFlag,
@@ -139,8 +146,6 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 		Name: "NETWORKING",
 		Flags: []cli.Flag{
 			utils.BootnodesFlag,
-			utils.LegacyBootnodesV4Flag,
-			utils.LegacyBootnodesV5Flag,
 			utils.DNSDiscoveryFlag,
 			utils.ListenPortFlag,
 			utils.MaxPeersFlag,
@@ -159,6 +164,7 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 			utils.MiningEnabledFlag,
 			utils.MinerThreadsFlag,
 			utils.MinerNotifyFlag,
+			utils.MinerNotifyFullFlag,
 			utils.MinerGasPriceFlag,
 			utils.MinerGasTargetFlag,
 			utils.MinerGasLimitFlag,
@@ -197,27 +203,21 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 	},
 	{
 		Name: "ALIASED (deprecated)",
-		Flags: append([]cli.Flag{
+		Flags: []cli.Flag{
+			utils.NoUSBFlag,
 			utils.LegacyRPCEnabledFlag,
 			utils.LegacyRPCListenAddrFlag,
 			utils.LegacyRPCPortFlag,
 			utils.LegacyRPCCORSDomainFlag,
 			utils.LegacyRPCVirtualHostsFlag,
 			utils.LegacyRPCApiFlag,
-			utils.LegacyWSListenAddrFlag,
-			utils.LegacyWSPortFlag,
-			utils.LegacyWSAllowedOriginsFlag,
-			utils.LegacyWSApiFlag,
-			utils.LegacyGpoBlocksFlag,
-			utils.LegacyGpoPercentileFlag,
-			utils.LegacyGraphQLListenAddrFlag,
-			utils.LegacyGraphQLPortFlag,
-		}, debug.DeprecatedFlags...),
+		},
 	},
 	{
 		Name: "MISC",
 		Flags: []cli.Flag{
 			utils.SnapshotFlag,
+			utils.BloomFilterSizeFlag,
 			cli.HelpFlag,
 		},
 	},

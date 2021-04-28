@@ -28,11 +28,10 @@ import (
 	"github.com/ubiq/go-ubiq/v5/common/hexutil"
 	"github.com/ubiq/go-ubiq/v5/common/math"
 	"github.com/ubiq/go-ubiq/v5/consensus"
-	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v5/consensus/ethash"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
 	"github.com/ubiq/go-ubiq/v5/core/state"
-	"github.com/ubiq/go-ubiq/v5/core/state/snapshot"
 	"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/core/vm"
 	"github.com/ubiq/go-ubiq/v5/params"
@@ -147,7 +146,7 @@ func (t *BlockTest) Run(snapshotter bool) error {
 	}
 	// Cross-check the snapshot-to-hash against the trie hash
 	if snapshotter {
-		if err := snapshot.VerifyState(chain.Snapshot(), chain.CurrentBlock().Root()); err != nil {
+		if err := chain.Snapshots().Verify(chain.CurrentBlock().Root()); err != nil {
 			return err
 		}
 	}

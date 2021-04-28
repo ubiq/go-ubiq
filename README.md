@@ -12,7 +12,7 @@ Binary archives are published at [releases](https://github.com/ubiq/go-ubiq/rele
 
 ## Building the source
 
-For prerequisites and detailed build instructions please read the [Ubiq's Installation Instructions](https://github.com/ubiq/go-ubiq/wiki/Building-Ethereum) on the wiki.
+For prerequisites and detailed build instructions please read the [Installation Instructions](https://geth.ethereum.org/docs/install-and-build/installing-geth).
 
 *Note*: Keep in mind that Ubiq aims to be 100% compatible with Ethereum, so mostly all the documentation you can find on Ethereum wiki, will apply for sure to Ubiq.
 
@@ -46,7 +46,7 @@ directory.
 ## Running `gubiq`
 
 Going through all the possible command line flags is out of scope here (please consult our
-[CLI Wiki page](https://github.com/ubiq/go-ubiq/wiki/Command-Line-Options)),
+[CLI Wiki page](https://geth.ethereum.org/docs/interface/command-line-options)),
 but we've enumerated a few common parameter combos to get you up to speed quickly
 on how you can run your own `gubiq` instance.
 
@@ -65,9 +65,9 @@ This command will:
  * Start `gubiq` in fast sync mode (default, can be changed with the `--syncmode` flag),
    causing it to download more data in exchange for avoiding processing the entire history
    of the Ubiq network, which is very CPU intensive.
- * Start up `gubiq`'s built-in interactive [JavaScript console](https://github.com/ubiq/go-ubiq/wiki/JavaScript-Console),
-   (via the trailing `console` subcommand) through which you can invoke all official [`web3` methods](https://github.com/ubiq/go-ubiq/wiki/JavaScript-API)
-   as well as `gubiq`'s own [management APIs](https://github.com/ubiq/go-ubiq/wiki/Management-APIs).
+ * Start up `gubiq`'s built-in interactive [JavaScript console](https://geth.ethereum.org/docs/interface/javascript-console),
+   (via the trailing `console` subcommand) through which you can invoke all official [`web3` methods](https://web3js.readthedocs.io/en/)
+   as well as `gubiq`'s own [management APIs](https://geth.ethereum.org/docs/rpc/server).
    This tool is optional and if you leave it out you can always attach to an already running
    `gubiq` instance with `gubiq attach`.
 
@@ -124,8 +124,8 @@ accessible from the outside.
 
 As a developer, sooner rather than later you'll want to start interacting with `gubiq` and the
 Ubiq network via your own programs and not manually through the console. To aid
-this, `gubiq` has built-in support for a JSON-RPC based APIs ([standard APIs](https://github.com/ethereum/wiki/wiki/JSON-RPC)
-and [`gubiq` specific APIs](https://github.com/ubiq/go-ubiq/wiki/Management-APIs)).
+this, `gubiq` has built-in support for a JSON-RPC based APIs ([standard APIs](https://eth.wiki/json-rpc/API)
+and [`gubiq` specific APIs](https://geth.ethereum.org/docs/rpc/server)).
 These can be exposed via HTTP, WebSockets and IPC (UNIX sockets on UNIX based
 platforms, and named pipes on Windows).
 
@@ -231,7 +231,7 @@ $ bootnode --genkey=boot.key
 $ bootnode --nodekey=boot.key
 ```
 
-With the bootnode online, it will display an [`enode` URL](https://github.com/ethereum/wiki/wiki/enode-url-format)
+With the bootnode online, it will display an [`enode` URL](https://eth.wiki/en/fundamentals/enode-url-format)
 that other nodes can use to connect to it and exchange peer information. Make sure to
 replace the displayed IP address information (most probably `[::]`) with your externally
 accessible IP to get the actual `enode` URL.
@@ -267,13 +267,13 @@ ones either). To start a `gubiq` instance for mining, run it with all your usual
 by:
 
 ```shell
-$ gubiq <usual-flags> --mine --miner.threads=1 --etherbase=0x0000000000000000000000000000000000000000
+$ gubiq <usual-flags> --mine --miner.threads=1 --miner.etherbase=0x0000000000000000000000000000000000000000
 ```
 
 Which will start mining blocks and transactions on a single CPU thread, crediting all
-proceedings to the account specified by `--etherbase`. You can further tune the mining
-by changing the default gas limit blocks converge to (`--targetgaslimit`) and the price
-transactions are accepted at (`--gasprice`).
+proceedings to the account specified by `--miner.etherbase`. You can further tune the mining
+by changing the default gas limit blocks converge to (`--miner.targetgaslimit`) and the price
+transactions are accepted at (`--miner.gasprice`).
 
 ## Contribution
 
@@ -297,7 +297,7 @@ Please make sure your contributions adhere to our coding guidelines:
  * Commit messages should be prefixed with the package(s) they modify.
    * E.g. "eth, rpc: make trace configs optional"
 
-Please see the [Developers' Guide](https://github.com/ubiq/go-ubiq/wiki/Developers'-Guide)
+Please see the [Developers' Guide](https://geth.ethereum.org/docs/developers/devguide)
 for more details on configuring your environment, managing project dependencies, and
 testing procedures.
 

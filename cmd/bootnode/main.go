@@ -28,7 +28,6 @@ import (
 	"github.com/ubiq/go-ubiq/v5/crypto"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/p2p/discover"
-	"github.com/ubiq/go-ubiq/v5/p2p/discv5"
 	"github.com/ubiq/go-ubiq/v5/p2p/enode"
 	"github.com/ubiq/go-ubiq/v5/p2p/nat"
 	"github.com/ubiq/go-ubiq/v5/p2p/netutil"
@@ -121,17 +120,17 @@ func main() {
 
 	printNotice(&nodeKey.PublicKey, *realaddr)
 
+	db, _ := enode.OpenDB("")
+	ln := enode.NewLocalNode(db, nodeKey)
+	cfg := discover.Config{
+		PrivateKey:  nodeKey,
+		NetRestrict: restrictList,
+	}
 	if *runv5 {
-		if _, err := discv5.ListenUDP(nodeKey, conn, "", restrictList); err != nil {
+		if _, err := discover.ListenV5(conn, ln, cfg); err != nil {
 			utils.Fatalf("%v", err)
 		}
 	} else {
-		db, _ := enode.OpenDB("")
-		ln := enode.NewLocalNode(db, nodeKey)
-		cfg := discover.Config{
-			PrivateKey:  nodeKey,
-			NetRestrict: restrictList,
-		}
 		if _, err := discover.ListenUDP(conn, ln, cfg); err != nil {
 			utils.Fatalf("%v", err)
 		}

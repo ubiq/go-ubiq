@@ -20,7 +20,7 @@ import (
 	"context"
 	"sync"
 
-	ethereum "github.com/ubiq/go-ubiq/v5"
+	"github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/event"
 	"github.com/ubiq/go-ubiq/v5/rpc"
 )

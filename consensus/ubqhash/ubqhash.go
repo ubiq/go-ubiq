@@ -33,7 +33,7 @@ import (
 	"time"
 	"unsafe"
 
-	mmap "github.com/edsrzf/mmap-go"
+	"github.com/edsrzf/mmap-go"
 	"github.com/hashicorp/golang-lru/simplelru"
 	"github.com/ubiq/go-ubiq/v5/consensus"
 	"github.com/ubiq/go-ubiq/v5/log"
@@ -48,7 +48,7 @@ var (
 	two256 = new(big.Int).Exp(big.NewInt(2), big.NewInt(256), big.NewInt(0))
 
 	// sharedUbqhash is a full instance that can be shared between multiple users.
-	sharedUbqhash = New(Config{"", 3, 0, false, "", 1, 0, false, ModeNormal, nil}, nil, false)
+	sharedUbqhash *Ubqhash
 
 	// algorithmRevision is the data structure version used for file naming.
 	algorithmRevision = 23
@@ -56,6 +56,15 @@ var (
 	// dumpMagic is a dataset dump header to sanity check a data dump.
 	dumpMagic = []uint32{0xbaddcafe, 0xfee1dead}
 )
+
+func init() {
+	sharedConfig := Config{
+		PowMode:       ModeNormal,
+		CachesInMem:   3,
+		DatasetsInMem: 1,
+	}
+	sharedEthash = New(sharedConfig, nil, false)
+}
 
 // isLittleEndian returns whether the local system is running in little or big
 // endian byte order.
@@ -411,6 +420,10 @@ type Config struct {
 	DatasetsLockMmap bool
 	PowMode          Mode
 
+	// When set, notifications sent by the remote sealer will
+	// be block header JSON objects instead of work package arrays.
+	NotifyFull bool
+
 	Log log.Logger `toml:"-"`
 }
 
@@ -462,22 +475,17 @@ func New(config Config, notify []string, noverify bool) *Ubqhash {
 		update:   make(chan struct{}),
 		hashrate: metrics.NewMeterForced(),
 	}
+	if config.PowMode == ModeShared {
+		ubqhash.shared = sharedUbqhash
+	}
 	ubqhash.remote = startRemoteSealer(ubqhash, notify, noverify)
-	return ubqhash
+	return ethash
 }
 
 // NewTester creates a small sized ubqhash PoW scheme useful only for testing
 // purposes.
 func NewTester(notify []string, noverify bool) *Ubqhash {
-	ubqhash := &Ubqhash{
-		config:   Config{PowMode: ModeTest, Log: log.Root()},
-		caches:   newlru("cache", 1, newCache),
-		datasets: newlru("dataset", 1, newDataset),
-		update:   make(chan struct{}),
-		hashrate: metrics.NewMeterForced(),
-	}
-	ubqhash.remote = startRemoteSealer(ubqhash, notify, noverify)
-	return ubqhash
+	return New(Config{PowMode: ModeTest}, notify, noverify)
 }
 
 // NewFaker creates a ubqhash consensus engine with a fake PoW scheme that accepts
@@ -536,8 +544,7 @@ func NewShared() *Ubqhash {
 }
 
 // Close closes the exit channel to notify all backend threads exiting.
-func (ubqhash *Ubqhash) Close() error {
-	var err error
+func (ethash *Ubqhash) Close() error {
 	ubqhash.closeOnce.Do(func() {
 		// Short circuit if the exit channel is not allocated.
 		if ubqhash.remote == nil {
@@ -546,7 +553,7 @@ func (ubqhash *Ubqhash) Close() error {
 		close(ubqhash.remote.requestExit)
 		<-ubqhash.remote.exitCh
 	})
-	return err
+	return nil
 }
 
 // cache tries to retrieve a verification cache for the specified block number

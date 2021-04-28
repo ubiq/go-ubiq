@@ -23,7 +23,7 @@ import (
 	"strings"
 
 	"github.com/ubiq/go-ubiq/v5/core/asm"
-	cli "gopkg.in/urfave/cli.v1"
+	"gopkg.in/urfave/cli.v1"
 )
 
 var disasmCommand = cli.Command{
