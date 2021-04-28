@@ -48,11 +48,11 @@ import (
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/eth"
 	"github.com/ubiq/go-ubiq/v5/eth/downloader"
 	"github.com/ubiq/go-ubiq/v5/eth/ethconfig"
 	"github.com/ubiq/go-ubiq/v5/ethclient"
 	"github.com/ubiq/go-ubiq/v5/ethstats"
-	"github.com/ubiq/go-ubiq/v5/les"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/node"
 	"github.com/ubiq/go-ubiq/v5/p2p"
@@ -247,7 +247,7 @@ func newFaucet(genesis *core.Genesis, port int, enodes []*enode.Node, network ui
 	}
 
 	// Assemble the Ethereum light client protocol
-	cfg := eth.DefaultConfig
+	cfg := ethconfig.Defaults
 	cfg.SyncMode = downloader.FastSync
 	cfg.NetworkId = network
 	cfg.Genesis = genesis
