@@ -545,10 +545,10 @@ var bindTests = []struct {
 		`
 			"math/big"
 
-			"github.com/ethereum/go-ethereum/accounts/abi/bind"
-			"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
-			"github.com/ethereum/go-ethereum/core"
-			"github.com/ethereum/go-ethereum/crypto"
+			"github.com/ubiq/go-ubiq/v5/accounts/abi/bind"
+			"github.com/ubiq/go-ubiq/v5/accounts/abi/bind/backends"
+			"github.com/ubiq/go-ubiq/v5/core"
+			"github.com/ubiq/go-ubiq/v5/crypto"
 		`,
 		`
 			// Generate a new random account and a funded simulator
@@ -629,10 +629,10 @@ var bindTests = []struct {
 		[]string{`6080604052348015600f57600080fd5b5060888061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063d5f6622514602d575b600080fd5b6033604c565b6040805192835260208301919091528051918290030190f35b600a809156fea264697066735822beefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeefbeef64736f6c6343decafe0033`},
 		[]string{`[{"inputs":[],"name":"Struct","outputs":[{"internalType":"uint256","name":"a","type":"uint256"},{"internalType":"uint256","name":"b","type":"uint256"}],"stateMutability":"pure","type":"function"}]`},
 		`
-			"github.com/ethereum/go-ethereum/accounts/abi/bind"
-			"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
-			"github.com/ethereum/go-ethereum/common"
-			"github.com/ethereum/go-ethereum/core"
+			"github.com/ubiq/go-ubiq/v5/accounts/abi/bind"
+			"github.com/ubiq/go-ubiq/v5/accounts/abi/bind/backends"
+			"github.com/ubiq/go-ubiq/v5/common"
+			"github.com/ubiq/go-ubiq/v5/core"
 		`,
 		`
 			// Create a simulator and wrap a non-deployed contract

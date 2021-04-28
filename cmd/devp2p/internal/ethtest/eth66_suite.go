@@ -19,11 +19,11 @@ package ethtest
 import (
 	"time"
 
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth/protocols/eth"
-	"github.com/ethereum/go-ethereum/internal/utesting"
-	"github.com/ethereum/go-ethereum/p2p"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/eth/protocols/eth"
+	"github.com/ubiq/go-ubiq/v5/internal/utesting"
+	"github.com/ubiq/go-ubiq/v5/p2p"
 )
 
 // Is_66 checks if the node supports the eth66 protocol version,

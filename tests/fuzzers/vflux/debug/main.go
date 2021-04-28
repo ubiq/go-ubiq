@@ -21,7 +21,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/ethereum/go-ethereum/tests/fuzzers/vflux"
+	"github.com/ubiq/go-ubiq/v5/tests/fuzzers/vflux"
 )
 
 func main() {

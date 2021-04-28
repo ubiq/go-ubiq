@@ -19,7 +19,7 @@ package core
 import (
 	"errors"
 
-	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ubiq/go-ubiq/v5/core/types"
 )
 
 var (
