@@ -29,7 +29,7 @@ const (
 )
 
 func (mode SyncMode) IsValid() bool {
-	return mode >= FullSync && mode <= FastSync
+	return mode >= FullSync && mode <= SnapSync
 }
 
 // String implements the stringer interface.
