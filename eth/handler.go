@@ -51,7 +51,7 @@ var (
 )
 
 // txPool defines the methods needed from a transaction pool implementation to
-// support all the operations needed by the Ethereum chain protocols.
+// support all the operations needed by the Ubiq chain protocols.
 type txPool interface {
 	// Has returns an indicator whether txpool has a transaction
 	// cached with the given hash.
@@ -125,7 +125,7 @@ type handler struct {
 	peerWG    sync.WaitGroup
 }
 
-// newHandler returns a handler for all Ethereum chain management protocol.
+// newHandler returns a handler for all Ubiq chain management protocol.
 func newHandler(config *handlerConfig) (*handler, error) {
 	// Create the protocol manager with the base fields
 	if config.EventMux == nil {
@@ -368,11 +368,11 @@ func (h *handler) removePeer(id string) {
 	// Abort if the peer does not exist
 	peer := h.peers.peer(id)
 	if peer == nil {
-		logger.Error("Ethereum peer removal failed", "err", errPeerNotRegistered)
+		logger.Error("Ubiq peer removal failed", "err", errPeerNotRegistered)
 		return
 	}
 	// Remove the `eth` peer if it exists
-	logger.Debug("Removing Ethereum peer", "snap", peer.snapExt != nil)
+	logger.Debug("Removing Ubiq peer", "snap", peer.snapExt != nil)
 
 	// Remove the `snap` extension if it exists
 	if peer.snapExt != nil {
@@ -382,7 +382,7 @@ func (h *handler) removePeer(id string) {
 	h.txFetcher.Drop(id)
 
 	if err := h.peers.unregisterPeer(id); err != nil {
-		logger.Error("Ethereum peer removal failed", "err", err)
+		logger.Error("Ubiq peer removal failed", "err", err)
 	}
 	// Hard disconnect at the networking layer
 	peer.Peer.Disconnect(p2p.DiscUselessPeer)
@@ -424,7 +424,7 @@ func (h *handler) Stop() {
 	h.peers.close()
 	h.peerWG.Wait()
 
-	log.Info("Ethereum protocol stopped")
+	log.Info("Ubiq protocol stopped")
 }
 
 // BroadcastBlock will either propagate a block to a subset of its peers, or
@@ -496,11 +496,7 @@ func (h *handler) BroadcastTransactions(txs types.Transactions) {
 	for peer, hashes := range annos {
 		annoPeers++
 		annoCount += len(hashes)
-		if peer.Version() >= eth.ETH65 {
-			peer.AsyncSendPooledTransactionHashes(hashes)
-		} else {
-			peer.AsyncSendTransactions(hashes)
-		}
+		peer.AsyncSendPooledTransactionHashes(hashes)
 	}
 	log.Debug("Transaction broadcast", "txs", len(txs),
 		"announce packs", annoPeers, "announced hashes", annoCount,

@@ -19,7 +19,6 @@ package eth
 import (
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/forkid"
-	"github.com/ubiq/go-ubiq/v5/p2p/dnsdisc"
 	"github.com/ubiq/go-ubiq/v5/p2p/enode"
 	"github.com/ubiq/go-ubiq/v5/rlp"
 )
@@ -61,14 +60,4 @@ func (eth *Ethereum) startEthEntryUpdate(ln *enode.LocalNode) {
 func (eth *Ethereum) currentEthEntry() *ethEntry {
 	return &ethEntry{ForkID: forkid.NewID(eth.blockchain.Config(), eth.blockchain.Genesis().Hash(),
 		eth.blockchain.CurrentHeader().Number.Uint64())}
-}
-
-// setupDiscovery creates the node discovery source for the `eth` and `snap`
-// protocols.
-func setupDiscovery(urls []string) (enode.Iterator, error) {
-	if len(urls) == 0 {
-		return nil, nil
-	}
-	client := dnsdisc.NewClient(dnsdisc.Config{})
-	return client.NewIterator(urls...)
 }

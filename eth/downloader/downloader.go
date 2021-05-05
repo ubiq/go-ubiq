@@ -28,7 +28,9 @@ import (
 	"github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
+	"github.com/ubiq/go-ubiq/v5/core/state/snapshot"
 	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/eth/protocols/eth"
 	"github.com/ubiq/go-ubiq/v5/eth/protocols/snap"
 	"github.com/ubiq/go-ubiq/v5/ethdb"
 	"github.com/ubiq/go-ubiq/v5/event"
@@ -206,6 +208,9 @@ type BlockChain interface {
 
 	// InsertReceiptChain inserts a batch of receipts into the local chain.
 	InsertReceiptChain(types.Blocks, []types.Receipts, uint64) (int, error)
+
+	// Snapshots returns the blockchain snapshot tree to paused it during sync.
+	Snapshots() *snapshot.Tree
 }
 
 // New creates a new downloader to fetch hashes and blocks from remote peers.
@@ -379,6 +384,12 @@ func (d *Downloader) synchronise(id string, hash common.Hash, td *big.Int, mode 
 	// but until snap becomes prevalent, we should support both. TODO(karalabe).
 	if mode == SnapSync {
 		if !d.snapSync {
+			// Snap sync uses the snapshot namespace to store potentially flakey data until
+			// sync completely heals and finishes. Pause snapshot maintenance in the mean
+			// time to prevent access.
+			if snapshots := d.blockchain.Snapshots(); snapshots != nil { // Only nil in tests
+				snapshots.Disable()
+			}
 			log.Warn("Enabling snapshot sync prototype")
 			d.snapSync = true
 		}
@@ -453,8 +464,8 @@ func (d *Downloader) syncWithPeer(p *peerConnection, hash common.Hash, td *big.I
 			d.mux.Post(DoneEvent{latest})
 		}
 	}()
-	if p.version < 64 {
-		return fmt.Errorf("%w: advertized %d < required %d", errTooOld, p.version, 64)
+	if p.version < eth.ETH65 {
+		return fmt.Errorf("%w: advertized %d < required %d", errTooOld, p.version, eth.ETH65)
 	}
 	mode := d.getMode()
 

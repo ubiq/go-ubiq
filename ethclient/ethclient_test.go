@@ -26,9 +26,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/consensus/ethash"
 	ethereum "github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
 	"github.com/ubiq/go-ubiq/v5/core/types"

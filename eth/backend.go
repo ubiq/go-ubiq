@@ -49,6 +49,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/miner"
 	"github.com/ubiq/go-ubiq/v5/node"
 	"github.com/ubiq/go-ubiq/v5/p2p"
+	"github.com/ubiq/go-ubiq/v5/p2p/dnsdisc"
 	"github.com/ubiq/go-ubiq/v5/p2p/enode"
 	"github.com/ubiq/go-ubiq/v5/params"
 	"github.com/ubiq/go-ubiq/v5/rlp"
@@ -161,7 +162,9 @@ func New(stack *node.Node, config *ethconfig.Config) (*Ethereum, error) {
 		if bcVersion != nil && *bcVersion > core.BlockChainVersion {
 			return nil, fmt.Errorf("database version is v%d, Gubiq %s only supports v%d", *bcVersion, params.VersionWithMeta, core.BlockChainVersion)
 		} else if bcVersion == nil || *bcVersion < core.BlockChainVersion {
-			log.Warn("Upgrade blockchain database version", "from", dbVer, "to", core.BlockChainVersion)
+			if bcVersion != nil { // only print warning on upgrade, not on init
+				log.Warn("Upgrade blockchain database version", "from", dbVer, "to", core.BlockChainVersion)
+			}
 			rawdb.WriteDatabaseVersion(chainDb, core.BlockChainVersion)
 		}
 	}
@@ -219,6 +222,7 @@ func New(stack *node.Node, config *ethconfig.Config) (*Ethereum, error) {
 	}); err != nil {
 		return nil, err
 	}
+
 	eth.miner = miner.New(eth, &config.Miner, chainConfig, eth.EventMux(), eth.engine, eth.isLocalBlock)
 	eth.miner.SetExtra(makeExtraData(config.Miner.ExtraData))
 
@@ -232,14 +236,17 @@ func New(stack *node.Node, config *ethconfig.Config) (*Ethereum, error) {
 	}
 	eth.APIBackend.gpo = gasprice.NewOracle(eth.APIBackend, gpoParams)
 
-	eth.ethDialCandidates, err = setupDiscovery(eth.config.EthDiscoveryURLs)
+	// Setup DNS discovery iterators.
+	dnsclient := dnsdisc.NewClient(dnsdisc.Config{})
+	eth.ethDialCandidates, err = dnsclient.NewIterator(eth.config.EthDiscoveryURLs...)
 	if err != nil {
 		return nil, err
 	}
-	eth.snapDialCandidates, err = setupDiscovery(eth.config.SnapDiscoveryURLs)
+	eth.snapDialCandidates, err = dnsclient.NewIterator(eth.config.SnapDiscoveryURLs...)
 	if err != nil {
 		return nil, err
 	}
+
 	// Start the RPC service
 	eth.netRPCService = ethapi.NewPublicNetAPI(eth.p2pServer, config.NetworkId)
 
@@ -537,6 +544,8 @@ func (s *Ethereum) Start() error {
 // Ubiq protocol.
 func (s *Ethereum) Stop() error {
 	// Stop all the peer-related stuff first.
+	s.ethDialCandidates.Close()
+	s.snapDialCandidates.Close()
 	s.handler.Stop()
 
 	// Then stop everything else.
