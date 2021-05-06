@@ -238,12 +238,12 @@ func createGQLService(t *testing.T, stack *node.Node) {
 	// create backend
 	ethConf := &ethconfig.Config{
 		Genesis: &core.Genesis{
-			Config:     params.AllEthashProtocolChanges,
+			Config:     params.AllUbqhashProtocolChanges,
 			GasLimit:   11500000,
 			Difficulty: big.NewInt(1048576),
 		},
-		Ethash: ethash.Config{
-			PowMode: ethash.ModeFake,
+		Ubqhash: ubqhash.Config{
+			PowMode: ubqhash.ModeFake,
 		},
 		NetworkId:               1337,
 		TrieCleanCache:          5,
@@ -258,8 +258,8 @@ func createGQLService(t *testing.T, stack *node.Node) {
 		t.Fatalf("could not create eth backend: %v", err)
 	}
 	// Create some blocks and import them
-	chain, _ := core.GenerateChain(params.AllEthashProtocolChanges, ethBackend.BlockChain().Genesis(),
-		ethash.NewFaker(), ethBackend.ChainDb(), 10, func(i int, gen *core.BlockGen) {})
+	chain, _ := core.GenerateChain(params.AllUbqhashProtocolChanges, ethBackend.BlockChain().Genesis(),
+		ubqhash.NewFaker(), ethBackend.ChainDb(), 10, func(i int, gen *core.BlockGen) {})
 	_, err = ethBackend.BlockChain().InsertChain(chain)
 	if err != nil {
 		t.Fatalf("could not create import blocks: %v", err)
@@ -280,7 +280,7 @@ func createGQLServiceWithTransactions(t *testing.T, stack *node.Node) {
 
 	ethConf := &ethconfig.Config{
 		Genesis: &core.Genesis{
-			Config:     params.AllEthashProtocolChanges,
+			Config:     params.AllUbqhashProtocolChanges,
 			GasLimit:   11500000,
 			Difficulty: big.NewInt(1048576),
 			Alloc: core.GenesisAlloc{
@@ -298,8 +298,8 @@ func createGQLServiceWithTransactions(t *testing.T, stack *node.Node) {
 				},
 			},
 		},
-		Ethash: ethash.Config{
-			PowMode: ethash.ModeFake,
+		Ubqhash: ubqhash.Config{
+			PowMode: ubqhash.ModeFake,
 		},
 		NetworkId:               1337,
 		TrieCleanCache:          5,
@@ -337,8 +337,8 @@ func createGQLServiceWithTransactions(t *testing.T, stack *node.Node) {
 	})
 
 	// Create some blocks and import them
-	chain, _ := core.GenerateChain(params.AllEthashProtocolChanges, ethBackend.BlockChain().Genesis(),
-		ethash.NewFaker(), ethBackend.ChainDb(), 1, func(i int, b *core.BlockGen) {
+	chain, _ := core.GenerateChain(params.AllUbqhashProtocolChanges, ethBackend.BlockChain().Genesis(),
+		ubqhash.NewFaker(), ethBackend.ChainDb(), 1, func(i int, b *core.BlockGen) {
 			b.SetCoinbase(common.Address{1})
 			b.AddTx(legacyTx)
 			b.AddTx(envelopTx)

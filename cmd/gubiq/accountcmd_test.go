@@ -77,7 +77,7 @@ Repeat password: {{.InputLine "foobar"}}
 
 Your new key was generated
 `)
-	geth.ExpectRegexp(`
+	gubiq.ExpectRegexp(`
 Public address of the key:   0x[0-9a-fA-F]{40}
 Path of the secret key file: .*UTC--.+--[0-9a-f]{40}
 
@@ -120,7 +120,7 @@ func importAccountWithExpect(t *testing.T, key string, expected string) {
 	if err := ioutil.WriteFile(passwordFile, []byte("foobar"), 0600); err != nil {
 		t.Error(err)
 	}
-	gubiq := runGeth(t, "account", "import", keyfile, "-password", passwordFile)
+	gubiq := runGubiq(t, "account", "import", keyfile, "-password", passwordFile)
 	defer gubiq.ExpectExit()
 	gubiq.Expect(expected)
 }

@@ -25,7 +25,7 @@ import (
 	"time"
 
 	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/consensus/ethash"
+	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/forkid"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
@@ -87,7 +87,7 @@ func testForkIDSplit(t *testing.T, protocol uint) {
 	t.Parallel()
 
 	var (
-		engine = ethash.NewFaker()
+		engine = ubqhash.NewFaker()
 
 		configNoFork  = &params.ChainConfig{HomesteadBlock: big.NewInt(1)}
 		configProFork = &params.ChainConfig{

@@ -65,7 +65,7 @@ func newTestBackend(t *testing.T) *testBackend {
 		}
 		signer = types.LatestSigner(gspec.Config)
 	)
-	engine := ethash.NewFaker()
+	engine := ubqhash.NewFaker()
 	db := rawdb.NewMemoryDatabase()
 	genesis, _ := gspec.Commit(db)
 

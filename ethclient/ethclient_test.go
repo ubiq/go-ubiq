@@ -197,7 +197,7 @@ func newTestBackend(t *testing.T) (*node.Node, []*types.Block) {
 	}
 	// Create Ethereum Service
 	config := &ethconfig.Config{Genesis: genesis}
-	config.Ethash.PowMode = ethash.ModeFake
+	config.Ubqhash.PowMode = ubqhash.ModeFake
 	ethservice, err := eth.New(n, config)
 	if err != nil {
 		t.Fatalf("can't create new ethereum service: %v", err)
@@ -226,7 +226,7 @@ func generateTestChain() (*core.Genesis, []*types.Block) {
 		g.SetExtra([]byte("test"))
 	}
 	gblock := genesis.ToBlock(db)
-	engine := ethash.NewFaker()
+	engine := ubqhash.NewFaker()
 	blocks, _ := core.GenerateChain(config, gblock, engine, db, 1, generate)
 	blocks = append([]*types.Block{gblock}, blocks...)
 	return genesis, blocks
@@ -452,12 +452,12 @@ func testStatusFunctions(t *testing.T, client *rpc.Client) {
 	if networkID.Cmp(big.NewInt(0)) != 0 {
 		t.Fatalf("unexpected networkID: %v", networkID)
 	}
-	// SuggestGasPrice (should suggest 1 Gwei)
+	// SuggestGasPrice (should suggest 10 Gwei)
 	gasPrice, err := ec.SuggestGasPrice(context.Background())
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if gasPrice.Cmp(big.NewInt(1000000000)) != 0 {
+	if gasPrice.Cmp(big.NewInt(10000000000)) != 0 {
 		t.Fatalf("unexpected gas price: %v", gasPrice)
 	}
 }

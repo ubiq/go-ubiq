@@ -67,35 +67,35 @@ var (
 			DigishieldModBlock: big.NewInt(4088),
 			FluxBlock:          big.NewInt(8000),
 			MonetaryPolicy: []UbqhashMPStep{
-				UbqhashMPStep{
+				{
 					Block:  big.NewInt(0),
 					Reward: big.NewInt(8e+18),
 				},
-				UbqhashMPStep{
+				{
 					Block:  big.NewInt(358363),
 					Reward: big.NewInt(7e+18),
 				},
-				UbqhashMPStep{
+				{
 					Block:  big.NewInt(716727),
 					Reward: big.NewInt(6e+18),
 				},
-				UbqhashMPStep{
+				{
 					Block:  big.NewInt(1075090),
 					Reward: big.NewInt(5e+18),
 				},
-				UbqhashMPStep{
+				{
 					Block:  big.NewInt(1433454),
 					Reward: big.NewInt(4e+18),
 				},
-				UbqhashMPStep{
+				{
 					Block:  big.NewInt(1791818),
 					Reward: big.NewInt(3e+18),
 				},
-				UbqhashMPStep{
+				{
 					Block:  big.NewInt(2150181),
 					Reward: big.NewInt(2e+18),
 				},
-				UbqhashMPStep{
+				{
 					Block:  big.NewInt(2508545),
 					Reward: big.NewInt(1e+18),
 				},
@@ -192,7 +192,7 @@ var (
 	//
 	// This configuration is intentionally not using keyed fields to force anyone
 	// adding flags to the config to also have to set these fields.
-	AllUbqhashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &UbqhashConfig{big.NewInt(0), big.NewInt(0), []UbqhashMPStep{}}, nil}
+	AllUbqhashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &UbqhashConfig{big.NewInt(4088), big.NewInt(8000), []UbqhashMPStep{{Block: big.NewInt(0), Reward: big.NewInt(8e+18)}}}, nil}
 
 	// AllCliqueProtocolChanges contains every protocol change (EIPs) introduced
 	// and accepted by the Ubiq core developers into the Clique consensus.

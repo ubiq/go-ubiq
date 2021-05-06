@@ -38,13 +38,13 @@ const (
 // spawns geth with the given command line args, using a set of flags to minimise
 // memory and disk IO. If the args don't set --datadir, the
 // child g gets a temporary data directory.
-func runMinimalGeth(t *testing.T, args ...string) *testgeth {
+func runMinimalGubiq(t *testing.T, args ...string) *testgubiq {
 	// --ropsten to make the 'writing genesis to disk' faster (no accounts)
 	// --networkid=1337 to avoid cache bump
 	// --syncmode=full to avoid allocating fast sync bloom
 	allArgs := []string{"--ropsten", "--networkid", "1337", "--syncmode=full", "--port", "0",
 		"--nat", "none", "--nodiscover", "--maxpeers", "0", "--cache", "64"}
-	return runGeth(t, append(allArgs, args...)...)
+	return runGubiq(t, append(allArgs, args...)...)
 }
 
 // Tests that a node embedded within a console can be started up properly and

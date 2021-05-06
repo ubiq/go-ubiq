@@ -26,7 +26,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5"
+	ethereum "github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
 	"github.com/ubiq/go-ubiq/v5/core/state/snapshot"
@@ -518,9 +518,8 @@ func assertOwnForkedChain(t *testing.T, tester *downloadTester, common int, leng
 	}
 }
 
-func TestCanonicalSynchronisation65Full(t *testing.T)  { testCanonSync(t, eth.ETH65, FullSync) }
-func TestCanonicalSynchronisation65Fast(t *testing.T)  { testCanonSync(t, eth.ETH65, FastSync) }
-func TestCanonicalSynchronisation65Light(t *testing.T) { testCanonSync(t, eth.ETH65, LightSync) }
+func TestCanonicalSynchronisation65Full(t *testing.T) { testCanonSync(t, eth.ETH65, FullSync) }
+func TestCanonicalSynchronisation65Fast(t *testing.T) { testCanonSync(t, eth.ETH65, FastSync) }
 
 func TestCanonicalSynchronisation66Full(t *testing.T) { testCanonSync(t, eth.ETH66, FullSync) }
 func TestCanonicalSynchronisation66Fast(t *testing.T) { testCanonSync(t, eth.ETH66, FastSync) }
@@ -629,9 +628,8 @@ func testThrottling(t *testing.T, protocol uint, mode SyncMode) {
 // Tests that simple synchronization against a forked chain works correctly. In
 // this test common ancestor lookup should *not* be short circuited, and a full
 // binary search should be executed.
-func TestForkedSync65Full(t *testing.T)  { testForkedSync(t, eth.ETH65, FullSync) }
-func TestForkedSync65Fast(t *testing.T)  { testForkedSync(t, eth.ETH65, FastSync) }
-func TestForkedSync65Light(t *testing.T) { testForkedSync(t, eth.ETH65, LightSync) }
+func TestForkedSync65Full(t *testing.T) { testForkedSync(t, eth.ETH65, FullSync) }
+func TestForkedSync65Fast(t *testing.T) { testForkedSync(t, eth.ETH65, FastSync) }
 
 func TestForkedSync66Full(t *testing.T) { testForkedSync(t, eth.ETH66, FullSync) }
 func TestForkedSync66Fast(t *testing.T) { testForkedSync(t, eth.ETH66, FastSync) }
@@ -694,9 +692,8 @@ func testHeavyForkedSync(t *testing.T, protocol uint, mode SyncMode) {
 // Tests that chain forks are contained within a certain interval of the current
 // chain head, ensuring that malicious peers cannot waste resources by feeding
 // long dead chains.
-func TestBoundedForkedSync65Full(t *testing.T)  { testBoundedForkedSync(t, eth.ETH65, FullSync) }
-func TestBoundedForkedSync65Fast(t *testing.T)  { testBoundedForkedSync(t, eth.ETH65, FastSync) }
-func TestBoundedForkedSync65Light(t *testing.T) { testBoundedForkedSync(t, eth.ETH65, LightSync) }
+func TestBoundedForkedSync65Full(t *testing.T) { testBoundedForkedSync(t, eth.ETH65, FullSync) }
+func TestBoundedForkedSync65Fast(t *testing.T) { testBoundedForkedSync(t, eth.ETH65, FastSync) }
 
 func TestBoundedForkedSync66Full(t *testing.T) { testBoundedForkedSync(t, eth.ETH66, FullSync) }
 func TestBoundedForkedSync66Fast(t *testing.T) { testBoundedForkedSync(t, eth.ETH66, FastSync) }
@@ -816,9 +813,8 @@ func testCancel(t *testing.T, protocol uint, mode SyncMode) {
 }
 
 // Tests that synchronisation from multiple peers works as intended (multi thread sanity test).
-func TestMultiSynchronisation65Full(t *testing.T)  { testMultiSynchronisation(t, eth.ETH65, FullSync) }
-func TestMultiSynchronisation65Fast(t *testing.T)  { testMultiSynchronisation(t, eth.ETH65, FastSync) }
-func TestMultiSynchronisation65Light(t *testing.T) { testMultiSynchronisation(t, eth.ETH65, LightSync) }
+func TestMultiSynchronisation65Full(t *testing.T) { testMultiSynchronisation(t, eth.ETH65, FullSync) }
+func TestMultiSynchronisation65Fast(t *testing.T) { testMultiSynchronisation(t, eth.ETH65, FastSync) }
 
 func TestMultiSynchronisation66Full(t *testing.T) { testMultiSynchronisation(t, eth.ETH66, FullSync) }
 func TestMultiSynchronisation66Fast(t *testing.T) { testMultiSynchronisation(t, eth.ETH66, FastSync) }
@@ -881,9 +877,8 @@ func testMultiProtoSync(t *testing.T, protocol uint, mode SyncMode) {
 
 // Tests that if a block is empty (e.g. header only), no body request should be
 // made, and instead the header should be assembled into a whole block in itself.
-func TestEmptyShortCircuit65Full(t *testing.T)  { testEmptyShortCircuit(t, eth.ETH65, FullSync) }
-func TestEmptyShortCircuit65Fast(t *testing.T)  { testEmptyShortCircuit(t, eth.ETH65, FastSync) }
-func TestEmptyShortCircuit65Light(t *testing.T) { testEmptyShortCircuit(t, eth.ETH65, LightSync) }
+func TestEmptyShortCircuit65Full(t *testing.T) { testEmptyShortCircuit(t, eth.ETH65, FullSync) }
+func TestEmptyShortCircuit65Fast(t *testing.T) { testEmptyShortCircuit(t, eth.ETH65, FastSync) }
 
 func TestEmptyShortCircuit65Full(t *testing.T) { testEmptyShortCircuit(t, 65, FullSync) }
 func TestEmptyShortCircuit65Fast(t *testing.T) { testEmptyShortCircuit(t, 65, FastSync) }
@@ -1475,9 +1470,8 @@ func testFakedSyncProgress(t *testing.T, protocol uint, mode SyncMode) {
 
 // This test reproduces an issue where unexpected deliveries would
 // block indefinitely if they arrived at the right time.
-func TestDeliverHeadersHang65Full(t *testing.T)  { testDeliverHeadersHang(t, eth.ETH65, FullSync) }
-func TestDeliverHeadersHang65Fast(t *testing.T)  { testDeliverHeadersHang(t, eth.ETH65, FastSync) }
-func TestDeliverHeadersHang65Light(t *testing.T) { testDeliverHeadersHang(t, eth.ETH65, LightSync) }
+func TestDeliverHeadersHang65Full(t *testing.T) { testDeliverHeadersHang(t, eth.ETH65, FullSync) }
+func TestDeliverHeadersHang65Fast(t *testing.T) { testDeliverHeadersHang(t, eth.ETH65, FastSync) }
 
 func TestDeliverHeadersHang66Full(t *testing.T) { testDeliverHeadersHang(t, eth.ETH66, FullSync) }
 func TestDeliverHeadersHang66Fast(t *testing.T) { testDeliverHeadersHang(t, eth.ETH66, FastSync) }

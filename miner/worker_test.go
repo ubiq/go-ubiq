@@ -218,7 +218,7 @@ func testGenerateBlockAndImport(t *testing.T, isClique bool) {
 		engine = clique.New(chainConfig.Clique, db)
 	} else {
 		chainConfig = params.AllUbqhashProtocolChanges
-		engine = ethash.NewFaker()
+		engine = ubqhash.NewFaker()
 	}
 
 	w, b := newTestWorker(t, chainConfig, engine, db, 0)
