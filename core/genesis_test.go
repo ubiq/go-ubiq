@@ -35,9 +35,9 @@ func TestDefaultGenesisBlock(t *testing.T) {
 	if block.Hash() != params.MainnetGenesisHash {
 		t.Errorf("wrong mainnet genesis hash, got %v, want %v", block.Hash(), params.MainnetGenesisHash)
 	}
-	block = DefaultTestnetGenesisBlock().ToBlock(nil)
-	if block.Hash() != params.RopstenGenesisHash {
-		t.Errorf("wrong ropsten genesis hash, got %v, want %v", block.Hash(), params.RopstenGenesisHash)
+	block = DefaultRinkebyGenesisBlock().ToBlock(nil)
+	if block.Hash() != params.RinkebyGenesisHash {
+		t.Errorf("wrong rinkeby genesis hash, got %v, want %v", block.Hash(), params.RinkebyGenesisHash)
 	}
 }
 
@@ -95,14 +95,14 @@ func TestSetupGenesis(t *testing.T) {
 			wantConfig: customg.Config,
 		},
 		{
-			name: "custom block in DB, genesis == ropsten",
+			name: "custom block in DB, genesis == rinkeby",
 			fn: func(db ethdb.Database) (*params.ChainConfig, common.Hash, error) {
 				customg.MustCommit(db)
-				return SetupGenesisBlock(db, DefaultTestnetGenesisBlock())
+				return SetupGenesisBlock(db, DefaultRinkebyGenesisBlock())
 			},
-			wantErr:    &GenesisMismatchError{Stored: customghash, New: params.RopstenGenesisHash},
-			wantHash:   params.RopstenGenesisHash,
-			wantConfig: params.RopstenChainConfig,
+			wantErr:    &GenesisMismatchError{Stored: customghash, New: params.RinkebyGenesisHash},
+			wantHash:   params.RinkebyGenesisHash,
+			wantConfig: params.RinkebyChainConfig,
 		},
 		{
 			name: "compatible config in DB",
@@ -178,16 +178,8 @@ func TestGenesisHashes(t *testing.T) {
 			hash:    params.GoerliGenesisHash,
 		},
 		{
-			genesis: DefaultRopstenGenesisBlock(),
-			hash:    params.RopstenGenesisHash,
-		},
-		{
 			genesis: DefaultRinkebyGenesisBlock(),
 			hash:    params.RinkebyGenesisHash,
-		},
-		{
-			genesis: DefaultYoloV3GenesisBlock(),
-			hash:    params.YoloV3GenesisHash,
 		},
 	}
 	for i, c := range cases {

@@ -240,10 +240,6 @@ func init() {
 		prompt.Stdin.Close() // Resets terminal mode.
 		return nil
 	}
-
-	// if err := rpc.SetDefaultOpenRPCSchemaRaw(openrpc.OpenRPCSchema); err != nil {
-	//	log.Crit("Setting OpenRPC default", "error", err)
-	// }
 }
 
 func main() {

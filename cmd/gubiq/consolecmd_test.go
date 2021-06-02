@@ -35,7 +35,7 @@ const (
 	httpAPIs = "eth:1.0 net:1.0 rpc:1.0 web3:1.0"
 )
 
-// spawns geth with the given command line args, using a set of flags to minimise
+// spawns gubiq with the given command line args, using a set of flags to minimise
 // memory and disk IO. If the args don't set --datadir, the
 // child g gets a temporary data directory.
 func runMinimalGubiq(t *testing.T, args ...string) *testgubiq {
@@ -52,7 +52,7 @@ func runMinimalGubiq(t *testing.T, args ...string) *testgubiq {
 func TestConsoleWelcome(t *testing.T) {
 	coinbase := "0x8605cdbbdb6d264aa742e77020dcbc58fcdce182"
 
-	// Start a geth console, make sure it's cleaned up and terminate the console
+	// Start a gubiq console, make sure it's cleaned up and terminate the console
 	gubiq := runMinimalGubiq(t, "--miner.etherbase", coinbase, "console")
 
 	// Gather all the infos the welcome message needs to contain
@@ -131,7 +131,7 @@ func testAttachWelcome(t *testing.T, gubiq *testgubiq, endpoint, apis string) {
 	attach.SetTemplateFunc("goarch", func() string { return runtime.GOARCH })
 	attach.SetTemplateFunc("gover", runtime.Version)
 	attach.SetTemplateFunc("gubiqver", func() string { return params.VersionWithCommit("", "") })
-	attach.SetTemplateFunc("etherbase", func() string { return geth.Etherbase })
+	attach.SetTemplateFunc("etherbase", func() string { return gubiq.Etherbase })
 	attach.SetTemplateFunc("niltime", func() string {
 		return time.Unix(0, 0).Format("Mon Jan 02 2006 15:04:05 GMT-0700 (MST)")
 	})
