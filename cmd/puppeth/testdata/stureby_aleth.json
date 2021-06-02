@@ -18,7 +18,7 @@
     "minimumDifficulty": "0x20000",
     "difficultyBoundDivisor": "0x800",
     "durationLimit": "0xd",
-    "blockReward": "0x4563918244f40000",
+    "blockReward": "0x6f05b59d3b200000",
     "networkID": "0x4cb2e",
     "chainID": "0x4cb2e",
     "allowFutureBlocks": false

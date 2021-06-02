@@ -73,7 +73,7 @@ func TestHeaderInsertion(t *testing.T) {
 		genesis = new(Genesis).MustCommit(db)
 	)
 
-	hc, err := NewHeaderChain(db, params.AllEthashProtocolChanges, ubqhash.NewFaker(), func() bool { return false })
+	hc, err := NewHeaderChain(db, params.AllUbqhashProtocolChanges, ubqhash.NewFaker(), func() bool { return false })
 	if err != nil {
 		t.Fatal(err)
 	}

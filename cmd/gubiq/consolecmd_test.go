@@ -31,7 +31,7 @@ import (
 )
 
 const (
-	ipcAPIs  = "admin:1.0 debug:1.0 eth:1.0 ubqhash:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0"
+	ipcAPIs  = "admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 ubqhash:1.0 web3:1.0"
 	httpAPIs = "eth:1.0 net:1.0 rpc:1.0 web3:1.0"
 )
 
@@ -39,10 +39,9 @@ const (
 // memory and disk IO. If the args don't set --datadir, the
 // child g gets a temporary data directory.
 func runMinimalGubiq(t *testing.T, args ...string) *testgubiq {
-	// --ropsten to make the 'writing genesis to disk' faster (no accounts)
 	// --networkid=1337 to avoid cache bump
 	// --syncmode=full to avoid allocating fast sync bloom
-	allArgs := []string{"--ropsten", "--networkid", "1337", "--syncmode=full", "--port", "0",
+	allArgs := []string{"--networkid", "1337", "--syncmode=full", "--port", "0",
 		"--nat", "none", "--nodiscover", "--maxpeers", "0", "--cache", "64"}
 	return runGubiq(t, append(allArgs, args...)...)
 }
@@ -61,7 +60,7 @@ func TestConsoleWelcome(t *testing.T) {
 	gubiq.SetTemplateFunc("gover", runtime.Version)
 	gubiq.SetTemplateFunc("gubiqver", func() string { return params.VersionWithCommit("", "") })
 	gubiq.SetTemplateFunc("niltime", func() string {
-		return time.Unix(0, 0).Format("Mon Jan 02 2006 15:04:05 GMT-0700 (MST)")
+		return "Sat Jan 28 2017 21:00:00 GMT+0100 (CET)"
 	})
 	gubiq.SetTemplateFunc("apis", func() string { return ipcAPIs })
 
@@ -133,7 +132,7 @@ func testAttachWelcome(t *testing.T, gubiq *testgubiq, endpoint, apis string) {
 	attach.SetTemplateFunc("gubiqver", func() string { return params.VersionWithCommit("", "") })
 	attach.SetTemplateFunc("etherbase", func() string { return gubiq.Etherbase })
 	attach.SetTemplateFunc("niltime", func() string {
-		return time.Unix(0, 0).Format("Mon Jan 02 2006 15:04:05 GMT-0700 (MST)")
+		return "Sat Jan 28 2017 21:00:00 GMT+0100 (CET)"
 	})
 	attach.SetTemplateFunc("ipc", func() bool { return strings.HasPrefix(endpoint, "ipc") })
 	attach.SetTemplateFunc("datadir", func() string { return gubiq.Datadir })
