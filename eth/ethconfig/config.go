@@ -65,7 +65,7 @@ var Defaults = Config{
 		DatasetsOnDisk:   2,
 		DatasetsLockMmap: false,
 	},
-	NetworkId:               88,
+	NetworkId:               8,
 	TxLookupLimit:           2350000,
 	LightPeers:              100, // TODO - iquidus
 	UltraLightFraction:      75,
