@@ -30,6 +30,8 @@ const (
 	// handshakeTimeout is the maximum allowed time for the `eth` handshake to
 	// complete before dropping the connection.= as malicious.
 	handshakeTimeout = 5 * time.Second
+
+	legacyNetworkID = 88
 )
 
 // Handshake executes the eth protocol handshake, negotiating version number,
@@ -45,7 +47,7 @@ func (p *Peer) Handshake(network uint64, td *big.Int, head common.Hash, genesis 
 		case p.version == ETH65:
 			errc <- p2p.Send(p.rw, StatusMsg, &StatusPacket{
 				ProtocolVersion: uint32(p.version),
-				NetworkID:       88,
+				NetworkID:       legacyNetworkID,
 				TD:              td,
 				Head:            head,
 				Genesis:         genesis,
@@ -103,7 +105,7 @@ func (p *Peer) readStatus(network uint64, status *StatusPacket, genesis common.H
 	if err := msg.Decode(&status); err != nil {
 		return fmt.Errorf("%w: message %v: %v", errDecode, msg, err)
 	}
-	if status.NetworkID != network && status.NetworkID != 88 {
+	if status.NetworkID != network && status.NetworkID != legacyNetworkID {
 		return fmt.Errorf("%w: %d (!= %d)", errNetworkIDMismatch, status.NetworkID, network)
 	}
 	if uint(status.ProtocolVersion) != p.version {
