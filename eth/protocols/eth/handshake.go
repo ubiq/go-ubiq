@@ -30,6 +30,8 @@ const (
 	// handshakeTimeout is the maximum allowed time for the `eth` handshake to
 	// complete before dropping the connection.= as malicious.
 	handshakeTimeout = 5 * time.Second
+
+	legacyNetworkID = 88
 )
 
 // Handshake executes the eth protocol handshake, negotiating version number,
@@ -41,14 +43,26 @@ func (p *Peer) Handshake(network uint64, td *big.Int, head common.Hash, genesis 
 	var status StatusPacket // safe to read after two values have been received from errc
 
 	go func() {
-		errc <- p2p.Send(p.rw, StatusMsg, &StatusPacket{
-			ProtocolVersion: uint32(p.version),
-			NetworkID:       network,
-			TD:              td,
-			Head:            head,
-			Genesis:         genesis,
-			ForkID:          forkID,
-		})
+		switch {
+		case p.version == ETH65:
+			errc <- p2p.Send(p.rw, StatusMsg, &StatusPacket{
+				ProtocolVersion: uint32(p.version),
+				NetworkID:       legacyNetworkID,
+				TD:              td,
+				Head:            head,
+				Genesis:         genesis,
+				ForkID:          forkID,
+			})
+		default:
+			errc <- p2p.Send(p.rw, StatusMsg, &StatusPacket{
+				ProtocolVersion: uint32(p.version),
+				NetworkID:       network,
+				TD:              td,
+				Head:            head,
+				Genesis:         genesis,
+				ForkID:          forkID,
+			})
+		}
 	}()
 	go func() {
 		errc <- p.readStatus(network, &status, genesis, forkFilter)
@@ -91,7 +105,7 @@ func (p *Peer) readStatus(network uint64, status *StatusPacket, genesis common.H
 	if err := msg.Decode(&status); err != nil {
 		return fmt.Errorf("%w: message %v: %v", errDecode, msg, err)
 	}
-	if status.NetworkID != network {
+	if status.NetworkID != network && status.NetworkID != legacyNetworkID {
 		return fmt.Errorf("%w: %d (!= %d)", errNetworkIDMismatch, status.NetworkID, network)
 	}
 	if uint(status.ProtocolVersion) != p.version {
