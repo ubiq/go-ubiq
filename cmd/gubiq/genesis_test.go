@@ -82,7 +82,7 @@ func TestCustomGenesis(t *testing.T) {
 		runGubiq(t, "--datadir", datadir, "init", json).WaitExit()
 
 		// Query the custom genesis block
-		gubiq := runGubiq(t, "--networkid", "1337", "--syncmode=full",
+		gubiq := runGubiq(t, "--networkid", "1337", "--syncmode=full", "--cache", "16",
 			"--datadir", datadir, "--maxpeers", "0", "--port", "0",
 			"--nodiscover", "--nat", "none", "--ipcdisable",
 			"--exec", tt.query, "console")

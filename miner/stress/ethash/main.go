@@ -14,9 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// +build none
-
-// This file contains a miner stress test based on the Ubqhash consensus engine.
+// This file contains a miner stress test based on the Ethash consensus engine.
 package main
 
 import (
@@ -37,6 +35,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/crypto"
 	"github.com/ubiq/go-ubiq/v5/eth"
 	"github.com/ubiq/go-ubiq/v5/eth/downloader"
+	"github.com/ubiq/go-ubiq/v5/eth/ethconfig"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/miner"
 	"github.com/ubiq/go-ubiq/v5/node"
@@ -169,8 +168,8 @@ func makeMiner(genesis *core.Genesis) (*node.Node, *eth.Ethereum, error) {
 		DatabaseCache:   256,
 		DatabaseHandles: 256,
 		TxPool:          core.DefaultTxPoolConfig,
-		GPO:             eth.DefaultConfig.GPO,
-		Ethash:          eth.DefaultConfig.Ethash,
+		GPO:             ethconfig.Defaults.GPO,
+		Ethash:          ethconfig.Defaults.Ethash,
 		Miner: miner.Config{
 			GasFloor: genesis.GasLimit * 9 / 10,
 			GasCeil:  genesis.GasLimit * 11 / 10,

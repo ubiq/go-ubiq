@@ -179,14 +179,13 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 			utils.GpoBlocksFlag,
 			utils.GpoPercentileFlag,
 			utils.GpoMaxGasPriceFlag,
+			utils.GpoIgnoreGasPriceFlag,
 		},
 	},
 	{
 		Name: "VIRTUAL MACHINE",
 		Flags: []cli.Flag{
 			utils.VMEnableDebugFlag,
-			utils.EVMInterpreterFlag,
-			utils.EWASMInterpreterFlag,
 		},
 	},
 	{

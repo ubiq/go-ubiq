@@ -72,8 +72,10 @@ func TestCreation(t *testing.T) {
 				{5435344, ID{Hash: checksumToBytes(0xafec6b27), Next: 5435345}}, // Last Petersburg block
 				{5435345, ID{Hash: checksumToBytes(0xcbdb8838), Next: 8290928}}, // First Istanbul block
 				{8290927, ID{Hash: checksumToBytes(0xcbdb8838), Next: 8290928}}, // Last Istanbul block
-				{8290928, ID{Hash: checksumToBytes(0x6910c8bd), Next: 0}},       // First Berlin block
-				{10000000, ID{Hash: checksumToBytes(0x6910c8bd), Next: 0}},      // Future Berlin block
+				{8290928, ID{Hash: checksumToBytes(0x6910c8bd), Next: 8897988}}, // First Berlin block
+				{8897987, ID{Hash: checksumToBytes(0x6910c8bd), Next: 8897988}}, // Last Berlin block
+				{8897988, ID{Hash: checksumToBytes(0x8E29F2F3), Next: 0}},       // First London block
+				{10000000, ID{Hash: checksumToBytes(0x8E29F2F3), Next: 0}},      // Future London block
 			},
 		},
 		// Goerli test cases
@@ -85,8 +87,10 @@ func TestCreation(t *testing.T) {
 				{1561650, ID{Hash: checksumToBytes(0xa3f5ab08), Next: 1561651}}, // Last Petersburg block
 				{1561651, ID{Hash: checksumToBytes(0xc25efa5c), Next: 4460644}}, // First Istanbul block
 				{4460643, ID{Hash: checksumToBytes(0xc25efa5c), Next: 4460644}}, // Last Istanbul block
-				{4460644, ID{Hash: checksumToBytes(0x757a1c47), Next: 0}},       // First Berlin block
-				{5000000, ID{Hash: checksumToBytes(0x757a1c47), Next: 0}},       // Future Berlin block
+				{4460644, ID{Hash: checksumToBytes(0x757a1c47), Next: 5062605}}, // First Berlin block
+				{5000000, ID{Hash: checksumToBytes(0x757a1c47), Next: 5062605}}, // Last Berlin block
+				{5062605, ID{Hash: checksumToBytes(0xB8C6299D), Next: 0}},       // First London block
+				{6000000, ID{Hash: checksumToBytes(0xB8C6299D), Next: 0}},       // Future London block
 			},
 		},
 	}
@@ -159,11 +163,11 @@ func TestValidation(t *testing.T) {
 		// Local is mainnet Petersburg, remote is Rinkeby Petersburg.
 		{7987396, ID{Hash: checksumToBytes(0xafec6b27), Next: 0}, ErrLocalIncompatibleOrStale},
 
-		// Local is mainnet Berlin, far in the future. Remote announces Gopherium (non existing fork)
+		// Local is mainnet London, far in the future. Remote announces Gopherium (non existing fork)
 		// at some future block 88888888, for itself, but past block for local. Local is incompatible.
 		//
 		// This case detects non-upgraded nodes with majority hash power (typical Ropsten mess).
-		{88888888, ID{Hash: checksumToBytes(0x0eb440f6), Next: 88888888}, ErrLocalIncompatibleOrStale},
+		{88888888, ID{Hash: checksumToBytes(0xb715077d), Next: 88888888}, ErrLocalIncompatibleOrStale},
 
 		// Local is mainnet Byzantium. Remote is also in Byzantium, but announces Gopherium (non existing
 		// fork) at block 7279999, before Petersburg. Local is incompatible.

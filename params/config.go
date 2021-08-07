@@ -63,6 +63,7 @@ var (
 		PetersburgBlock:     big.NewInt(1075090), // Andromeda
 		IstanbulBlock:       big.NewInt(1500000), // Taurus
 		BerlinBlock:         big.NewInt(math.MaxInt64),
+		LondonBlock:         big.NewInt(math.MaxInt64),
 		Ubqhash: &UbqhashConfig{
 			DigishieldModBlock: big.NewInt(4088),
 			FluxBlock:          big.NewInt(8000),
@@ -122,6 +123,7 @@ var (
 		PetersburgBlock:     big.NewInt(4_321_234),
 		IstanbulBlock:       big.NewInt(5_435_345),
 		BerlinBlock:         big.NewInt(8_290_928),
+		LondonBlock:         big.NewInt(8_897_988),
 		Clique: &CliqueConfig{
 			Period: 15,
 			Epoch:  30000,
@@ -130,10 +132,10 @@ var (
 
 	// RinkebyTrustedCheckpoint contains the light client trusted checkpoint for the Rinkeby test network.
 	RinkebyTrustedCheckpoint = &TrustedCheckpoint{
-		SectionIndex: 254,
-		SectionHead:  common.HexToHash("0x0cba01dd71baa22ac8fa0b105bc908e94f9ecfbc79b4eb97427fe07b5851dd10"),
-		CHTRoot:      common.HexToHash("0x5673d8fc49c9c7d8729068640e4b392d46952a5a38798973bac1cf1d0d27ad7d"),
-		BloomRoot:    common.HexToHash("0x70e01232b66df9a7778ae3291c9217afb9a2d9f799f32d7b912bd37e7bce83a8"),
+		SectionIndex: 270,
+		SectionHead:  common.HexToHash("0x03ef8982c93bbf18c859bc1b20ae05b439f04cf1ff592656e941d2c3fcff5d68"),
+		CHTRoot:      common.HexToHash("0x9eb80685e8ece479e105b170439779bc0f89997ab7f4dee425f85c4234e8a6b5"),
+		BloomRoot:    common.HexToHash("0xc3673721c5697efe5fe4cb825d178f4a335dbfeda6a197fb75c9256a767379dc"),
 	}
 
 	// RinkebyCheckpointOracle contains a set of configs for the Rinkeby test network oracle.
@@ -160,6 +162,7 @@ var (
 		PetersburgBlock:     big.NewInt(0),
 		IstanbulBlock:       big.NewInt(1_561_651),
 		BerlinBlock:         big.NewInt(4_460_644),
+		LondonBlock:         big.NewInt(5_062_605),
 		Clique: &CliqueConfig{
 			Period: 15,
 			Epoch:  30000,
@@ -168,10 +171,10 @@ var (
 
 	// GoerliTrustedCheckpoint contains the light client trusted checkpoint for the Görli test network.
 	GoerliTrustedCheckpoint = &TrustedCheckpoint{
-		SectionIndex: 138,
-		SectionHead:  common.HexToHash("0xb7ea0566abd7d0def5b3c9afa3431debb7bb30b65af35f106ca93a59e6c859a7"),
-		CHTRoot:      common.HexToHash("0x378c7ea9081242beb982e2e39567ba12f2ed3e59e5aba3f9db1d595646d7c9f4"),
-		BloomRoot:    common.HexToHash("0x523c169286cfca52e8a6579d8c35dc8bf093412d8a7478163bfa81ae91c2492d"),
+		SectionIndex: 154,
+		SectionHead:  common.HexToHash("0xf4cb74cc0e3683589f4992902184241fb892d7c3859d0044c16ec864605ff80d"),
+		CHTRoot:      common.HexToHash("0xead95f9f2504b2c7c6d82c51d30e50b40631c3ea2f590cddcc9721cfc0ae79de"),
+		BloomRoot:    common.HexToHash("0xc6dd6cfe88ac9c4a6d19c9a8651944fa9d941a2340a8f5ddaf673d4d39779d81"),
 	}
 
 	// GoerliCheckpointOracle contains a set of configs for the Goerli test network oracle.
@@ -275,8 +278,7 @@ type ChainConfig struct {
 	PetersburgBlock     *big.Int `json:"petersburgBlock,omitempty"`     // Petersburg switch block (nil = same as Constantinople)
 	IstanbulBlock       *big.Int `json:"istanbulBlock,omitempty"`       // Istanbul switch block (nil = no fork, 0 = already on istanbul)
 	BerlinBlock         *big.Int `json:"berlinBlock,omitempty"`         // Berlin switch block (nil = no fork, 0 = already on berlin)
-
-	EWASMBlock *big.Int `json:"ewasmBlock,omitempty"` // EWASM switch block (nil = no fork, 0 = already activated)
+	LondonBlock         *big.Int `json:"londonBlock,omitempty"`         // London switch block (nil = no fork, 0 = already on london)
 
 	// Various consensus engines
 	Ubqhash *UbqhashConfig `json:"ubqhash,omitempty"`
@@ -323,7 +325,7 @@ func (c *ChainConfig) String() string {
 	default:
 		engine = "unknown"
 	}
-	return fmt.Sprintf("{ChainID: %v Homestead: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v Petersburg: %v Istanbul: %v Berlin: %v, Engine: %v}",
+	return fmt.Sprintf("{ChainID: %v Homestead: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v Petersburg: %v Istanbul: %v, Berlin: %v, London: %v, Engine: %v}",
 		c.ChainID,
 		c.HomesteadBlock,
 		c.EIP150Block,
@@ -334,6 +336,7 @@ func (c *ChainConfig) String() string {
 		c.PetersburgBlock,
 		c.IstanbulBlock,
 		c.BerlinBlock,
+		c.LondonBlock,
 		engine,
 	)
 }
@@ -385,9 +388,9 @@ func (c *ChainConfig) IsBerlin(num *big.Int) bool {
 	return isForked(c.BerlinBlock, num)
 }
 
-// IsEWASM returns whether num represents a block number after the EWASM fork
-func (c *ChainConfig) IsEWASM(num *big.Int) bool {
-	return isForked(c.EWASMBlock, num)
+// IsLondon returns whether num is either equal to the London fork block or greater.
+func (c *ChainConfig) IsLondon(num *big.Int) bool {
+	return isForked(c.LondonBlock, num)
 }
 
 // CheckCompatible checks whether scheduled fork transitions have been imported
@@ -427,6 +430,7 @@ func (c *ChainConfig) CheckConfigForkOrder() error {
 		{name: "petersburgBlock", block: c.PetersburgBlock},
 		{name: "istanbulBlock", block: c.IstanbulBlock},
 		{name: "berlinBlock", block: c.BerlinBlock},
+		{name: "londonBlock", block: c.LondonBlock},
 	} {
 		if lastFork.name != "" {
 			// Next one must be higher number
@@ -484,8 +488,8 @@ func (c *ChainConfig) checkCompatible(newcfg *ChainConfig, head *big.Int) *Confi
 	if isForkIncompatible(c.BerlinBlock, newcfg.BerlinBlock, head) {
 		return newCompatError("Berlin fork block", c.BerlinBlock, newcfg.BerlinBlock)
 	}
-	if isForkIncompatible(c.EWASMBlock, newcfg.EWASMBlock, head) {
-		return newCompatError("ewasm fork block", c.EWASMBlock, newcfg.EWASMBlock)
+	if isForkIncompatible(c.LondonBlock, newcfg.LondonBlock, head) {
+		return newCompatError("London fork block", c.LondonBlock, newcfg.LondonBlock)
 	}
 	return nil
 }
@@ -554,7 +558,7 @@ type Rules struct {
 	ChainID                                                 *big.Int
 	IsHomestead, IsEIP150, IsEIP155, IsEIP158               bool
 	IsByzantium, IsConstantinople, IsPetersburg, IsIstanbul bool
-	IsBerlin, IsCatalyst                                    bool
+	IsBerlin, IsLondon, IsCatalyst                          bool
 }
 
 // Rules ensures c's ChainID is not nil.
@@ -574,5 +578,6 @@ func (c *ChainConfig) Rules(num *big.Int) Rules {
 		IsPetersburg:     c.IsPetersburg(num),
 		IsIstanbul:       c.IsIstanbul(num),
 		IsBerlin:         c.IsBerlin(num),
+		IsLondon:         c.IsLondon(num),
 	}
 }

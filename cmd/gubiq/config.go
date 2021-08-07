@@ -31,6 +31,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/cmd/utils"
 	"github.com/ubiq/go-ubiq/v5/eth/ethconfig"
 	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/metrics"
 	"github.com/ubiq/go-ubiq/v5/node"
 	"github.com/ubiq/go-ubiq/v5/params"
@@ -62,7 +63,12 @@ var tomlSettings = toml.Config{
 		return field
 	},
 	MissingField: func(rt reflect.Type, field string) error {
-		link := ""
+		id := fmt.Sprintf("%s.%s", rt.String(), field)
+		if deprecated(id) {
+			log.Warn("Config field is deprecated and won't have an effect", "name", id)
+			return nil
+		}
+		var link string
 		if unicode.IsUpper(rune(rt.Name()[0])) && rt.PkgPath() != "main" {
 			link = fmt.Sprintf(", see https://godoc.org/%s#%s for available fields", rt.PkgPath(), rt.Name())
 		}
@@ -140,8 +146,8 @@ func makeConfigNode(ctx *cli.Context) (*node.Node, gubiqConfig) {
 // makeFullNode loads geth configuration and creates the Ethereum backend.
 func makeFullNode(ctx *cli.Context) (*node.Node, ethapi.Backend) {
 	stack, cfg := makeConfigNode(ctx)
-	if ctx.GlobalIsSet(utils.OverrideBerlinFlag.Name) {
-		cfg.Eth.OverrideBerlin = new(big.Int).SetUint64(ctx.GlobalUint64(utils.OverrideBerlinFlag.Name))
+	if ctx.GlobalIsSet(utils.OverrideAriesFlag.Name) {
+		cfg.Eth.OverrideLondon = new(big.Int).SetUint64(ctx.GlobalUint64(utils.OverrideAriesFlag.Name))
 	}
 	backend, _ := utils.RegisterEthService(stack, &cfg.Eth)
 
@@ -215,5 +221,16 @@ func applyMetricConfig(ctx *cli.Context, cfg *gubiqConfig) {
 	}
 	if ctx.GlobalIsSet(utils.MetricsInfluxDBTagsFlag.Name) {
 		cfg.Metrics.InfluxDBTags = ctx.GlobalString(utils.MetricsInfluxDBTagsFlag.Name)
+	}
+}
+
+func deprecated(field string) bool {
+	switch field {
+	case "ethconfig.Config.EVMInterpreter":
+		return true
+	case "ethconfig.Config.EWASMInterpreter":
+		return true
+	default:
+		return false
 	}
 }

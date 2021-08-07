@@ -19,7 +19,7 @@
 package metrics
 
 import (
-	"syscall"
+	syscall "golang.org/x/sys/unix"
 
 	"github.com/ubiq/go-ubiq/v5/log"
 )
