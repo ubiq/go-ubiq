@@ -235,8 +235,8 @@ var (
 		Value: 2048,
 	}
 	OverrideAriesFlag = cli.Uint64Flag{
-		Name:  "override.london",
-		Usage: "Manually specify London fork-block, overriding the bundled setting",
+		Name:  "override.aries",
+		Usage: "Manually specify Aries fork-block, overriding the bundled setting",
 	}
 	// Ubqhash settings
 	UbqhashCacheDirFlag = DirectoryFlag{

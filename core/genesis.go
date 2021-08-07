@@ -158,7 +158,7 @@ func SetupGenesisBlock(db ethdb.Database, genesis *Genesis) (*params.ChainConfig
 	return SetupGenesisBlockWithOverride(db, genesis, nil)
 }
 
-func SetupGenesisBlockWithOverride(db ethdb.Database, genesis *Genesis, overrideLondon *big.Int) (*params.ChainConfig, common.Hash, error) {
+func SetupGenesisBlockWithOverride(db ethdb.Database, genesis *Genesis, overrideAries *big.Int) (*params.ChainConfig, common.Hash, error) {
 	if genesis != nil && genesis.Config == nil {
 		return params.AllUbqhashProtocolChanges, common.Hash{}, errGenesisNoConfig
 	}
@@ -204,8 +204,9 @@ func SetupGenesisBlockWithOverride(db ethdb.Database, genesis *Genesis, override
 	}
 	// Get the existing chain configuration.
 	newcfg := genesis.configOrDefault(stored)
-	if overrideLondon != nil {
-		newcfg.LondonBlock = overrideLondon
+	if overrideAries != nil {
+		newcfg.BerlinBlock = overrideAries
+		newcfg.LondonBlock = overrideAries
 	}
 	if err := newcfg.CheckConfigForkOrder(); err != nil {
 		return newcfg, common.Hash{}, err
