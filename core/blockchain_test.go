@@ -445,7 +445,7 @@ func testReorg(t *testing.T, first, second []int64, td int64, full bool) {
 	}
 }
 
-// Tests that the insertion functions detect banned hashes.
+// Tests that the insertion functions detect blacklisted hashes.
 func TestBadHeaderHashes(t *testing.T) { testBadHashes(t, false) }
 func TestBadBlockHashes(t *testing.T)  { testBadHashes(t, true) }
 
@@ -473,8 +473,8 @@ func testBadHashes(t *testing.T, full bool) {
 
 		_, err = blockchain.InsertHeaderChain(headers, 1)
 	}
-	if !errors.Is(err, ErrBannedHash) {
-		t.Errorf("error mismatch: have: %v, want: %v", err, ErrBannedHash)
+	if !errors.Is(err, ErrBlacklistedHash) {
+		t.Errorf("error mismatch: have: %v, want: %v", err, ErrBlacklistedHash)
 	}
 }
 
