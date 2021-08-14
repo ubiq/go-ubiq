@@ -261,11 +261,10 @@ func makeHeader(chain consensus.ChainHeaderReader, parent *types.Block, state *s
 	}
 	if chain.Config().IsLondon(header.Number) {
 		header.BaseFee = misc.CalcBaseFee(chain.Config(), parent.Header())
-		parentGasLimit := parent.GasLimit()
 		if !chain.Config().IsLondon(parent.Number()) {
-			parentGasLimit = parent.GasLimit() * params.ElasticityMultiplier
+			parentGasLimit := parent.GasLimit() * params.ElasticityMultiplier
+			header.GasLimit = CalcGasLimit(parentGasLimit, parentGasLimit)
 		}
-		header.GasLimit = CalcGasLimit1559(parentGasLimit, parentGasLimit)
 	}
 	return header
 }

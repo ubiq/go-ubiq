@@ -21,7 +21,7 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v5"
+	ethereum "github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/accounts"
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/common/hexutil"
@@ -29,7 +29,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/event"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/rpc"
-	"github.com/ubiq/go-ubiq/v5/signer/core"
+	"github.com/ubiq/go-ubiq/v5/signer/core/apitypes"
 )
 
 type ExternalBackend struct {
@@ -203,7 +203,7 @@ func (api *ExternalSigner) SignTx(account accounts.Account, tx *types.Transactio
 		t := common.NewMixedcaseAddress(*tx.To())
 		to = &t
 	}
-	args := &core.SendTxArgs{
+	args := &apitypes.SendTxArgs{
 		Data:  &data,
 		Nonce: hexutil.Uint64(tx.Nonce()),
 		Value: hexutil.Big(*tx.Value()),
@@ -211,11 +211,14 @@ func (api *ExternalSigner) SignTx(account accounts.Account, tx *types.Transactio
 		To:    to,
 		From:  common.NewMixedcaseAddress(account.Address),
 	}
-	if tx.GasFeeCap() != nil {
+	switch tx.Type() {
+	case types.LegacyTxType, types.AccessListTxType:
+		args.GasPrice = (*hexutil.Big)(tx.GasPrice())
+	case types.DynamicFeeTxType:
 		args.MaxFeePerGas = (*hexutil.Big)(tx.GasFeeCap())
 		args.MaxPriorityFeePerGas = (*hexutil.Big)(tx.GasTipCap())
-	} else {
-		args.GasPrice = (*hexutil.Big)(tx.GasPrice())
+	default:
+		return nil, fmt.Errorf("Unsupported tx type %d", tx.Type())
 	}
 	// We should request the default chain id that we're operating with
 	// (the chain we're executing on)
