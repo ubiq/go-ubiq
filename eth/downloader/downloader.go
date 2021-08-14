@@ -48,8 +48,8 @@ var (
 	MaxStateFetch   = 384 // Amount of node state values to allow fetching per request
 
 	maxQueuedHeaders            = 32 * 1024                         // [eth/62] Maximum number of headers to queue for import (DOS protection)
-	maxHeadersProcess           = 1                                 //2048                              // Number of header download results to import at once into the chain
-	maxResultsProcess           = 1                                 //2048                              // Number of content download results to import at once into the chain
+	maxHeadersProcess           = 2048                              // Number of header download results to import at once into the chain
+	maxResultsProcess           = 2048                              // Number of content download results to import at once into the chain
 	fullMaxForkAncestry  uint64 = params.FullImmutabilityThreshold  // Maximum chain reorganisation (locally redeclared so tests can reduce it)
 	lightMaxForkAncestry uint64 = params.LightImmutabilityThreshold // Maximum chain reorganisation (locally redeclared so tests can reduce it)
 
@@ -411,11 +411,13 @@ func (d *Downloader) synchronise(id string, hash common.Hash, td *big.Int, mode 
 	// Atomically set the requested sync mode
 	atomic.StoreUint32(&d.mode, uint32(mode))
 
-	// If FastSync its safe to increase maxResultsProcess - iquidus
-	if mode == FastSync {
-		maxResultsProcess = 2048
-	} else {
+	// Set correct values based on syncmode (flux downloader fix) - iquidus
+	if mode == FullSync {
 		maxResultsProcess = 1
+		maxHeadersProcess = 1
+	} else {
+		maxResultsProcess = 2048
+		maxHeadersProcess = 1
 	}
 
 	// Retrieve the origin peer and initiate the downloading process
