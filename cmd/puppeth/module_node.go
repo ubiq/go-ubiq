@@ -117,7 +117,7 @@ func deployNode(client *sshClient, network string, bootnodes []string, config *n
 	template.Must(template.New("").Parse(nodeComposefile)).Execute(composefile, map[string]interface{}{
 		"Type":       kind,
 		"Datadir":    config.datadir,
-		"Ubqhashdir":  config.ubqhashdir,
+		"Ubqhashdir": config.ubqhashdir,
 		"Network":    network,
 		"Port":       config.port,
 		"TotalPeers": config.peersTotal,
@@ -155,7 +155,7 @@ type nodeInfos struct {
 	genesis    []byte
 	network    int64
 	datadir    string
-	ubqhashdir  string
+	ubqhashdir string
 	ethstats   string
 	port       int
 	enode      string
@@ -255,7 +255,7 @@ func checkNode(client *sshClient, network string, boot bool) (*nodeInfos, error)
 	stats := &nodeInfos{
 		genesis:    genesis,
 		datadir:    infos.volumes["/root/.ubiq"],
-		ubqhashdir:  infos.volumes["/root/.ubqhash"],
+		ubqhashdir: infos.volumes["/root/.ubqhash"],
 		port:       port,
 		peersTotal: totalPeers,
 		peersLight: lightPeers,

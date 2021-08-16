@@ -24,12 +24,12 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/metrics"
-	"github.com/ubiq/go-ubiq/v5/metrics/exp"
 	"github.com/fjl/memsize/memsizeui"
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
+	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v5/metrics"
+	"github.com/ubiq/go-ubiq/v5/metrics/exp"
 	"gopkg.in/urfave/cli.v1"
 )
 

@@ -18,9 +18,10 @@ package rpc
 
 import (
 	"context"
-	openrpc "github.com/octanolabs/g0penrpc"
 	"io"
 	"sync/atomic"
+
+	openrpc "github.com/octanolabs/g0penrpc"
 
 	mapset "github.com/deckarep/golang-set"
 	"github.com/ubiq/go-ubiq/v5/log"

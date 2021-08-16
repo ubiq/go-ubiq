@@ -17,14 +17,10 @@
 package tests
 
 import (
-	// "fmt"
 	"math/big"
 
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/common/math"
-	// "github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
-
-	//"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/params"
 )
 

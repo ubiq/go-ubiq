@@ -4,10 +4,11 @@ import (
 	"encoding"
 	"encoding/json"
 	"errors"
+	"reflect"
+
 	openrpc "github.com/octanolabs/g0penrpc"
 	"github.com/ubiq/go-ubiq/v5/common/hexutil"
 	"github.com/ubiq/go-ubiq/v5/log"
-	"reflect"
 )
 
 func makeOpenRpcSpecV1(server *Server) (*openrpc.DocumentSpec1, error) {

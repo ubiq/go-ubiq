@@ -880,11 +880,8 @@ func testMultiProtoSync(t *testing.T, protocol uint, mode SyncMode) {
 func TestEmptyShortCircuit65Full(t *testing.T) { testEmptyShortCircuit(t, eth.ETH65, FullSync) }
 func TestEmptyShortCircuit65Fast(t *testing.T) { testEmptyShortCircuit(t, eth.ETH65, FastSync) }
 
-func TestEmptyShortCircuit65Full(t *testing.T) { testEmptyShortCircuit(t, 65, FullSync) }
-func TestEmptyShortCircuit65Fast(t *testing.T) { testEmptyShortCircuit(t, 65, FastSync) }
-
-func TestEmptyShortCircuit66Full(t *testing.T) { testEmptyShortCircuit(t, 66, FullSync) }
-func TestEmptyShortCircuit66Fast(t *testing.T) { testEmptyShortCircuit(t, 66, FastSync) }
+func TestEmptyShortCircuit66Full(t *testing.T) { testEmptyShortCircuit(t, eth.ETH66, FullSync) }
+func TestEmptyShortCircuit66Fast(t *testing.T) { testEmptyShortCircuit(t, eth.ETH66, FastSync) }
 
 func testEmptyShortCircuit(t *testing.T, protocol uint, mode SyncMode) {
 	t.Parallel()

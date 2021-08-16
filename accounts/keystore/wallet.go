@@ -19,7 +19,7 @@ package keystore
 import (
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v5"
+	ethereum "github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/accounts"
 	"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/crypto"

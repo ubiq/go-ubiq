@@ -3218,11 +3218,13 @@ func TestEIP1559Transition(t *testing.T) {
 
 	state, _ := chain.State()
 
+	reward, _ := ubqhash.CalcBaseBlockReward(chain.Config().Ubqhash, block.Number())
+
 	// 3: Ensure that miner received only the tx's tip.
 	actual := state.GetBalance(block.Coinbase())
 	expected := new(big.Int).Add(
 		new(big.Int).SetUint64(block.GasUsed()*block.Transactions()[0].GasTipCap().Uint64()),
-		ubqhash.ConstantinopleBlockReward,
+		reward,
 	)
 	if actual.Cmp(expected) != 0 {
 		t.Fatalf("miner balance incorrect: expected %d, got %d", expected, actual)
@@ -3262,7 +3264,7 @@ func TestEIP1559Transition(t *testing.T) {
 	actual = state.GetBalance(block.Coinbase())
 	expected = new(big.Int).Add(
 		new(big.Int).SetUint64(block.GasUsed()*effectiveTip),
-		ubqhash.ConstantinopleBlockReward,
+		reward,
 	)
 	if actual.Cmp(expected) != 0 {
 		t.Fatalf("miner balance incorrect: expected %d, got %d", expected, actual)

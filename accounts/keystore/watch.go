@@ -21,8 +21,8 @@ package keystore
 import (
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/rjeczalik/notify"
+	"github.com/ubiq/go-ubiq/v5/log"
 )
 
 type watcher struct {

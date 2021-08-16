@@ -14,7 +14,7 @@ linters:
   enable:
     - deadcode
     - goconst
-    - goimports
+    # - goimports
     - gosimple
     - govet
     - ineffassign
