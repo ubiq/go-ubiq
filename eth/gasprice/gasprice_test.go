@@ -29,6 +29,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/core/vm"
 	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v5/event"
 	"github.com/ubiq/go-ubiq/v5/params"
 	"github.com/ubiq/go-ubiq/v5/rpc"
 )
@@ -88,6 +89,10 @@ func (b *testBackend) PendingBlockAndReceipts() (*types.Block, types.Receipts) {
 
 func (b *testBackend) ChainConfig() *params.ChainConfig {
 	return b.chain.Config()
+}
+
+func (b *testBackend) SubscribeChainHeadEvent(ch chan<- core.ChainHeadEvent) event.Subscription {
+	return nil
 }
 
 func newTestBackend(t *testing.T, londonBlock *big.Int, pending bool) *testBackend {
