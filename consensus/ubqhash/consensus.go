@@ -324,9 +324,8 @@ func CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *type
 	parentDiff := parent.Difficulty
 
 	config := chain.Config()
-	if config.Ubqhash != nil {
-		ubqhashConfig := config.Ubqhash
-		
+	ubqhashConfig := config.Ubqhash
+	if ubqhashConfig.UIP0Block != nil && parentNumber.Cmp(ubqhashConfig.UIP0Block) < 0 {
 		if parentNumber.Cmp(ubqhashConfig.FluxBlock) < 0 {
 			if parentNumber.Cmp(ubqhashConfig.DigishieldModBlock) < 0 {
 				// Original DigishieldV3
@@ -682,8 +681,8 @@ func CalcUncleBlockReward(config *params.ChainConfig, blockHeight *big.Int, uncl
 // included uncles. The coinbase of each uncle block is also rewarded.
 func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
 	// block reward (miner)
-
-	if config.Ubqhash != nil {
+	ubqhashConfig := config.Ubqhash
+	if ubqhashConfig.UIP0Block != nil && header.Number.Cmp(ubqhashConfig.UIP0Block) < 0 {
 		//ubiq
 		initialReward, currentReward := CalcBaseBlockReward(config.Ubqhash, header.Number)
 

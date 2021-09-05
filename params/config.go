@@ -65,6 +65,8 @@ var (
 		BerlinBlock:         big.NewInt(math.MaxInt64),
 		LondonBlock:         big.NewInt(math.MaxInt64),
 		Ubqhash: &UbqhashConfig{
+			UIP0Block: big.NewInt(0),
+			UIP1Epoch: big.NewInt(22),
 			DigishieldModBlock: big.NewInt(4088),
 			FluxBlock:          big.NewInt(8000),
 			MonetaryPolicy: []UbqhashMPStep{
@@ -195,7 +197,7 @@ var (
 	//
 	// This configuration is intentionally not using keyed fields to force anyone
 	// adding flags to the config to also have to set these fields.
-	AllUbqhashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &UbqhashConfig{big.NewInt(4088), big.NewInt(8000), []UbqhashMPStep{{Block: big.NewInt(0), Reward: big.NewInt(8e+18)}}}, nil}
+	AllUbqhashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &UbqhashConfig{big.NewInt(0), big.NewInt(22), big.NewInt(4088), big.NewInt(8000), []UbqhashMPStep{{Block: big.NewInt(0), Reward: big.NewInt(8e+18)}}}, nil}
 
 	// AllCliqueProtocolChanges contains every protocol change (EIPs) introduced
 	// and accepted by the Ubiq core developers into the Clique consensus.
@@ -293,9 +295,11 @@ type UbqhashMPStep struct {
 
 // UbqhashConfig is the consensus engine configs for proof-of-work based sealing.
 type UbqhashConfig struct {
-	DigishieldModBlock *big.Int        `json:"digishieldModBlock,omitempty"` // Block to activate the DigiShield V3 mod
-	FluxBlock          *big.Int        `json:"fluxBlock"`                    // Block to activate the Flux difficulty algorithm
-	MonetaryPolicy     []UbqhashMPStep `json:"monetaryPolicy"`               // Blocks to step the block reward down
+	UIP0Block		   *big.Int		   `json:"UIP0Block,omitempty"`					   // Block to activate UIP0 (ubiq genesis defaults)
+	UIP1Epoch		   *big.Int		   `json:"UIP1Epoch,omitempty"`                    // Epoch to activate UIP1
+	DigishieldModBlock *big.Int        `json:"digishieldModBlock,omitempty"`           // Block to activate the DigiShield V3 mod
+	FluxBlock          *big.Int        `json:"fluxBlock,omitempty"`                    // Block to activate the Flux difficulty algorithm
+	MonetaryPolicy     []UbqhashMPStep `json:"monetaryPolicy,omitempty"`               // Blocks to step the block reward down
 }
 
 // String implements the stringer interface, returning the consensus engine details.
