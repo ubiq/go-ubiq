@@ -48,8 +48,6 @@ const (
 	datasetParents     = 256     // Number of parents of each dataset element
 	cacheRounds        = 3       // Number of rounds in cache production
 	loopAccesses       = 64      // Number of accesses in hashimoto loop
-
-	uip1Epoch = 22
 )
 
 // cacheSize returns the size of the ubqhash verification cache that belongs to a certain
@@ -152,7 +150,7 @@ func seedHash(block uint64) []byte {
 // algorithm from Strict Memory Hard Hashing Functions (2014). The output is a
 // set of 524288 64-byte values.
 // This method places the result into dest in machine byte order.
-func generateCache(dest []uint32, epoch uint64, seed []byte) {
+func generateCache(dest []uint32, epoch uint64, uip1Epoch *uint64, seed []byte) {
 	// Print some debug logs to allow analysis on low end devices
 	logger := log.New("epoch", epoch)
 
@@ -196,7 +194,7 @@ func generateCache(dest []uint32, epoch uint64, seed []byte) {
 	}()
 	// Create a hasher to reuse between invocations
 	keccak512 := makeHasher(sha3.NewLegacyKeccak512())
-	if epoch >= uip1Epoch {
+	if uip1Epoch != nil && epoch >= *uip1Epoch {
 		h, _ := blake2b.New512(nil)
 		keccak512 = blakeHasher(h) // use blakeHasher instead of makeHasher here.
 	}
