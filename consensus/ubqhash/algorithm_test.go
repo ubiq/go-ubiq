@@ -723,7 +723,7 @@ func TestConcurrentDiskCacheGeneration(t *testing.T) {
 	})
 	// Simulate multiple processes sharing the same datadir
 	var pend sync.WaitGroup
-
+	var uip1Epoch uint64 = 22
 	for i := 0; i < 3; i++ {
 		pend.Add(1)
 		go func(idx int) {
@@ -732,6 +732,7 @@ func TestConcurrentDiskCacheGeneration(t *testing.T) {
 			config := Config{
 				CacheDir:     cachedir,
 				CachesOnDisk: 1,
+				UIP1Epoch: &uip1Epoch,
 			}
 			ubqhash := New(config, nil, false)
 			defer ubqhash.Close()
