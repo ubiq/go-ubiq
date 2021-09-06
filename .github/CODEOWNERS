@@ -5,7 +5,6 @@ accounts/usbwallet              @karalabe
 accounts/scwallet               @gballet
 accounts/abi                    @gballet @MariusVanDerWijden
 cmd/clef                        @holiman
-cmd/puppeth                     @karalabe
 consensus                       @karalabe
 core/                           @karalabe @holiman @rjl493456442
 eth/                            @karalabe @holiman @rjl493456442

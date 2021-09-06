@@ -77,7 +77,6 @@ var (
 		executablePath("bootnode"),
 		executablePath("evm"),
 		executablePath("gubiq"),
-		executablePath("puppeth"),
 		executablePath("rlpdump"),
 		executablePath("clef"),
 	}
@@ -99,10 +98,6 @@ var (
 		{
 			BinaryName:  "gubiq",
 			Description: "Ubiq CLI client.",
-		},
-		{
-			BinaryName:  "puppeth",
-			Description: "Ubiq private network manager.",
 		},
 		{
 			BinaryName:  "rlpdump",
