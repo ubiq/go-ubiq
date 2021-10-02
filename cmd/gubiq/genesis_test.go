@@ -58,7 +58,7 @@ var customGenesisTests = []struct {
 			"parentHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
 			"timestamp"  : "0x00",
 			"config"     : {
-				"homesteadBlock" : 42,
+				"homesteadBlock" : 42
 			}
 		}`,
 		query:  "eth.getBlock(0).nonce",
