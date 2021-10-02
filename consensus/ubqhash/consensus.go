@@ -325,9 +325,9 @@ func CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *type
 
 	config := chain.Config()
 	ubqhashConfig := config.Ubqhash
-	if ubqhashConfig.UIP0Block != nil && parentNumber.Cmp(ubqhashConfig.UIP0Block) < 0 {
-		if parentNumber.Cmp(ubqhashConfig.FluxBlock) < 0 {
-			if parentNumber.Cmp(ubqhashConfig.DigishieldModBlock) < 0 {
+	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && parentNumber.Cmp(ubqhashConfig.UIP0Block) < 0 {
+		if ubqhashConfig.FluxBlock != nil && parentNumber.Cmp(ubqhashConfig.FluxBlock) < 0 {
+			if ubqhashConfig.DigishieldModBlock != nil && parentNumber.Cmp(ubqhashConfig.DigishieldModBlock) < 0 {
 				// Original DigishieldV3
 				return CalcDifficultyDigishieldV3(chain, parentNumber, parentDiff, parent, digishieldV3Config)
 			}
@@ -682,9 +682,9 @@ func CalcUncleBlockReward(config *params.ChainConfig, blockHeight *big.Int, uncl
 func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
 	// block reward (miner)
 	ubqhashConfig := config.Ubqhash
-	if ubqhashConfig.UIP0Block != nil && header.Number.Cmp(ubqhashConfig.UIP0Block) < 0 {
+	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && header.Number.Cmp(ubqhashConfig.UIP0Block) < 0 {
 		//ubiq
-		initialReward, currentReward := CalcBaseBlockReward(config.Ubqhash, header.Number)
+		initialReward, currentReward := CalcBaseBlockReward(ubqhashConfig, header.Number)
 
 		// Uncle reward step down fix. (activates along-side byzantium)
 		ufixReward := initialReward
