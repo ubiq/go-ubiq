@@ -18,6 +18,7 @@
 package ethconfig
 
 import (
+	"math"
 	"math/big"
 	"os"
 	"os/user"
@@ -59,7 +60,7 @@ var LightClientGPO = gasprice.Config{
 	IgnorePrice:      gasprice.DefaultIgnorePrice,
 }
 
-// Defaults contains default settings for use on the Ethereum main net.
+// Defaults contains default settings for use on the Ubiq main net.
 var Defaults = Config{
 	SyncMode: downloader.FastSync,
 	Ubqhash: ubqhash.Config{
@@ -70,6 +71,7 @@ var Defaults = Config{
 		DatasetsInMem:    1,
 		DatasetsOnDisk:   2,
 		DatasetsLockMmap: false,
+		UIP1Epoch:        22,
 	},
 	NetworkId:               8,
 	TxLookupLimit:           2350000,
@@ -198,7 +200,7 @@ type Config struct {
 	// CheckpointOracle is the configuration for checkpoint oracle.
 	CheckpointOracle *params.CheckpointOracleConfig `toml:",omitempty"`
 
-	// Berlin block override (TODO: remove after the fork)
+	// Berlin block override (TODO(iquidus) remove after the fork)
 	OverrideAries *big.Int `toml:",omitempty"`
 }
 
@@ -217,6 +219,12 @@ func CreateConsensusEngine(stack *node.Node, chainConfig *params.ChainConfig, co
 	case ubqhash.ModeShared:
 		log.Warn("Ubqhash used in shared mode")
 	}
+
+	var uip1Epoch uint64 = math.MaxUint64
+	if chainConfig.Ubqhash != nil && chainConfig.Ubqhash.UIP1Epoch != nil {
+		uip1Epoch = chainConfig.Ubqhash.UIP1Epoch.Uint64()
+	}
+
 	engine := ubqhash.New(ubqhash.Config{
 		PowMode:          config.PowMode,
 		CacheDir:         stack.ResolvePath(config.CacheDir),
@@ -228,6 +236,7 @@ func CreateConsensusEngine(stack *node.Node, chainConfig *params.ChainConfig, co
 		DatasetsOnDisk:   config.DatasetsOnDisk,
 		DatasetsLockMmap: config.DatasetsLockMmap,
 		NotifyFull:       config.NotifyFull,
+		UIP1Epoch:        uip1Epoch,
 	}, notify, noverify)
 	engine.SetThreads(-1) // Disable CPU mining
 	return engine

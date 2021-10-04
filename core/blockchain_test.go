@@ -3062,7 +3062,7 @@ func TestEIP2718Transition(t *testing.T) {
 		address = crypto.PubkeyToAddress(key.PublicKey)
 		funds   = big.NewInt(1000000000000000)
 		gspec   = &Genesis{
-			Config: params.RinkebyChainConfig,
+			Config: params.TestChainConfig,
 			Alloc: GenesisAlloc{
 				address: {Balance: funds},
 				// The address 0xAAAA sloads 0x00 and 0x01
@@ -3168,6 +3168,7 @@ func TestEIP1559Transition(t *testing.T) {
 
 	gspec.Config.BerlinBlock = common.Big0
 	gspec.Config.LondonBlock = common.Big0
+	gspec.Config.Ubqhash.UIP0Block = common.Big0
 	genesis := gspec.MustCommit(db)
 	signer := types.LatestSigner(gspec.Config)
 
@@ -3218,7 +3219,7 @@ func TestEIP1559Transition(t *testing.T) {
 
 	state, _ := chain.State()
 
-	reward, _ := ubqhash.CalcBaseBlockReward(chain.Config().Ubqhash, block.Number())
+	_, reward := ubqhash.CalcBaseBlockReward(chain.Config().Ubqhash, block.Number())
 
 	// 3: Ensure that miner received only the tx's tip.
 	actual := state.GetBalance(block.Coinbase())

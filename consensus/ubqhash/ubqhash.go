@@ -189,14 +189,9 @@ func newlru(what string, maxItems int, new func(epoch uint64, uip1Epoch uint64) 
 // get retrieves or creates an item for the given epoch. The first return value is always
 // non-nil. The second return value is non-nil if lru thinks that an item will be useful in
 // the near future.
-func (lru *lru) get(epoch uint64, uip1FEpoch *uint64) (item, future interface{}) {
+func (lru *lru) get(epoch uint64, uip1Epoch uint64) (item, future interface{}) {
 	lru.mu.Lock()
 	defer lru.mu.Unlock()
-
-	var uip1Epoch uint64 = math.MaxUint64
-	if uip1FEpoch != nil {
-		uip1Epoch = *uip1FEpoch
-	}
 
 	// Get or create the item for the requested epoch.
 	item, ok := lru.cache.Get(epoch)
@@ -212,7 +207,7 @@ func (lru *lru) get(epoch uint64, uip1FEpoch *uint64) (item, future interface{})
 	// Update the 'future item' if epoch is larger than previously seen.
 	if epoch < maxEpoch-1 && lru.future < epoch+1 {
 		log.Trace("Requiring new future ubqhash "+lru.what, "epoch", epoch+1)
-		future = lru.new(epoch + 1, uip1Epoch)
+		future = lru.new(epoch+1, uip1Epoch)
 		lru.future = epoch + 1
 		lru.futureItem = future
 	}
@@ -246,7 +241,7 @@ func (c *cache) generate(dir string, limit int, lock bool, test bool) {
 		// If we don't store anything on disk, generate and return.
 		if dir == "" {
 			c.cache = make([]uint32, size/4)
-			generateCache(c.cache, c.epoch, &c.uip1Epoch, seed)
+			generateCache(c.cache, c.epoch, c.uip1Epoch, seed)
 			return
 		}
 		// Disk storage is needed, this will get fancy
@@ -256,7 +251,6 @@ func (c *cache) generate(dir string, limit int, lock bool, test bool) {
 		}
 		path := filepath.Join(dir, fmt.Sprintf("cache-R%d-%x%s", algorithmRevision, seed[:8], endian))
 		logger := log.New("epoch", c.epoch)
-
 		// We're about to mmap the file, ensure that the mapping is cleaned up when the
 		// cache becomes unused.
 		runtime.SetFinalizer(c, (*cache).finalizer)
@@ -271,12 +265,12 @@ func (c *cache) generate(dir string, limit int, lock bool, test bool) {
 		logger.Debug("Failed to load old ubqhash cache", "err", err)
 
 		// No previous cache available, create a new cache file to fill
-		c.dump, c.mmap, c.cache, err = memoryMapAndGenerate(path, size, lock, func(buffer []uint32) { generateCache(buffer, c.epoch, &c.uip1Epoch, seed) })
+		c.dump, c.mmap, c.cache, err = memoryMapAndGenerate(path, size, lock, func(buffer []uint32) { generateCache(buffer, c.epoch, c.uip1Epoch, seed) })
 		if err != nil {
 			logger.Error("Failed to generate mapped ubqhash cache", "err", err)
 
 			c.cache = make([]uint32, size/4)
-			generateCache(c.cache, c.epoch, &c.uip1Epoch, seed)
+			generateCache(c.cache, c.epoch, c.uip1Epoch, seed)
 		}
 		// Iterate over all previous instances and delete old ones
 		for ep := int(c.epoch) - limit; ep >= 0; ep-- {
@@ -298,13 +292,13 @@ func (c *cache) finalizer() {
 
 // dataset wraps an ubqhash dataset with some metadata to allow easier concurrent use.
 type dataset struct {
-	epoch   uint64    // Epoch for which this cache is relevant
-	uip1Epoch   uint64    // Epoch activation for UIP-1
-	dump    *os.File  // File descriptor of the memory mapped cache
-	mmap    mmap.MMap // Memory map itself to unmap before releasing
-	dataset []uint32  // The actual cache data content
-	once    sync.Once // Ensures the cache is generated only once
-	done    uint32    // Atomic flag to determine generation status
+	epoch     uint64    // Epoch for which this cache is relevant
+	uip1Epoch uint64    // Epoch activation for UIP-1
+	dump      *os.File  // File descriptor of the memory mapped cache
+	mmap      mmap.MMap // Memory map itself to unmap before releasing
+	dataset   []uint32  // The actual cache data content
+	once      sync.Once // Ensures the cache is generated only once
+	done      uint32    // Atomic flag to determine generation status
 }
 
 // newDataset creates a new ubqhash mining dataset and returns it as a plain Go
@@ -329,7 +323,7 @@ func (d *dataset) generate(dir string, limit int, lock bool, test bool) {
 		// If we don't store anything on disk, generate and return
 		if dir == "" {
 			cache := make([]uint32, csize/4)
-			generateCache(cache, d.epoch, &d.uip1Epoch, seed)
+			generateCache(cache, d.epoch, d.uip1Epoch, seed)
 
 			d.dataset = make([]uint32, dsize/4)
 			generateDataset(d.dataset, d.epoch, cache)
@@ -359,7 +353,7 @@ func (d *dataset) generate(dir string, limit int, lock bool, test bool) {
 
 		// No previous dataset available, create a new dataset file to fill
 		cache := make([]uint32, csize/4)
-		generateCache(cache, d.epoch, &d.uip1Epoch, seed)
+		generateCache(cache, d.epoch, d.uip1Epoch, seed)
 
 		d.dump, d.mmap, d.dataset, err = memoryMapAndGenerate(path, dsize, lock, func(buffer []uint32) { generateDataset(buffer, d.epoch, cache) })
 		if err != nil {
@@ -434,7 +428,7 @@ type Config struct {
 
 	Log log.Logger `toml:"-"`
 	// UIP-1 - ubqhash
-	UIP1Epoch *uint64 `toml:"-"`
+	UIP1Epoch uint64 `toml:"-"`
 }
 
 // Ubqhash is a consensus engine based on proof-of-work implementing the ubqhash
@@ -573,7 +567,6 @@ func (ubqhash *Ubqhash) cache(block uint64) *cache {
 	epoch := block / epochLength
 	currentI, futureI := ubqhash.caches.get(epoch, ubqhash.config.UIP1Epoch)
 	current := currentI.(*cache)
-
 	// Wait for generation finish.
 	current.generate(ubqhash.config.CacheDir, ubqhash.config.CachesOnDisk, ubqhash.config.CachesLockMmap, ubqhash.config.PowMode == ModeTest)
 

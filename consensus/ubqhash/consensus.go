@@ -39,9 +39,9 @@ import (
 
 // Ubqhash proof-of-work protocol constants.
 var (
-	FrontierBlockReward           = big.NewInt(5e+18) // Block reward in wei for successfully mining a block
-	ByzantiumBlockReward          = big.NewInt(3e+18) // Block reward in wei for successfully mining a block upward from Byzantium
-	ConstantinopleBlockReward     = big.NewInt(2e+18) // Block reward in wei for successfully mining a block upward from Constantinople
+	FrontierBlockReward       = big.NewInt(5e+18) // Block reward in wei for successfully mining a block
+	ByzantiumBlockReward      = big.NewInt(3e+18) // Block reward in wei for successfully mining a block upward from Byzantium
+	ConstantinopleBlockReward = big.NewInt(2e+18) // Block reward in wei for successfully mining a block upward from Constantinople
 
 	maxUncles              = 2                // Maximum number of uncles allowed in a single block
 	allowedFutureBlockTime = 15 * time.Second // Max time from current time allowed for blocks, before they're considered future blocks
@@ -325,7 +325,7 @@ func CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *type
 
 	config := chain.Config()
 	ubqhashConfig := config.Ubqhash
-	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && parentNumber.Cmp(ubqhashConfig.UIP0Block) < 0 {
+	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && parentNumber.Cmp(ubqhashConfig.UIP0Block) >= 0 {
 		if ubqhashConfig.FluxBlock != nil && parentNumber.Cmp(ubqhashConfig.FluxBlock) < 0 {
 			if ubqhashConfig.DigishieldModBlock != nil && parentNumber.Cmp(ubqhashConfig.DigishieldModBlock) < 0 {
 				// Original DigishieldV3
@@ -337,7 +337,7 @@ func CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *type
 		// Flux
 		return CalcDifficultyFlux(chain, big.NewInt(int64(time)), big.NewInt(int64(parentTime)), parentNumber, parentDiff, parent)
 	}
-	
+
 	next := new(big.Int).Add(parent.Number, big1)
 	switch {
 	case config.IsLondon(next):
@@ -457,15 +457,14 @@ func (ubqhash *Ubqhash) FinalizeAndAssemble(chain consensus.ChainHeaderReader, h
 
 // Some weird constants to avoid constant memory allocs for them.
 var (
-	big1  		  = big.NewInt(1)
-	big2  		  = big.NewInt(2)
-	big8  		  = big.NewInt(8)
+	big1          = big.NewInt(1)
+	big2          = big.NewInt(2)
+	big8          = big.NewInt(8)
 	big9          = big.NewInt(9)
 	big10         = big.NewInt(10)
-	big32 		  = big.NewInt(32)
+	big32         = big.NewInt(32)
 	bigMinus99    = big.NewInt(-99)
 	expDiffPeriod = big.NewInt(100000)
-
 )
 
 // makeDifficultyCalculator creates a difficultyCalculator with the given bomb-delay.
@@ -682,7 +681,7 @@ func CalcUncleBlockReward(config *params.ChainConfig, blockHeight *big.Int, uncl
 func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header *types.Header, uncles []*types.Header) {
 	// block reward (miner)
 	ubqhashConfig := config.Ubqhash
-	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && header.Number.Cmp(ubqhashConfig.UIP0Block) < 0 {
+	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && header.Number.Cmp(ubqhashConfig.UIP0Block) > 0 {
 		//ubiq
 		initialReward, currentReward := CalcBaseBlockReward(ubqhashConfig, header.Number)
 
@@ -728,5 +727,5 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 		}
 		state.AddBalance(header.Coinbase, reward)
 	}
-	
+
 }
