@@ -31,12 +31,12 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	ethereum "github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/common/mclock"
 	"github.com/ubiq/go-ubiq/v5/consensus"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/eth/downloader"
 	ethproto "github.com/ubiq/go-ubiq/v5/eth/protocols/eth"
 	"github.com/ubiq/go-ubiq/v5/event"
 	"github.com/ubiq/go-ubiq/v5/log"
@@ -66,7 +66,7 @@ type backend interface {
 	HeaderByNumber(ctx context.Context, number rpc.BlockNumber) (*types.Header, error)
 	GetTd(ctx context.Context, hash common.Hash) *big.Int
 	Stats() (pending int, queued int)
-	Downloader() *downloader.Downloader
+	SyncProgress() ethereum.SyncProgress
 }
 
 // fullNodeBackend encompasses the functionality necessary for a full node
@@ -774,7 +774,7 @@ func (s *Service) reportStats(conn *connWrapper) error {
 		mining = fullBackend.Miner().Mining()
 		hashrate = int(fullBackend.Miner().Hashrate())
 
-		sync := fullBackend.Downloader().Progress()
+		sync := fullBackend.SyncProgress()
 		syncing = fullBackend.CurrentHeader().Number.Uint64() >= sync.HighestBlock
 
 		price, _ := fullBackend.SuggestGasTipCap(context.Background())
@@ -783,7 +783,7 @@ func (s *Service) reportStats(conn *connWrapper) error {
 			gasprice += int(basefee.Uint64())
 		}
 	} else {
-		sync := s.backend.Downloader().Progress()
+		sync := s.backend.SyncProgress()
 		syncing = s.backend.CurrentHeader().Number.Uint64() >= sync.HighestBlock
 	}
 	// Assemble the node stats and send it to the server

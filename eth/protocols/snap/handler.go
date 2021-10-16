@@ -23,7 +23,7 @@ import (
 
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/core"
-	"github.com/ubiq/go-ubiq/v5/core/state"
+	"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/metrics"
 	"github.com/ubiq/go-ubiq/v5/p2p"
@@ -318,7 +318,7 @@ func handleMessage(backend Backend, peer *Peer) error {
 				if err != nil {
 					return p2p.Send(peer.rw, StorageRangesMsg, &StorageRangesPacket{ID: req.ID})
 				}
-				var acc state.Account
+				var acc types.StateAccount
 				if err := rlp.DecodeBytes(accTrie.Get(account[:]), &acc); err != nil {
 					return p2p.Send(peer.rw, StorageRangesMsg, &StorageRangesPacket{ID: req.ID})
 				}
@@ -468,7 +468,7 @@ func handleMessage(backend Backend, peer *Peer) error {
 				// Storage slots requested, open the storage trie and retrieve from there
 				account, err := snap.Account(common.BytesToHash(pathset[0]))
 				loads++ // always account database reads, even for failures
-				if err != nil {
+				if err != nil || account == nil {
 					break
 				}
 				stTrie, err := trie.NewSecure(common.BytesToHash(account.Root), triedb)

@@ -148,6 +148,7 @@ func structFields(typ reflect.Type) (fields []field, err error) {
 		lastPublic  = lastPublicField(typ)
 		anyOptional = false
 	)
+
 	for i := 0; i < typ.NumField(); i++ {
 		if f := typ.Field(i); f.PkgPath == "" { // exported
 			tags, err := parseStructTag(typ, i, lastPublic)
@@ -247,6 +248,7 @@ func parseStructTag(typ reflect.Type, fi, lastPublic int) (tags, error) {
 
 func lastPublicField(typ reflect.Type) int {
 	last := 0
+
 	for i := 0; i < typ.NumField(); i++ {
 		if typ.Field(i).PkgPath == "" {
 			last = i

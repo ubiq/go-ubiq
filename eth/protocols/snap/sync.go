@@ -32,6 +32,7 @@ import (
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
 	"github.com/ubiq/go-ubiq/v5/core/state"
 	"github.com/ubiq/go-ubiq/v5/core/state/snapshot"
+	"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/crypto"
 	"github.com/ubiq/go-ubiq/v5/ethdb"
 	"github.com/ubiq/go-ubiq/v5/event"
@@ -124,8 +125,8 @@ type accountRequest struct {
 type accountResponse struct {
 	task *accountTask // Task which this request is filling
 
-	hashes   []common.Hash    // Account hashes in the returned range
-	accounts []*state.Account // Expanded accounts in the returned range
+	hashes   []common.Hash         // Account hashes in the returned range
+	accounts []*types.StateAccount // Expanded accounts in the returned range
 
 	cont bool // Whether the account range has a continuation
 }
@@ -2273,9 +2274,9 @@ func (s *Syncer) OnAccounts(peer SyncPeer, id uint64, hashes []common.Hash, acco
 		s.scheduleRevertAccountRequest(req)
 		return err
 	}
-	accs := make([]*state.Account, len(accounts))
+	accs := make([]*types.StateAccount, len(accounts))
 	for i, account := range accounts {
-		acc := new(state.Account)
+		acc := new(types.StateAccount)
 		if err := rlp.DecodeBytes(account, acc); err != nil {
 			panic(err) // We created these blobs, we must be able to decode them
 		}
@@ -2739,7 +2740,7 @@ func (s *Syncer) onHealByteCodes(peer SyncPeer, id uint64, bytecodes [][]byte) e
 // Note it's not concurrent safe, please handle the concurrent issue outside.
 func (s *Syncer) onHealState(paths [][]byte, value []byte) error {
 	if len(paths) == 1 {
-		var account state.Account
+		var account types.StateAccount
 		if err := rlp.DecodeBytes(value, &account); err != nil {
 			return nil
 		}

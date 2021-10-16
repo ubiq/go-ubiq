@@ -20,6 +20,7 @@ import (
 	"bytes"
 
 	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v5/core/types"
 	"github.com/ubiq/go-ubiq/v5/ethdb"
 	"github.com/ubiq/go-ubiq/v5/rlp"
 	"github.com/ubiq/go-ubiq/v5/trie"
@@ -43,7 +44,7 @@ func NewStateSync(root common.Hash, database ethdb.KeyValueReader, bloom *trie.S
 				return err
 			}
 		}
-		var obj Account
+		var obj types.StateAccount
 		if err := rlp.Decode(bytes.NewReader(leaf), &obj); err != nil {
 			return err
 		}

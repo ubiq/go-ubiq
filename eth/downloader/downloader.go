@@ -444,8 +444,8 @@ func (d *Downloader) syncWithPeer(p *peerConnection, hash common.Hash, td *big.I
 			d.mux.Post(DoneEvent{latest})
 		}
 	}()
-	if p.version < eth.ETH65 {
-		return fmt.Errorf("%w: advertized %d < required %d", errTooOld, p.version, eth.ETH65)
+	if p.version < eth.ETH66 {
+		return fmt.Errorf("%w: advertized %d < required %d", errTooOld, p.version, eth.ETH66)
 	}
 	mode := d.getMode()
 

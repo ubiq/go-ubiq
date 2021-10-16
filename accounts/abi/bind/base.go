@@ -24,7 +24,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v5"
+	ethereum "github.com/ubiq/go-ubiq/v5"
 	"github.com/ubiq/go-ubiq/v5/accounts/abi"
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/core/types"
@@ -431,6 +431,10 @@ func (c *BoundContract) WatchLogs(opts *WatchOpts, name string, query ...[]inter
 
 // UnpackLog unpacks a retrieved log into the provided output structure.
 func (c *BoundContract) UnpackLog(out interface{}, event string, log types.Log) error {
+	fmt.Printf("UnpackLog %s", log.Topics[0])
+	if log.Topics[0] != c.abi.Events[event].ID {
+		return fmt.Errorf("event signature mismatch")
+	}
 	if len(log.Data) > 0 {
 		if err := c.abi.UnpackIntoInterface(out, event, log.Data); err != nil {
 			return err
@@ -447,6 +451,9 @@ func (c *BoundContract) UnpackLog(out interface{}, event string, log types.Log) 
 
 // UnpackLogIntoMap unpacks a retrieved log into the provided map.
 func (c *BoundContract) UnpackLogIntoMap(out map[string]interface{}, event string, log types.Log) error {
+	if log.Topics[0] != c.abi.Events[event].ID {
+		return fmt.Errorf("event signature mismatch")
+	}
 	if len(log.Data) > 0 {
 		if err := c.abi.UnpackIntoMap(out, event, log.Data); err != nil {
 			return err
