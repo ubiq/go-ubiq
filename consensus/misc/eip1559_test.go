@@ -29,20 +29,21 @@ import (
 // do not use e.g. SetInt() on the numbers. For testing only
 func copyConfig(original *params.ChainConfig) *params.ChainConfig {
 	return &params.ChainConfig{
-		ChainID:             original.ChainID,
-		HomesteadBlock:      original.HomesteadBlock,
-		EIP150Block:         original.EIP150Block,
-		EIP150Hash:          original.EIP150Hash,
-		EIP155Block:         original.EIP155Block,
-		EIP158Block:         original.EIP158Block,
-		ByzantiumBlock:      original.ByzantiumBlock,
-		ConstantinopleBlock: original.ConstantinopleBlock,
-		PetersburgBlock:     original.PetersburgBlock,
-		IstanbulBlock:       original.IstanbulBlock,
-		BerlinBlock:         original.BerlinBlock,
-		LondonBlock:         original.LondonBlock,
-		Ubqhash:             original.Ubqhash,
-		Clique:              original.Clique,
+		ChainID:                 original.ChainID,
+		HomesteadBlock:          original.HomesteadBlock,
+		EIP150Block:             original.EIP150Block,
+		EIP150Hash:              original.EIP150Hash,
+		EIP155Block:             original.EIP155Block,
+		EIP158Block:             original.EIP158Block,
+		ByzantiumBlock:          original.ByzantiumBlock,
+		ConstantinopleBlock:     original.ConstantinopleBlock,
+		PetersburgBlock:         original.PetersburgBlock,
+		IstanbulBlock:           original.IstanbulBlock,
+		BerlinBlock:             original.BerlinBlock,
+		LondonBlock:             original.LondonBlock,
+		TerminalTotalDifficulty: original.TerminalTotalDifficulty,
+		Ubqhash:                 original.Ubqhash,
+		Clique:                  original.Clique,
 	}
 }
 

@@ -276,7 +276,7 @@ func rlpHash(x interface{}) (h common.Hash) {
 	return h
 }
 
-// TODO(iquidus): re-add this at some point. see: https://github.com/ethereum/go-ethereum/commit/84c51bc5ec9038db6ab28195384a6bd720a28af9
+// TODO(iquidus): re-add this at some point. see: https://github.com/ubiq/go-ubiq/v5/commit/84c51bc5ec9038db6ab28195384a6bd720a28af9
 // calcDifficulty is based on ethash.CalcDifficulty. This method is used in case
 // the caller does not provide an explicit difficulty, but instead provides only
 // parent timestamp + difficulty.

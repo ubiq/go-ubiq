@@ -162,6 +162,7 @@ var (
 		utils.IPCPathFlag,
 		utils.InsecureUnlockAllowedFlag,
 		utils.RPCGlobalGasCapFlag,
+		utils.RPCGlobalEVMTimeoutFlag,
 		utils.RPCGlobalTxFeeCapFlag,
 		utils.AllowUnprotectedTxs,
 	}
@@ -386,7 +387,7 @@ func startNode(ctx *cli.Context, stack *node.Node, backend ethapi.Backend) {
 	if ctx.GlobalBool(utils.MiningEnabledFlag.Name) || ctx.GlobalBool(utils.DeveloperFlag.Name) {
 		ethBackend, ok := backend.(*eth.EthAPIBackend)
 		if !ok {
-			utils.Fatalf("Ubiq service not running: %v", err)
+			utils.Fatalf("Ubiq service not running")
 		}
 		// Set the gas price to the limits from the CLI and start mining
 		gasprice := utils.GlobalBig(ctx, utils.MinerGasPriceFlag.Name)

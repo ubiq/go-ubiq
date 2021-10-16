@@ -149,6 +149,8 @@ type worker struct {
 	resubmitIntervalCh chan time.Duration
 	resubmitAdjustCh   chan *intervalAdjust
 
+	wg sync.WaitGroup
+
 	current      *environment                 // An environment for current running cycle.
 	localUncles  map[common.Hash]*types.Block // A set of side blocks generated locally as the possible uncle blocks.
 	remoteUncles map[common.Hash]*types.Block // A set of side blocks as the possible uncle blocks.
@@ -224,6 +226,7 @@ func newWorker(config *Config, chainConfig *params.ChainConfig, engine consensus
 		recommit = minRecommitInterval
 	}
 
+	worker.wg.Add(4)
 	go worker.mainLoop()
 	go worker.newWorkLoop(recommit)
 	go worker.resultLoop()
@@ -317,11 +320,9 @@ func (w *worker) isRunning() bool {
 // close terminates all background threads maintained by the worker.
 // Note the worker does not support being closed multiple times.
 func (w *worker) close() {
-	if w.current != nil && w.current.state != nil {
-		w.current.state.StopPrefetcher()
-	}
 	atomic.StoreInt32(&w.running, 0)
 	close(w.exitCh)
+	w.wg.Wait()
 }
 
 // recalcRecommit recalculates the resubmitting interval upon feedback.
@@ -348,6 +349,7 @@ func recalcRecommit(minRecommit, prev time.Duration, target float64, inc bool) t
 
 // newWorkLoop is a standalone goroutine to submit new mining work upon received events.
 func (w *worker) newWorkLoop(recommit time.Duration) {
+	defer w.wg.Done()
 	var (
 		interrupt   *int32
 		minRecommit = recommit // minimal resubmit interval specified by user.
@@ -445,9 +447,15 @@ func (w *worker) newWorkLoop(recommit time.Duration) {
 
 // mainLoop is a standalone goroutine to regenerate the sealing task based on the received event.
 func (w *worker) mainLoop() {
+	defer w.wg.Done()
 	defer w.txsSub.Unsubscribe()
 	defer w.chainHeadSub.Unsubscribe()
 	defer w.chainSideSub.Unsubscribe()
+	defer func() {
+		if w.current != nil && w.current.state != nil {
+			w.current.state.StopPrefetcher()
+		}
+	}()
 
 	for {
 		select {
@@ -547,6 +555,7 @@ func (w *worker) mainLoop() {
 // taskLoop is a standalone goroutine to fetch sealing task from the generator and
 // push them to consensus engine.
 func (w *worker) taskLoop() {
+	defer w.wg.Done()
 	var (
 		stopCh chan struct{}
 		prev   common.Hash
@@ -594,6 +603,7 @@ func (w *worker) taskLoop() {
 // resultLoop is a standalone goroutine to handle sealing result submitting
 // and flush relative data to the database.
 func (w *worker) resultLoop() {
+	defer w.wg.Done()
 	for {
 		select {
 		case block := <-w.resultCh:
@@ -960,11 +970,7 @@ func (w *worker) commitNewWork(interrupt *int32, noempty bool, timestamp int64) 
 	}
 
 	// Fill the block with all available pending transactions.
-	pending, err := w.eth.TxPool().Pending(true)
-	if err != nil {
-		log.Error("Failed to fetch pending transactions", "err", err)
-		return
-	}
+	pending := w.eth.TxPool().Pending(true)
 	// Short circuit if there is no available pending transactions.
 	// But if we disable empty precommit already, ignore it. Since
 	// empty block is necessary to keep the liveness of the network.

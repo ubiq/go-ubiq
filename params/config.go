@@ -197,16 +197,16 @@ var (
 	//
 	// This configuration is intentionally not using keyed fields to force anyone
 	// adding flags to the config to also have to set these fields.
-	AllUbqhashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), &UbqhashConfig{nil, big.NewInt(math.MaxInt64), nil, nil, []UbqhashMPStep{{Block: big.NewInt(0), Reward: big.NewInt(8e+18)}}}, nil}
+	AllUbqhashProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &UbqhashConfig{nil, big.NewInt(math.MaxInt64), nil, nil, []UbqhashMPStep{{Block: big.NewInt(0), Reward: big.NewInt(8e+18)}}}, nil}
 
 	// AllCliqueProtocolChanges contains every protocol change (EIPs) introduced
 	// and accepted by the Ubiq core developers into the Clique consensus.
 	//
 	// This configuration is intentionally not using keyed fields to force anyone
 	// adding flags to the config to also have to set these fields.
-	AllCliqueProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &CliqueConfig{Period: 0, Epoch: 30000}}
+	AllCliqueProtocolChanges = &ChainConfig{big.NewInt(1337), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, nil, &CliqueConfig{Period: 0, Epoch: 30000}}
 
-	TestChainConfig = &ChainConfig{big.NewInt(1), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), &UbqhashConfig{nil, big.NewInt(math.MaxInt64), nil, nil, []UbqhashMPStep{{Block: big.NewInt(0), Reward: big.NewInt(8e+18)}}}, nil}
+	TestChainConfig = &ChainConfig{big.NewInt(1), big.NewInt(0), big.NewInt(0), common.Hash{}, big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), nil, &UbqhashConfig{nil, big.NewInt(math.MaxInt64), nil, nil, []UbqhashMPStep{{Block: big.NewInt(0), Reward: big.NewInt(8e+18)}}}, nil}
 	TestRules       = TestChainConfig.Rules(new(big.Int))
 )
 
@@ -281,6 +281,10 @@ type ChainConfig struct {
 	IstanbulBlock       *big.Int `json:"istanbulBlock,omitempty"`       // Istanbul switch block (nil = no fork, 0 = already on istanbul)
 	BerlinBlock         *big.Int `json:"berlinBlock,omitempty"`         // Berlin switch block (nil = no fork, 0 = already on berlin)
 	LondonBlock         *big.Int `json:"londonBlock,omitempty"`         // London switch block (nil = no fork, 0 = already on london)
+
+	// TerminalTotalDifficulty is the amount of total difficulty reached by
+	// the network that triggers the consensus upgrade.
+	TerminalTotalDifficulty *big.Int `json:"terminalTotalDifficulty,omitempty"`
 
 	// Various consensus engines
 	Ubqhash *UbqhashConfig `json:"ubqhash,omitempty"`
@@ -395,6 +399,14 @@ func (c *ChainConfig) IsBerlin(num *big.Int) bool {
 // IsLondon returns whether num is either equal to the London fork block or greater.
 func (c *ChainConfig) IsLondon(num *big.Int) bool {
 	return isForked(c.LondonBlock, num)
+}
+
+// IsTerminalPoWBlock returns whether the given block is the last block of PoW stage.
+func (c *ChainConfig) IsTerminalPoWBlock(parentTotalDiff *big.Int, totalDiff *big.Int) bool {
+	if c.TerminalTotalDifficulty == nil {
+		return false
+	}
+	return parentTotalDiff.Cmp(c.TerminalTotalDifficulty) < 0 && totalDiff.Cmp(c.TerminalTotalDifficulty) >= 0
 }
 
 // CheckCompatible checks whether scheduled fork transitions have been imported
@@ -562,7 +574,7 @@ type Rules struct {
 	ChainID                                                 *big.Int
 	IsHomestead, IsEIP150, IsEIP155, IsEIP158               bool
 	IsByzantium, IsConstantinople, IsPetersburg, IsIstanbul bool
-	IsBerlin, IsLondon, IsCatalyst                          bool
+	IsBerlin, IsLondon                                      bool
 }
 
 // Rules ensures c's ChainID is not nil.

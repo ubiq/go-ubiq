@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU Lesser General Public License
 // along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
+//go:build none
 // +build none
 
 /*
@@ -141,7 +142,7 @@ var (
 	// This is the version of go that will be downloaded by
 	//
 	//     go run ci.go install -dlgo
-	dlgoVersion = "1.17"
+	dlgoVersion = "1.17.2"
 )
 
 var GOBIN, _ = filepath.Abs(filepath.Join("build", "bin"))
@@ -254,6 +255,11 @@ func buildFlags(env build.Environment) (flags []string) {
 	if runtime.GOOS == "darwin" {
 		ld = append(ld, "-s")
 	}
+	// Enforce the stacksize to 8M, which is the case on most platforms apart from
+	// alpine Linux.
+	if runtime.GOOS == "linux" {
+		ld = append(ld, "-extldflags", "-Wl,-z,stack-size=0x800000")
+	}
 	if len(ld) > 0 {
 		flags = append(flags, "-ldflags", strings.Join(ld, " "))
 	}
@@ -271,6 +277,7 @@ func doTest(cmdline []string) {
 		cc       = flag.String("cc", "", "Sets C compiler binary")
 		coverage = flag.Bool("coverage", false, "Whether to record code coverage")
 		verbose  = flag.Bool("v", false, "Whether to log verbosely")
+		race     = flag.Bool("race", false, "Execute the race detector")
 	)
 	flag.CommandLine.Parse(cmdline)
 
@@ -290,6 +297,9 @@ func doTest(cmdline []string) {
 	}
 	if *verbose {
 		gotest.Args = append(gotest.Args, "-v")
+	}
+	if *race {
+		gotest.Args = append(gotest.Args, "-race")
 	}
 
 	packages := []string{"./..."}

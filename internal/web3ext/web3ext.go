@@ -223,6 +223,11 @@ web3._extend({
 			outputFormatter: console.log
 		}),
 		new web3._extend.Method({
+			name: 'getHeaderRlp',
+			call: 'debug_getHeaderRlp',
+			params: 1
+		}),
+		new web3._extend.Method({
 			name: 'getBlockRlp',
 			call: 'debug_getBlockRlp',
 			params: 1
@@ -458,6 +463,12 @@ web3._extend({
 			name: 'freezeClient',
 			call: 'debug_freezeClient',
 			params: 1,
+		}),
+		new web3._extend.Method({
+			name: 'getAccessibleState',
+			call: 'debug_getAccessibleState',
+			params: 2,
+			inputFormatter:[web3._extend.formatters.inputBlockNumberFormatter, web3._extend.formatters.inputBlockNumberFormatter],
 		}),
 	],
 	properties: []
