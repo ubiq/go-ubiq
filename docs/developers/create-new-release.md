@@ -16,6 +16,6 @@
 - [ ] Edit `params/version.go` making the necessary changes to version information. (To `-unstable` version.)
 - [ ] `git commit -m "bump version from v1.11.16-stable to v1.11.17-unstable"`
 - [ ] `git push origin`
-  > Push the branch. This will get PR'd, eg. https://github.com/etclabscore/core-geth/pull/197
 - [ ] Draft a new release, following the existing patterns for naming and notes. https://github.com/ubiq/go-ubiq/releases/new
     - Define the tag the release should be associated with (eg `v1.11.16`).
+- [ ] update BUILD_TAG in https://github.com/ubiq/go-ubiq-builder/blob/main/.github/workflows/builder.yml#L4
