@@ -39,6 +39,10 @@ import (
 	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/ubiq/go-ubiq/v5/metrics"
 	"github.com/ubiq/go-ubiq/v5/node"
+
+	// Force-load the native, to trigger registration
+	_ "github.com/ubiq/go-ubiq/v5/eth/tracers/native"
+
 	"gopkg.in/urfave/cli.v1"
 )
 
@@ -66,7 +70,7 @@ var (
 		utils.NoUSBFlag,
 		utils.USBFlag,
 		utils.SmartCardDaemonPathFlag,
-		utils.OverrideAriesFlag,
+		utils.OverrideOrionFlag,
 		utils.UbqhashCacheDirFlag,
 		utils.UbqhashCachesInMemoryFlag,
 		utils.UbqhashCachesOnDiskFlag,

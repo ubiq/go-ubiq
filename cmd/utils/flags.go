@@ -230,9 +230,9 @@ var (
 		Usage: "Megabytes of memory allocated to bloom-filter for pruning",
 		Value: 2048,
 	}
-	OverrideAriesFlag = cli.Uint64Flag{
-		Name:  "override.aries",
-		Usage: "Manually specify Aries fork-block, overriding the bundled setting",
+	OverrideOrionFlag = cli.Uint64Flag{
+		Name:  "override.orion",
+		Usage: "Manually specify Orion fork-block, overriding the bundled setting",
 	}
 	// Ubqhash settings
 	UbqhashCacheDirFlag = DirectoryFlag{

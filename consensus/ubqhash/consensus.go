@@ -51,11 +51,6 @@ var (
 	// Specification EIP-3554: https://eips.ethereum.org/EIPS/eip-3554
 	calcDifficultyEip3554 = makeDifficultyCalculator(big.NewInt(9700000))
 
-	// calcDifficultyEip2384 is the difficulty adjustment algorithm as specified by EIP 2384.
-	// It offsets the bomb 4M blocks from Constantinople, so in total 9M blocks.
-	// Specification EIP-2384: https://eips.ethereum.org/EIPS/eip-2384
-	calcDifficultyEip2384 = makeDifficultyCalculator(big.NewInt(9000000))
-
 	// calcDifficultyConstantinople is the difficulty adjustment algorithm for Constantinople.
 	// It returns the difficulty that a new block should have when created at time given the
 	// parent block's time and difficulty. The calculation uses the Byzantium rules, but with

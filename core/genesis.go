@@ -158,7 +158,7 @@ func SetupGenesisBlock(db ethdb.Database, genesis *Genesis) (*params.ChainConfig
 	return SetupGenesisBlockWithOverride(db, genesis, nil)
 }
 
-func SetupGenesisBlockWithOverride(db ethdb.Database, genesis *Genesis, overrideAries *big.Int) (*params.ChainConfig, common.Hash, error) {
+func SetupGenesisBlockWithOverride(db ethdb.Database, genesis *Genesis, overrideOrion *big.Int) (*params.ChainConfig, common.Hash, error) {
 	if genesis != nil && genesis.Config == nil {
 		return params.AllUbqhashProtocolChanges, common.Hash{}, errGenesisNoConfig
 	}
@@ -204,9 +204,9 @@ func SetupGenesisBlockWithOverride(db ethdb.Database, genesis *Genesis, override
 	}
 	// Get the existing chain configuration.
 	newcfg := genesis.configOrDefault(stored)
-	if overrideAries != nil {
-		newcfg.BerlinBlock = overrideAries
-		newcfg.LondonBlock = overrideAries
+	if overrideOrion != nil {
+		newcfg.BerlinBlock = overrideOrion
+		newcfg.LondonBlock = overrideOrion
 	}
 	if err := newcfg.CheckConfigForkOrder(); err != nil {
 		return newcfg, common.Hash{}, err
@@ -321,7 +321,7 @@ func (g *Genesis) Commit(db ethdb.Database) (*types.Block, error) {
 	if config.Clique != nil && len(block.Extra()) == 0 {
 		return nil, errors.New("can't start clique chain without signers")
 	}
-	rawdb.WriteTd(db, block.Hash(), block.NumberU64(), g.Difficulty)
+	rawdb.WriteTd(db, block.Hash(), block.NumberU64(), block.Difficulty())
 	rawdb.WriteBlock(db, block)
 	rawdb.WriteReceipts(db, block.Hash(), block.NumberU64(), nil)
 	rawdb.WriteCanonicalHash(db, block.Hash(), block.NumberU64())

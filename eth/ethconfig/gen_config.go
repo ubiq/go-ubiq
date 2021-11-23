@@ -59,7 +59,7 @@ func (c Config) MarshalTOML() (interface{}, error) {
 		RPCTxFeeCap             float64
 		Checkpoint              *params.TrustedCheckpoint      `toml:",omitempty"`
 		CheckpointOracle        *params.CheckpointOracleConfig `toml:",omitempty"`
-		OverrideAries          *big.Int                       `toml:",omitempty"`
+		OverrideOrion           *big.Int                       `toml:",omitempty"`
 	}
 	var enc Config
 	enc.Genesis = c.Genesis
@@ -103,7 +103,7 @@ func (c Config) MarshalTOML() (interface{}, error) {
 	enc.RPCTxFeeCap = c.RPCTxFeeCap
 	enc.Checkpoint = c.Checkpoint
 	enc.CheckpointOracle = c.CheckpointOracle
-	enc.OverrideAries = c.OverrideAries
+	enc.OverrideOrion = c.OverrideOrion
 	return &enc, nil
 }
 
@@ -151,7 +151,7 @@ func (c *Config) UnmarshalTOML(unmarshal func(interface{}) error) error {
 		RPCTxFeeCap             *float64
 		Checkpoint              *params.TrustedCheckpoint      `toml:",omitempty"`
 		CheckpointOracle        *params.CheckpointOracleConfig `toml:",omitempty"`
-		OverrideAries          *big.Int                       `toml:",omitempty"`
+		OverrideOrion           *big.Int                       `toml:",omitempty"`
 	}
 	var dec Config
 	if err := unmarshal(&dec); err != nil {
@@ -280,8 +280,8 @@ func (c *Config) UnmarshalTOML(unmarshal func(interface{}) error) error {
 	if dec.CheckpointOracle != nil {
 		c.CheckpointOracle = dec.CheckpointOracle
 	}
-	if dec.OverrideAries != nil {
-		c.OverrideAries = dec.OverrideAries
+	if dec.OverrideOrion != nil {
+		c.OverrideOrion = dec.OverrideOrion
 	}
 	return nil
 }
