@@ -40,7 +40,8 @@ import (
 	"github.com/ubiq/go-ubiq/v5/metrics"
 	"github.com/ubiq/go-ubiq/v5/node"
 
-	// Force-load the native, to trigger registration
+	// Force-load the tracer engines to trigger registration
+	_ "github.com/ubiq/go-ubiq/v5/eth/tracers/js"
 	_ "github.com/ubiq/go-ubiq/v5/eth/tracers/native"
 
 	"gopkg.in/urfave/cli.v1"
@@ -129,6 +130,7 @@ var (
 		utils.MainnetFlag,
 		utils.DeveloperFlag,
 		utils.DeveloperPeriodFlag,
+		utils.DeveloperGasLimitFlag,
 		utils.RinkebyFlag,
 		utils.GoerliFlag,
 		utils.VMEnableDebugFlag,
