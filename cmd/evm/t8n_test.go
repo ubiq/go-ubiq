@@ -179,14 +179,6 @@ func TestT8n(t *testing.T) {
 			output: t8nOutput{result: true},
 			expOut: "exp_berlin.json",
 		},
-		{ // Difficulty calculation on arrow glacier
-			base: "./testdata/19",
-			input: t8nInput{
-				"alloc.json", "txs.json", "env.json", "London", "",
-			},
-			output: t8nOutput{result: true},
-			expOut: "exp_london.json",
-		},
 	} {
 
 		args := []string{"t8n"}

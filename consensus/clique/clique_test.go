@@ -47,7 +47,7 @@ func TestReimportMirroredState(t *testing.T) {
 	genspec := &core.Genesis{
 		ExtraData: make([]byte, extraVanity+common.AddressLength+extraSeal),
 		Alloc: map[common.Address]core.GenesisAccount{
-			addr: {Balance: big.NewInt(10000000000000000)},
+			addr: {Balance: big.NewInt(800000000000000000)},
 		},
 		BaseFee: big.NewInt(params.InitialBaseFee),
 	}

@@ -112,8 +112,8 @@ func TestCalcBaseFee(t *testing.T) {
 		expectedBaseFee int64
 	}{
 		{params.InitialBaseFee, 20000000, 10000000, params.InitialBaseFee}, // usage == target
-		{params.InitialBaseFee, 20000000, 9000000, 987500000},              // usage below target
-		{params.InitialBaseFee, 20000000, 11000000, 1012500000},            // usage above target
+		{params.InitialBaseFee, 20000000, 9000000, 79000000000},            // usage below target
+		{params.InitialBaseFee, 20000000, 11000000, 81000000000},           // usage above target
 	}
 	for i, test := range tests {
 		parent := &types.Header{
