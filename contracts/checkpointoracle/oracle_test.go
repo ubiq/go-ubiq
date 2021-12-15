@@ -177,9 +177,9 @@ func TestCheckpointRegister(t *testing.T) {
 	// Deploy registrar contract
 	contractBackend := backends.NewSimulatedBackend(
 		core.GenesisAlloc{
-			accounts[0].addr: {Balance: big.NewInt(10000000000000000)},
-			accounts[1].addr: {Balance: big.NewInt(10000000000000000)},
-			accounts[2].addr: {Balance: big.NewInt(10000000000000000)},
+			accounts[0].addr: {Balance: big.NewInt(800000000000000000)},
+			accounts[1].addr: {Balance: big.NewInt(800000000000000000)},
+			accounts[2].addr: {Balance: big.NewInt(800000000000000000)},
 		}, 10000000,
 	)
 	defer contractBackend.Close()

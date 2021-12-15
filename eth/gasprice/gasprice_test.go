@@ -170,7 +170,7 @@ func TestSuggestTipCap(t *testing.T) {
 		{nil, big.NewInt(params.GWei * int64(30))},
 		{big.NewInt(0), big.NewInt(params.GWei * int64(30))},  // Fork point in genesis
 		{big.NewInt(1), big.NewInt(params.GWei * int64(30))},  // Fork point in first block
-		{big.NewInt(32), big.NewInt(params.GWei * int64(30))}, // Fork point in last block
+		{big.NewInt(32), big.NewInt(params.GWei * int64(29))}, // Fork point in last block
 		{big.NewInt(33), big.NewInt(params.GWei * int64(30))}, // Fork point in the future
 	}
 	for _, c := range cases {
