@@ -46,20 +46,10 @@ var (
 	maxUncles              = 2                // Maximum number of uncles allowed in a single block
 	allowedFutureBlockTime = 15 * time.Second // Max time from current time allowed for blocks, before they're considered future blocks
 
-	// calcDifficultyEip4345 is the difficulty adjustment algorithm as specified by EIP 4345.
-	// It offsets the bomb a total of 10.7M blocks.
-	// Specification EIP-4345: https://eips.ethereum.org/EIPS/eip-4345
-	calcDifficultyEip4345 = makeDifficultyCalculator(big.NewInt(10_700_000))
-
 	// calcDifficultyEip3554 is the difficulty adjustment algorithm as specified by EIP 3554.
 	// It offsets the bomb a total of 9.7M blocks.
 	// Specification EIP-3554: https://eips.ethereum.org/EIPS/eip-3554
 	calcDifficultyEip3554 = makeDifficultyCalculator(big.NewInt(9700000))
-
-	// calcDifficultyEip2384 is the difficulty adjustment algorithm as specified by EIP 2384.
-	// It offsets the bomb 4M blocks from Constantinople, so in total 9M blocks.
-	// Specification EIP-2384: https://eips.ethereum.org/EIPS/eip-2384
-	calcDifficultyEip2384 = makeDifficultyCalculator(big.NewInt(9000000))
 
 	// calcDifficultyConstantinople is the difficulty adjustment algorithm for Constantinople.
 	// It returns the difficulty that a new block should have when created at time given the
@@ -319,16 +309,19 @@ func (ubqhash *Ubqhash) verifyHeader(chain consensus.ChainHeaderReader, header, 
 // that a new block should have when created at time given the parent block's time
 // and difficulty.
 func (ubqhash *Ubqhash) CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *types.Header) *big.Int {
-	return CalcDifficulty(chain, time, parent)
+	return CalcDifficulty(chain, nil, time, parent)
 }
 
 // CalcDifficulty determines which difficulty algorithm to use for calculating a new block
-func CalcDifficulty(chain consensus.ChainHeaderReader, time uint64, parent *types.Header) *big.Int {
+func CalcDifficulty(chain consensus.ChainHeaderReader, config *params.ChainConfig, time uint64, parent *types.Header) *big.Int {
 	parentTime := parent.Time
 	parentNumber := parent.Number
 	parentDiff := parent.Difficulty
 
-	config := chain.Config()
+	if config == nil {
+		config = chain.Config()
+	}
+
 	ubqhashConfig := config.Ubqhash
 	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && parentNumber.Cmp(ubqhashConfig.UIP0Block) >= 0 {
 		if ubqhashConfig.FluxBlock != nil && parentNumber.Cmp(ubqhashConfig.FluxBlock) < 0 {
