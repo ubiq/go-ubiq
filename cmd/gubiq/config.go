@@ -155,8 +155,8 @@ func makeConfigNode(ctx *cli.Context) (*node.Node, gubiqConfig) {
 // makeFullNode loads geth configuration and creates the Ethereum backend.
 func makeFullNode(ctx *cli.Context) (*node.Node, ethapi.Backend) {
 	stack, cfg := makeConfigNode(ctx)
-	if ctx.GlobalIsSet(utils.OverrideAriesFlag.Name) {
-		cfg.Eth.OverrideAries = new(big.Int).SetUint64(ctx.GlobalUint64(utils.OverrideAriesFlag.Name))
+	if ctx.GlobalIsSet(utils.OverrideOrionFlag.Name) {
+		cfg.Eth.OverrideOrion = new(big.Int).SetUint64(ctx.GlobalUint64(utils.OverrideOrionFlag.Name))
 	}
 	backend, _ := utils.RegisterEthService(stack, &cfg.Eth)
 

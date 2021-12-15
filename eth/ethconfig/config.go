@@ -204,8 +204,8 @@ type Config struct {
 	// CheckpointOracle is the configuration for checkpoint oracle.
 	CheckpointOracle *params.CheckpointOracleConfig `toml:",omitempty"`
 
-	// Berlin block override (TODO(iquidus) remove after the fork)
-	OverrideAries *big.Int `toml:",omitempty"`
+	// Orion block override (TODO(iquidus): remove after the fork)
+	OverrideOrion *big.Int `toml:",omitempty"`
 }
 
 // CreateConsensusEngine creates a consensus engine for the given chain configuration.

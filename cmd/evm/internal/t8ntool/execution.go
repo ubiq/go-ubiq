@@ -23,8 +23,7 @@ import (
 
 	"github.com/ubiq/go-ubiq/v5/common"
 	"github.com/ubiq/go-ubiq/v5/common/math"
-
-	// "github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v5/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v5/core"
 	"github.com/ubiq/go-ubiq/v5/core/rawdb"
 	"github.com/ubiq/go-ubiq/v5/core/state"
@@ -47,14 +46,15 @@ type Prestate struct {
 // ExecutionResult contains the execution status after running a state test, any
 // error that might have occurred and a dump of the final state if requested.
 type ExecutionResult struct {
-	StateRoot   common.Hash    `json:"stateRoot"`
-	TxRoot      common.Hash    `json:"txRoot"`
-	ReceiptRoot common.Hash    `json:"receiptRoot"`
-	LogsHash    common.Hash    `json:"logsHash"`
-	Bloom       types.Bloom    `json:"logsBloom"        gencodec:"required"`
-	Receipts    types.Receipts `json:"receipts"`
-	Rejected    []*rejectedTx  `json:"rejected,omitempty"`
-	// Difficulty  *math.HexOrDecimal256 `json:"currentDifficulty" gencodec:"required"`
+	StateRoot   common.Hash           `json:"stateRoot"`
+	TxRoot      common.Hash           `json:"txRoot"`
+	ReceiptRoot common.Hash           `json:"receiptsRoot"`
+	LogsHash    common.Hash           `json:"logsHash"`
+	Bloom       types.Bloom           `json:"logsBloom"        gencodec:"required"`
+	Receipts    types.Receipts        `json:"receipts"`
+	Rejected    []*rejectedTx         `json:"rejected,omitempty"`
+	Difficulty  *math.HexOrDecimal256 `json:"currentDifficulty" gencodec:"required"`
+	GasUsed     math.HexOrDecimal64   `json:"gasUsed"`
 }
 
 type ommer struct {
@@ -64,28 +64,28 @@ type ommer struct {
 
 //go:generate gencodec -type stEnv -field-override stEnvMarshaling -out gen_stenv.go
 type stEnv struct {
-	Coinbase   common.Address `json:"currentCoinbase"   gencodec:"required"`
-	Difficulty *big.Int       `json:"currentDifficulty"`
-	// ParentDifficulty *big.Int                            `json:"parentDifficulty"`
-	GasLimit  uint64 `json:"currentGasLimit"   gencodec:"required"`
-	Number    uint64 `json:"currentNumber"     gencodec:"required"`
-	Timestamp uint64 `json:"currentTimestamp"  gencodec:"required"`
-	// ParentTimestamp  uint64                              `json:"parentTimestamp,omitempty"`
-	BlockHashes map[math.HexOrDecimal64]common.Hash `json:"blockHashes,omitempty"`
-	Ommers      []ommer                             `json:"ommers,omitempty"`
-	BaseFee     *big.Int                            `json:"currentBaseFee,omitempty"`
-	// ParentUncleHash  common.Hash                         `json:"parentUncleHash"`
+	Coinbase         common.Address                      `json:"currentCoinbase"   gencodec:"required"`
+	Difficulty       *big.Int                            `json:"currentDifficulty"`
+	ParentDifficulty *big.Int                            `json:"parentDifficulty"`
+	GasLimit         uint64                              `json:"currentGasLimit"   gencodec:"required"`
+	Number           uint64                              `json:"currentNumber"     gencodec:"required"`
+	Timestamp        uint64                              `json:"currentTimestamp"  gencodec:"required"`
+	ParentTimestamp  uint64                              `json:"parentTimestamp,omitempty"`
+	BlockHashes      map[math.HexOrDecimal64]common.Hash `json:"blockHashes,omitempty"`
+	Ommers           []ommer                             `json:"ommers,omitempty"`
+	BaseFee          *big.Int                            `json:"currentBaseFee,omitempty"`
+	ParentUncleHash  common.Hash                         `json:"parentUncleHash"`
 }
 
 type stEnvMarshaling struct {
-	Coinbase   common.UnprefixedAddress
-	Difficulty *math.HexOrDecimal256
-	// ParentDifficulty *math.HexOrDecimal256
-	GasLimit  math.HexOrDecimal64
-	Number    math.HexOrDecimal64
-	Timestamp math.HexOrDecimal64
-	// ParentTimestamp  math.HexOrDecimal64
-	BaseFee *math.HexOrDecimal256
+	Coinbase         common.UnprefixedAddress
+	Difficulty       *math.HexOrDecimal256
+	ParentDifficulty *math.HexOrDecimal256
+	GasLimit         math.HexOrDecimal64
+	Number           math.HexOrDecimal64
+	Timestamp        math.HexOrDecimal64
+	ParentTimestamp  math.HexOrDecimal64
+	BaseFee          *math.HexOrDecimal256
 }
 
 type rejectedTx struct {
@@ -96,7 +96,7 @@ type rejectedTx struct {
 // Apply applies a set of transactions to a pre-state
 func (pre *Prestate) Apply(vmConfig vm.Config, chainConfig *params.ChainConfig,
 	txs types.Transactions, miningReward int64,
-	getTracerFn func(txIndex int, txHash common.Hash) (tracer vm.Tracer, err error)) (*state.StateDB, *ExecutionResult, error) {
+	getTracerFn func(txIndex int, txHash common.Hash) (tracer vm.EVMLogger, err error)) (*state.StateDB, *ExecutionResult, error) {
 
 	// Capture errors for BLOCKHASH operation, if we haven't been supplied the
 	// required blockhashes
@@ -247,7 +247,8 @@ func (pre *Prestate) Apply(vmConfig vm.Config, chainConfig *params.ChainConfig,
 		LogsHash:    rlpHash(statedb.Logs()),
 		Receipts:    receipts,
 		Rejected:    rejectedTxs,
-		// Difficulty:  (*math.HexOrDecimal256)(vmContext.Difficulty),
+		Difficulty:  (*math.HexOrDecimal256)(vmContext.Difficulty),
+		GasUsed:     (math.HexOrDecimal64)(gasUsed),
 	}
 	return statedb, execRs, nil
 }
@@ -276,23 +277,22 @@ func rlpHash(x interface{}) (h common.Hash) {
 	return h
 }
 
-// TODO(iquidus): re-add this at some point. see: https://github.com/ubiq/go-ubiq/v5/commit/84c51bc5ec9038db6ab28195384a6bd720a28af9
 // calcDifficulty is based on ethash.CalcDifficulty. This method is used in case
 // the caller does not provide an explicit difficulty, but instead provides only
 // parent timestamp + difficulty.
 // Note: this method only works for ethash engine.
-// func calcDifficulty(config *params.ChainConfig, number, currentTime, parentTime uint64,
-// 	parentDifficulty *big.Int, parentUncleHash common.Hash) *big.Int {
-// 	uncleHash := parentUncleHash
-// 	if uncleHash == (common.Hash{}) {
-// 		uncleHash = types.EmptyUncleHash
-// 	}
-// 	parent := &types.Header{
-// 		ParentHash: common.Hash{},
-// 		UncleHash:  uncleHash,
-// 		Difficulty: parentDifficulty,
-// 		Number:     new(big.Int).SetUint64(number - 1),
-// 		Time:       parentTime,
-// 	}
-// 	return ubqhash.CalcDifficulty(config, currentTime, parent)
-// }
+func calcDifficulty(config *params.ChainConfig, number, currentTime, parentTime uint64,
+	parentDifficulty *big.Int, parentUncleHash common.Hash) *big.Int {
+	uncleHash := parentUncleHash
+	if uncleHash == (common.Hash{}) {
+		uncleHash = types.EmptyUncleHash
+	}
+	parent := &types.Header{
+		ParentHash: common.Hash{},
+		UncleHash:  uncleHash,
+		Difficulty: parentDifficulty,
+		Number:     new(big.Int).SetUint64(number - 1),
+		Time:       parentTime,
+	}
+	return ubqhash.CalcDifficulty(nil, config, currentTime, parent)
+}
