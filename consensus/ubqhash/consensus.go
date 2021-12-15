@@ -46,6 +46,11 @@ var (
 	maxUncles              = 2                // Maximum number of uncles allowed in a single block
 	allowedFutureBlockTime = 15 * time.Second // Max time from current time allowed for blocks, before they're considered future blocks
 
+	// calcDifficultyUip12 is the difficulty adjustment algorithm as specified by UIP 12.
+	// It ignores the difficulty bomb
+	// Specification UIP-12: https://github.com/ubiq/UIPs/issues/12
+	calcDifficultyUip12 = makeDifficultyCalculator(nil)
+
 	// calcDifficultyEip3554 is the difficulty adjustment algorithm as specified by EIP 3554.
 	// It offsets the bomb a total of 9.7M blocks.
 	// Specification EIP-3554: https://eips.ethereum.org/EIPS/eip-3554
@@ -323,7 +328,12 @@ func CalcDifficulty(chain consensus.ChainHeaderReader, config *params.ChainConfi
 	}
 
 	ubqhashConfig := config.Ubqhash
+	next := new(big.Int).Add(parent.Number, big1)
+
 	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && parentNumber.Cmp(ubqhashConfig.UIP0Block) >= 0 {
+		if config.IsLondon(next) {
+			return calcDifficultyUip12(time, parent)
+		}
 		if ubqhashConfig.FluxBlock != nil && parentNumber.Cmp(ubqhashConfig.FluxBlock) < 0 {
 			if ubqhashConfig.DigishieldModBlock != nil && parentNumber.Cmp(ubqhashConfig.DigishieldModBlock) < 0 {
 				// Original DigishieldV3
@@ -336,7 +346,6 @@ func CalcDifficulty(chain consensus.ChainHeaderReader, config *params.ChainConfi
 		return CalcDifficultyFlux(chain, big.NewInt(int64(time)), big.NewInt(int64(parentTime)), parentNumber, parentDiff, parent)
 	}
 
-	next := new(big.Int).Add(parent.Number, big1)
 	switch {
 	case config.IsLondon(next):
 		return calcDifficultyEip3554(time, parent)
@@ -471,7 +480,12 @@ var (
 func makeDifficultyCalculator(bombDelay *big.Int) func(time uint64, parent *types.Header) *big.Int {
 	// Note, the calculations below looks at the parent number, which is 1 below
 	// the block number. Thus we remove one from the delay given
-	bombDelayFromParent := new(big.Int).Sub(bombDelay, big1)
+	medianBlockTime := big.NewInt(15) // Ubiq - Orion
+	bombDelayFromParent := new(big.Int)
+	if bombDelay != nil {
+		bombDelayFromParent = new(big.Int).Sub(bombDelay, big1)
+		medianBlockTime = big9 // Ethereum
+	}
 	return func(time uint64, parent *types.Header) *big.Int {
 		// https://github.com/ethereum/EIPs/issues/100.
 		// algorithm:
@@ -486,19 +500,19 @@ func makeDifficultyCalculator(bombDelay *big.Int) func(time uint64, parent *type
 		x := new(big.Int)
 		y := new(big.Int)
 
-		// (2 if len(parent_uncles) else 1) - (block_timestamp - parent_timestamp) // 9
+		// (2 if len(parent_uncles) else 1) - (block_timestamp - parent_timestamp) // 15
 		x.Sub(bigTime, bigParentTime)
-		x.Div(x, big9)
+		x.Div(x, medianBlockTime)
 		if parent.UncleHash == types.EmptyUncleHash {
 			x.Sub(big1, x)
 		} else {
 			x.Sub(big2, x)
 		}
-		// max((2 if len(parent_uncles) else 1) - (block_timestamp - parent_timestamp) // 9, -99)
+		// max((2 if len(parent_uncles) else 1) - (block_timestamp - parent_timestamp) // 15, -99)
 		if x.Cmp(bigMinus99) < 0 {
 			x.Set(bigMinus99)
 		}
-		// parent_diff + (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 9), -99))
+		// parent_diff + (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 15), -99))
 		y.Div(parent.Difficulty, params.DifficultyBoundDivisor)
 		x.Mul(y, x)
 		x.Add(parent.Difficulty, x)
@@ -507,22 +521,26 @@ func makeDifficultyCalculator(bombDelay *big.Int) func(time uint64, parent *type
 		if x.Cmp(params.MinimumDifficulty) < 0 {
 			x.Set(params.MinimumDifficulty)
 		}
-		// calculate a fake block number for the ice-age delay
-		// Specification: https://eips.ethereum.org/EIPS/eip-1234
-		fakeBlockNumber := new(big.Int)
-		if parent.Number.Cmp(bombDelayFromParent) >= 0 {
-			fakeBlockNumber = fakeBlockNumber.Sub(parent.Number, bombDelayFromParent)
-		}
-		// for the exponential factor
-		periodCount := fakeBlockNumber
-		periodCount.Div(periodCount, expDiffPeriod)
 
-		// the exponential factor, commonly referred to as "the bomb"
-		// diff = diff + 2^(periodCount - 2)
-		if periodCount.Cmp(big1) > 0 {
-			y.Sub(periodCount, big2)
-			y.Exp(big2, y, nil)
-			x.Add(x, y)
+		// if bombDelay then activate ice-age
+		if bombDelay != nil {
+			// calculate a fake block number for the ice-age delay
+			// Specification: https://eips.ethereum.org/EIPS/eip-1234
+			fakeBlockNumber := new(big.Int)
+			if parent.Number.Cmp(bombDelayFromParent) >= 0 {
+				fakeBlockNumber = fakeBlockNumber.Sub(parent.Number, bombDelayFromParent)
+			}
+			// for the exponential factor
+			periodCount := fakeBlockNumber
+			periodCount.Div(periodCount, expDiffPeriod)
+
+			// the exponential factor, commonly referred to as "the bomb"
+			// diff = diff + 2^(periodCount - 2)
+			if periodCount.Cmp(big1) > 0 {
+				y.Sub(periodCount, big2)
+				y.Exp(big2, y, nil)
+				x.Add(x, y)
+			}
 		}
 		return x
 	}
@@ -648,7 +666,7 @@ func CalcBaseBlockReward(config *params.UbqhashConfig, height *big.Int, isOrion 
 	current := big.NewInt(15e+17)                                // UIP-13 modified via UIP-16
 
 	// if Orion then return static reward of 1.5 UBQ
-	if isOrion == true {
+	if isOrion {
 		return initial, current
 	}
 

@@ -17,14 +17,14 @@
 package ubqhash
 
 import (
-	"math/big"
 	"fmt"
+	"math/big"
 
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/consensus"
-	"github.com/ubiq/go-ubiq/v5/params"
-	"github.com/ubiq/go-ubiq/v5/log"
 	"github.com/holiman/uint256"
+	"github.com/ubiq/go-ubiq/v5/consensus"
+	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v5/params"
 )
 
 const (
@@ -211,7 +211,12 @@ func CalcDifficultyHomesteadU256(time uint64, parent *types.Header) *big.Int {
 func MakeDifficultyCalculatorU256(bombDelay *big.Int) func(time uint64, parent *types.Header) *big.Int {
 	// Note, the calculations below looks at the parent number, which is 1 below
 	// the block number. Thus we remove one from the delay given
-	bombDelayFromParent := bombDelay.Uint64() - 1
+	medianBlockTime := 15 // Ubiq - Orion
+	bombDelayFromParent := new(big.Int).Uint64()
+	if bombDelay != nil {
+		bombDelayFromParent = bombDelay.Uint64() - 1
+		medianBlockTime = 9 // Ethereum
+	}
 	return func(time uint64, parent *types.Header) *big.Int {
 		/*
 			https://github.com/ethereum/EIPs/issues/100
@@ -221,8 +226,8 @@ func MakeDifficultyCalculatorU256(bombDelay *big.Int) func(time uint64, parent *
 			b = min(parent.difficulty, MIN_DIFF)
 			child_diff = max(a,b )
 		*/
-		x := (time - parent.Time) / 9 // (block_timestamp - parent_timestamp) // 9
-		c := uint64(1)                // if parent.unclehash == emptyUncleHashHash
+		x := (time - parent.Time) / uint64(medianBlockTime) // (block_timestamp - parent_timestamp) // 15
+		c := uint64(1)                                      // if parent.unclehash == emptyUncleHashHash
 		if parent.UncleHash != types.EmptyUncleHash {
 			c = 2
 		}
@@ -231,12 +236,12 @@ func MakeDifficultyCalculatorU256(bombDelay *big.Int) func(time uint64, parent *
 			// x is now _negative_ adjustment factor
 			x = x - c // - ( (t-p)/p -( 2 or 1) )
 		} else {
-			x = c - x // (2 or 1) - (t-p)/9
+			x = c - x // (2 or 1) - (t-p)/15
 		}
 		if x > 99 {
 			x = 99 // max(x, 99)
 		}
-		// parent_diff + (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 9), -99))
+		// parent_diff + (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 15), -99))
 		y := new(uint256.Int)
 		y.SetFromBig(parent.Difficulty)    // y: p_diff
 		pDiff := y.Clone()                 // pdiff: p_diff
@@ -253,14 +258,16 @@ func MakeDifficultyCalculatorU256(bombDelay *big.Int) func(time uint64, parent *
 		if y.LtUint64(minimumDifficulty) {
 			y.SetUint64(minimumDifficulty)
 		}
-		// calculate a fake block number for the ice-age delay
-		// Specification: https://eips.ethereum.org/EIPS/eip-1234
-		var pNum = parent.Number.Uint64()
-		if pNum >= bombDelayFromParent {
-			if fakeBlockNumber := pNum - bombDelayFromParent; fakeBlockNumber >= 2*expDiffPeriodUint {
-				z.SetOne()
-				z.Lsh(z, uint(fakeBlockNumber/expDiffPeriodUint-2))
-				y.Add(z, y)
+		if bombDelay != nil {
+			// calculate a fake block number for the ice-age delay
+			// Specification: https://eips.ethereum.org/EIPS/eip-1234
+			var pNum = parent.Number.Uint64()
+			if pNum >= bombDelayFromParent {
+				if fakeBlockNumber := pNum - bombDelayFromParent; fakeBlockNumber >= 2*expDiffPeriodUint {
+					z.SetOne()
+					z.Lsh(z, uint(fakeBlockNumber/expDiffPeriodUint-2))
+					y.Add(z, y)
+				}
 			}
 		}
 		return y.ToBig()
