@@ -3280,7 +3280,7 @@ func TestEIP1559Transition(t *testing.T) {
 
 	state, _ := chain.State()
 
-	_, reward := ubqhash.CalcBaseBlockReward(chain.Config().Ubqhash, block.Number())
+	_, reward := ubqhash.CalcBaseBlockReward(chain.Config().Ubqhash, block.Number(), true)
 
 	// 3: Ensure that miner received only the tx's tip.
 	actual := state.GetBalance(block.Coinbase())

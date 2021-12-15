@@ -643,18 +643,25 @@ func (ubqhash *Ubqhash) SealHash(header *types.Header) (hash common.Hash) {
 }
 
 // CalcBaseBlockReward calculates the base block reward as per the ubiq monetary policy.
-func CalcBaseBlockReward(config *params.UbqhashConfig, height *big.Int) (*big.Int, *big.Int) {
-	reward := new(big.Int)
+func CalcBaseBlockReward(config *params.UbqhashConfig, height *big.Int, isOrion bool) (*big.Int, *big.Int) {
+	initial := new(big.Int).Set(config.MonetaryPolicy[0].Reward) // Initial block reward as per original monetary policy
+	current := big.NewInt(15e+17)                                // UIP-13 modified via UIP-16
 
+	// if Orion then return static reward of 1.5 UBQ
+	if isOrion == true {
+		return initial, current
+	}
+
+	// else use original (pre-orion) monetary policy
 	for _, step := range config.MonetaryPolicy {
 		if height.Cmp(step.Block) > 0 {
-			reward = new(big.Int).Set(step.Reward)
+			current = new(big.Int).Set(step.Reward)
 		} else {
 			break
 		}
 	}
 
-	return new(big.Int).Set(config.MonetaryPolicy[0].Reward), reward
+	return initial, current
 }
 
 // CalcUncleBlockReward calculates the uncle miner reward based on depth.
@@ -681,7 +688,7 @@ func accumulateRewards(config *params.ChainConfig, state *state.StateDB, header 
 	ubqhashConfig := config.Ubqhash
 	if ubqhashConfig != nil && ubqhashConfig.UIP0Block != nil && header.Number.Cmp(ubqhashConfig.UIP0Block) > 0 {
 		//ubiq
-		initialReward, currentReward := CalcBaseBlockReward(ubqhashConfig, header.Number)
+		initialReward, currentReward := CalcBaseBlockReward(ubqhashConfig, header.Number, config.IsLondon(header.Number))
 
 		// Uncle reward step down fix. (activates along-side byzantium)
 		ufixReward := initialReward
