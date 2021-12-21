@@ -28,17 +28,17 @@ import (
 	"gopkg.in/urfave/cli.v1"
 
 	"github.com/naoina/toml"
-	"github.com/ubiq/go-ubiq/v5/accounts/external"
-	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v5/accounts/scwallet"
-	"github.com/ubiq/go-ubiq/v5/accounts/usbwallet"
-	"github.com/ubiq/go-ubiq/v5/cmd/utils"
-	"github.com/ubiq/go-ubiq/v5/eth/ethconfig"
-	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/metrics"
-	"github.com/ubiq/go-ubiq/v5/node"
-	"github.com/ubiq/go-ubiq/v5/params"
+	"github.com/ubiq/go-ubiq/v6/accounts/external"
+	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v6/accounts/scwallet"
+	"github.com/ubiq/go-ubiq/v6/accounts/usbwallet"
+	"github.com/ubiq/go-ubiq/v6/cmd/utils"
+	"github.com/ubiq/go-ubiq/v6/eth/ethconfig"
+	"github.com/ubiq/go-ubiq/v6/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/metrics"
+	"github.com/ubiq/go-ubiq/v6/node"
+	"github.com/ubiq/go-ubiq/v6/params"
 )
 
 var (

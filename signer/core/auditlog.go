@@ -20,11 +20,11 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/signer/core/apitypes"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/signer/core/apitypes"
 )
 
 type AuditLogger struct {

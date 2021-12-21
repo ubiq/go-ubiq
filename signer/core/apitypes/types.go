@@ -22,9 +22,9 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/core/types"
 )
 
 type ValidationInfo struct {
@@ -80,7 +80,7 @@ type SendTxArgs struct {
 
 	// We accept "data" and "input" for backwards-compatibility reasons.
 	// "input" is the newer name and should be preferred by clients.
-	// Issue detail: https://github.com/ubiq/go-ubiq/v5/issues/15628
+	// Issue detail: https://github.com/ethereum/go-ethereum/issues/15628
 	Data  *hexutil.Bytes `json:"data"`
 	Input *hexutil.Bytes `json:"input,omitempty"`
 

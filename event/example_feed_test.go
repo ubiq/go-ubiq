@@ -19,7 +19,7 @@ package event_test
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v5/event"
+	"github.com/ubiq/go-ubiq/v6/event"
 )
 
 func ExampleFeed_acknowledgedEvents() {

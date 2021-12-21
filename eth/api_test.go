@@ -25,10 +25,10 @@ import (
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/core/state"
-	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/core/state"
+	"github.com/ubiq/go-ubiq/v6/crypto"
 )
 
 var dumper = spew.ConfigState{Indent: "    "}

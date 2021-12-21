@@ -23,9 +23,9 @@ import (
 	"net"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/internal/utesting"
-	"github.com/ubiq/go-ubiq/v5/p2p/discover/v4wire"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/internal/utesting"
+	"github.com/ubiq/go-ubiq/v6/p2p/discover/v4wire"
 )
 
 const (

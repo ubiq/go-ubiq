@@ -20,9 +20,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/cmd/devp2p/internal/v5test"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/p2p/discover"
+	"github.com/ubiq/go-ubiq/v6/cmd/devp2p/internal/v5test"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/p2p/discover"
 	"gopkg.in/urfave/cli.v1"
 )
 

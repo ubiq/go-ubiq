@@ -23,8 +23,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 // TestExport does basic sanity checks on the export/import functionality

@@ -29,16 +29,16 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/mclock"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/event"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/p2p/discover"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/p2p/enr"
-	"github.com/ubiq/go-ubiq/v5/p2p/nat"
-	"github.com/ubiq/go-ubiq/v5/p2p/netutil"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/mclock"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/event"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/p2p/discover"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/p2p/enr"
+	"github.com/ubiq/go-ubiq/v6/p2p/nat"
+	"github.com/ubiq/go-ubiq/v6/p2p/netutil"
 )
 
 const (

@@ -24,7 +24,7 @@ import (
 	openrpc "github.com/octanolabs/g0penrpc"
 
 	mapset "github.com/deckarep/golang-set"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 const MetadataApi = "rpc"

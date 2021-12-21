@@ -19,9 +19,9 @@ package simulations
 import (
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/node"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/p2p/simulations/adapters"
+	"github.com/ubiq/go-ubiq/v6/node"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/p2p/simulations/adapters"
 )
 
 func newTestNetwork(t *testing.T, nodeCount int) (*Network, []enode.ID) {

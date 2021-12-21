@@ -20,12 +20,12 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/consensus"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/rlp"
-	"github.com/ubiq/go-ubiq/v5/rpc"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/consensus"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v6/rpc"
 )
 
 // API is a user facing RPC API to allow controlling the signer and voting

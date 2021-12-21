@@ -27,11 +27,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common/mclock"
-	"github.com/ubiq/go-ubiq/v5/internal/testlog"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/p2p/netutil"
+	"github.com/ubiq/go-ubiq/v6/common/mclock"
+	"github.com/ubiq/go-ubiq/v6/internal/testlog"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/p2p/netutil"
 )
 
 // This test checks that dynamic dials are launched from discovery results.

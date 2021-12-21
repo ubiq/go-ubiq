@@ -24,12 +24,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/ethdb"
-	"github.com/ubiq/go-ubiq/v5/event"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
+	"github.com/ubiq/go-ubiq/v6/event"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 // ChainIndexerBackend defines the methods needed to process chain segments in

@@ -26,12 +26,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/ethdb"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/rlp"
-	"github.com/ubiq/go-ubiq/v5/trie"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v6/trie"
 )
 
 // trieKV represents a trie key-value pair

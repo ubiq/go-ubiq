@@ -23,12 +23,12 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/common/math"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/rpc"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/common/math"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/rpc"
 )
 
 // TransactionArgs represents the arguments to construct a new transaction
@@ -45,7 +45,7 @@ type TransactionArgs struct {
 
 	// We accept "data" and "input" for backwards-compatibility reasons.
 	// "input" is the newer name and should be preferred by clients.
-	// Issue detail: https://github.com/ubiq/go-ubiq/v5/issues/15628
+	// Issue detail: https://github.com/ethereum/go-ethereum/issues/15628
 	Data  *hexutil.Bytes `json:"data"`
 	Input *hexutil.Bytes `json:"input"`
 

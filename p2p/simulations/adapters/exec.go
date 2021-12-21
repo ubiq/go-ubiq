@@ -36,11 +36,11 @@ import (
 
 	"github.com/docker/docker/pkg/reexec"
 	"github.com/gorilla/websocket"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/node"
-	"github.com/ubiq/go-ubiq/v5/p2p"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/rpc"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/node"
+	"github.com/ubiq/go-ubiq/v6/p2p"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/rpc"
 )
 
 func init() {

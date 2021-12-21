@@ -28,10 +28,10 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/bitutil"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/bitutil"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/log"
 
 	"golang.org/x/crypto/blake2b"
 	"golang.org/x/crypto/sha3"

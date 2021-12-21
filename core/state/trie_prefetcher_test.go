@@ -21,8 +21,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
 )
 
 func filledStateDB() *StateDB {

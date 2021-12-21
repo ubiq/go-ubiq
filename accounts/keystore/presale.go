@@ -26,8 +26,8 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
-	"github.com/ubiq/go-ubiq/v5/accounts"
-	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v6/accounts"
+	"github.com/ubiq/go-ubiq/v6/crypto"
 	"golang.org/x/crypto/pbkdf2"
 )
 

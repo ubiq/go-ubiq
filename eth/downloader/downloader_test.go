@@ -26,15 +26,15 @@ import (
 	"testing"
 	"time"
 
-	ethereum "github.com/ubiq/go-ubiq/v5"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/core/state/snapshot"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/eth/protocols/eth"
-	"github.com/ubiq/go-ubiq/v5/ethdb"
-	"github.com/ubiq/go-ubiq/v5/event"
-	"github.com/ubiq/go-ubiq/v5/trie"
+	ethereum "github.com/ubiq/go-ubiq/v6"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/core/state/snapshot"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/eth/protocols/eth"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
+	"github.com/ubiq/go-ubiq/v6/event"
+	"github.com/ubiq/go-ubiq/v6/trie"
 )
 
 // Reduce some of the parameters to make the tester faster.

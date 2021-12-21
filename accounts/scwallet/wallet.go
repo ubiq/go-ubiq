@@ -35,12 +35,12 @@ import (
 
 	pcsc "github.com/gballet/go-libpcsclite"
 	"github.com/status-im/keycard-go/derivationpath"
-	ethereum "github.com/ubiq/go-ubiq/v5"
-	"github.com/ubiq/go-ubiq/v5/accounts"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/log"
+	ethereum "github.com/ubiq/go-ubiq/v6"
+	"github.com/ubiq/go-ubiq/v6/accounts"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 // ErrPairingPasswordNeeded is returned if opening the smart card requires pairing with a pairing

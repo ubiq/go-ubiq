@@ -25,9 +25,9 @@ import (
 	"io"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/ethdb"
-	"github.com/ubiq/go-ubiq/v5/trie"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
+	"github.com/ubiq/go-ubiq/v6/trie"
 	"golang.org/x/crypto/sha3"
 )
 

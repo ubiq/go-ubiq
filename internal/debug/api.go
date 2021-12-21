@@ -36,7 +36,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-bexpr"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 // Handler is the global debugging handler.

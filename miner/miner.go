@@ -23,16 +23,16 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/consensus"
-	"github.com/ubiq/go-ubiq/v5/core"
-	"github.com/ubiq/go-ubiq/v5/core/state"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/eth/downloader"
-	"github.com/ubiq/go-ubiq/v5/event"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/params"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/consensus"
+	"github.com/ubiq/go-ubiq/v6/core"
+	"github.com/ubiq/go-ubiq/v6/core/state"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/eth/downloader"
+	"github.com/ubiq/go-ubiq/v6/event"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/params"
 )
 
 // Backend wraps all methods required for mining.

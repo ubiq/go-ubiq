@@ -24,13 +24,13 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/eth/protocols/eth"
-	"github.com/ubiq/go-ubiq/v5/internal/utesting"
-	"github.com/ubiq/go-ubiq/v5/p2p"
-	"github.com/ubiq/go-ubiq/v5/p2p/rlpx"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/eth/protocols/eth"
+	"github.com/ubiq/go-ubiq/v6/internal/utesting"
+	"github.com/ubiq/go-ubiq/v6/p2p"
+	"github.com/ubiq/go-ubiq/v6/p2p/rlpx"
 )
 
 var (

@@ -19,9 +19,9 @@ package main
 import (
 	"os"
 
-	"github.com/ubiq/go-ubiq/v5/cmd/devp2p/internal/v4test"
-	"github.com/ubiq/go-ubiq/v5/internal/utesting"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/cmd/devp2p/internal/v4test"
+	"github.com/ubiq/go-ubiq/v6/internal/utesting"
+	"github.com/ubiq/go-ubiq/v6/log"
 	"gopkg.in/urfave/cli.v1"
 )
 

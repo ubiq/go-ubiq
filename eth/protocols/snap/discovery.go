@@ -17,7 +17,7 @@
 package snap
 
 import (
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 // enrEntry is the ENR entry which advertises `snap` protocol on the discovery.

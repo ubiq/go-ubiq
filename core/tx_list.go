@@ -25,8 +25,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
 )
 
 // nonceHeap is a heap.Interface implementation over 64bit unsigned integers for

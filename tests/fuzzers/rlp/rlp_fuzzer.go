@@ -20,8 +20,8 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 func decodeEncode(input []byte, val interface{}, i int) {

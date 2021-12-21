@@ -21,8 +21,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common/mclock"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/common/mclock"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
 )
 
 // This is the number of consecutive leaf requests that may fail before

@@ -27,11 +27,11 @@ import (
 	"net"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common/math"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/p2p/enr"
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/common/math"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/p2p/enr"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 // RPC packet types

@@ -19,8 +19,8 @@ package core
 import (
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/state"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/state"
 )
 
 // txNoncer is a tiny virtual state database to manage the executable nonces of

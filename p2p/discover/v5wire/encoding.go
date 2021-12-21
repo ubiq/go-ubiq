@@ -28,10 +28,10 @@ import (
 	"fmt"
 	"hash"
 
-	"github.com/ubiq/go-ubiq/v5/common/mclock"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/p2p/enr"
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/common/mclock"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/p2p/enr"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 // TODO concurrent WHOAREYOU tie-breaker

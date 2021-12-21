@@ -23,10 +23,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/mclock"
-	"github.com/ubiq/go-ubiq/v5/core"
-	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/mclock"
+	"github.com/ubiq/go-ubiq/v6/core"
+	"github.com/ubiq/go-ubiq/v6/core/types"
 )
 
 var (

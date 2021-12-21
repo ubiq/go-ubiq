@@ -26,7 +26,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	"github.com/ubiq/go-ubiq/v5/metrics"
+	"github.com/ubiq/go-ubiq/v6/metrics"
 )
 
 func init() {

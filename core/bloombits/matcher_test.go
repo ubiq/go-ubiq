@@ -23,7 +23,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v6/common"
 )
 
 const testSectionSize = 4096

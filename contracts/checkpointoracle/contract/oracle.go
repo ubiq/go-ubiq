@@ -7,12 +7,12 @@ import (
 	"math/big"
 	"strings"
 
-	ethereum "github.com/ubiq/go-ubiq/v5"
-	"github.com/ubiq/go-ubiq/v5/accounts/abi"
-	"github.com/ubiq/go-ubiq/v5/accounts/abi/bind"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/event"
+	ethereum "github.com/ubiq/go-ubiq/v6"
+	"github.com/ubiq/go-ubiq/v6/accounts/abi"
+	"github.com/ubiq/go-ubiq/v6/accounts/abi/bind"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/event"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.

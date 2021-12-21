@@ -23,8 +23,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/ethdb"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
 )
 
 var (

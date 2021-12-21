@@ -39,7 +39,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v6/crypto"
 )
 
 func TestKDF(t *testing.T) {

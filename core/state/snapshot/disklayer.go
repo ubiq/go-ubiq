@@ -21,11 +21,11 @@ import (
 	"sync"
 
 	"github.com/VictoriaMetrics/fastcache"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/ethdb"
-	"github.com/ubiq/go-ubiq/v5/rlp"
-	"github.com/ubiq/go-ubiq/v5/trie"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
+	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v6/trie"
 )
 
 // diskLayer is a low level persistent snapshot built on top of a key-value store.

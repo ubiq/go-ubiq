@@ -7,10 +7,10 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/common/math"
-	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/common/math"
+	"github.com/ubiq/go-ubiq/v6/core/types"
 )
 
 var _ = (*headerMarshaling)(nil)

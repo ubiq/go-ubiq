@@ -22,8 +22,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/p2p/enr"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/p2p/enr"
 )
 
 func newLocalNodeForTesting() (*LocalNode, *DB) {

@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ubiq/go-ubiq/v5/internal/flags"
+	"github.com/ubiq/go-ubiq/v6/internal/flags"
 	"gopkg.in/urfave/cli.v1"
 )
 

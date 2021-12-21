@@ -23,9 +23,9 @@ import (
 	"crypto/rand"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/p2p"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/p2p"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
 )
 
 // testPeer is a simulated peer to allow testing direct network calls.

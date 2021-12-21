@@ -21,14 +21,14 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/ethdb"
-	"github.com/ubiq/go-ubiq/v5/ethdb/memorydb"
-	"github.com/ubiq/go-ubiq/v5/rlp"
-	"github.com/ubiq/go-ubiq/v5/trie"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
+	"github.com/ubiq/go-ubiq/v6/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v6/trie"
 )
 
 // testAccount is the data associated with an account used by the state tests.

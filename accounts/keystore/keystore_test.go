@@ -28,10 +28,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/accounts"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/event"
+	"github.com/ubiq/go-ubiq/v6/accounts"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/event"
 )
 
 var testSigData = make([]byte, 32)

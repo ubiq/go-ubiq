@@ -21,7 +21,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
 )
 
 func TestReadBufferReset(t *testing.T) {

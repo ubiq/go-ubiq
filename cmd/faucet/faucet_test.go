@@ -19,7 +19,7 @@ package main
 import (
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v6/common"
 )
 
 func TestFacebook(t *testing.T) {

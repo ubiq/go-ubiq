@@ -22,9 +22,9 @@ import (
 	"os"
 
 	bloomfilter "github.com/holiman/bloomfilter/v2"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 // stateBloomHasher is a wrapper around a byte blob to satisfy the interface API

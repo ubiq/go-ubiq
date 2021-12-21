@@ -33,7 +33,7 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 func TestClientRequest(t *testing.T) {
@@ -438,7 +438,7 @@ func TestClientSubscriptionUnsubscribeServer(t *testing.T) {
 }
 
 // This checks that the subscribed channel can be closed after Unsubscribe.
-// It is the reproducer for https://github.com/ubiq/go-ubiq/v5/issues/22322
+// It is the reproducer for https://github.com/ethereum/go-ethereum/issues/22322
 func TestClientSubscriptionChannelClose(t *testing.T) {
 	t.Parallel()
 

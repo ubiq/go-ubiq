@@ -21,8 +21,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/crypto"
 )
 
 func TestMakeTopics(t *testing.T) {

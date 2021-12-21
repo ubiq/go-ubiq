@@ -24,20 +24,20 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/accounts/abi"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/consensus"
-	"github.com/ubiq/go-ubiq/v5/core"
-	"github.com/ubiq/go-ubiq/v5/core/asm"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/core/state"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/core/vm"
-	"github.com/ubiq/go-ubiq/v5/eth/tracers"
-	"github.com/ubiq/go-ubiq/v5/params"
+	"github.com/ubiq/go-ubiq/v6/accounts/abi"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/consensus"
+	"github.com/ubiq/go-ubiq/v6/core"
+	"github.com/ubiq/go-ubiq/v6/core/asm"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/core/state"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/core/vm"
+	"github.com/ubiq/go-ubiq/v6/eth/tracers"
+	"github.com/ubiq/go-ubiq/v6/params"
 
 	// force-load js tracers to trigger registration
-	_ "github.com/ubiq/go-ubiq/v5/eth/tracers/js"
+	_ "github.com/ubiq/go-ubiq/v6/eth/tracers/js"
 )
 
 func TestDefaults(t *testing.T) {
@@ -623,7 +623,7 @@ func TestEip2929Cases(t *testing.T) {
 
 // TestColdAccountAccessCost test that the cold account access cost is reported
 // correctly
-// see: https://github.com/ubiq/go-ubiq/v5/issues/22649
+// see: https://github.com/ethereum/go-ethereum/issues/22649
 func TestColdAccountAccessCost(t *testing.T) {
 	for i, tc := range []struct {
 		code []byte

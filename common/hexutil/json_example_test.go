@@ -20,7 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
 )
 
 type MyType [5]byte

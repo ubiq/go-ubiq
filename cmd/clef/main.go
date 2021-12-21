@@ -37,25 +37,25 @@ import (
 
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
-	"github.com/ubiq/go-ubiq/v5/accounts"
-	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v5/cmd/utils"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v5/internal/flags"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/node"
-	"github.com/ubiq/go-ubiq/v5/params"
-	"github.com/ubiq/go-ubiq/v5/rlp"
-	"github.com/ubiq/go-ubiq/v5/rpc"
-	"github.com/ubiq/go-ubiq/v5/signer/core"
-	"github.com/ubiq/go-ubiq/v5/signer/core/apitypes"
-	"github.com/ubiq/go-ubiq/v5/signer/fourbyte"
-	"github.com/ubiq/go-ubiq/v5/signer/rules"
-	"github.com/ubiq/go-ubiq/v5/signer/storage"
+	"github.com/ubiq/go-ubiq/v6/accounts"
+	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v6/cmd/utils"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v6/internal/flags"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/node"
+	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v6/rpc"
+	"github.com/ubiq/go-ubiq/v6/signer/core"
+	"github.com/ubiq/go-ubiq/v6/signer/core/apitypes"
+	"github.com/ubiq/go-ubiq/v6/signer/fourbyte"
+	"github.com/ubiq/go-ubiq/v6/signer/rules"
+	"github.com/ubiq/go-ubiq/v6/signer/storage"
 	"gopkg.in/urfave/cli.v1"
 )
 
@@ -795,7 +795,7 @@ func checkFile(filename string) error {
 	}
 	// Check the unix permission bits
 	// However, on windows, we cannot use the unix perm-bits, see
-	// https://github.com/ubiq/go-ubiq/v5/issues/20123
+	// https://github.com/ethereum/go-ethereum/issues/20123
 	if runtime.GOOS != "windows" && info.Mode().Perm()&0377 != 0 {
 		return fmt.Errorf("file (%v) has insecure file permissions (%v)", filename, info.Mode().String())
 	}

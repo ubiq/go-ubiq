@@ -20,11 +20,11 @@ import (
 	"crypto/ecdsa"
 	"net"
 
-	"github.com/ubiq/go-ubiq/v5/common/mclock"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/p2p/enr"
-	"github.com/ubiq/go-ubiq/v5/p2p/netutil"
+	"github.com/ubiq/go-ubiq/v6/common/mclock"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/p2p/enr"
+	"github.com/ubiq/go-ubiq/v6/p2p/netutil"
 )
 
 // UDPConn is a network connection on which discovery can operate.

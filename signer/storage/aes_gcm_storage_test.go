@@ -24,8 +24,8 @@ import (
 	"testing"
 
 	"github.com/mattn/go-colorable"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 func TestEncryption(t *testing.T) {

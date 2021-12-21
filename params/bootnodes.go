@@ -16,7 +16,7 @@
 
 package params
 
-import "github.com/ubiq/go-ubiq/v5/common"
+import "github.com/ubiq/go-ubiq/v6/common"
 
 // MainnetBootnodes are the enode URLs of the P2P bootstrap nodes running on
 // the main Ubiq network.

@@ -24,8 +24,8 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/p2p"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/p2p"
 )
 
 // Tests that datadirs can be successfully created, be them manually configured

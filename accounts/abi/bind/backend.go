@@ -21,9 +21,9 @@ import (
 	"errors"
 	"math/big"
 
-	ethereum "github.com/ubiq/go-ubiq/v5"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
+	ethereum "github.com/ubiq/go-ubiq/v6"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
 )
 
 var (

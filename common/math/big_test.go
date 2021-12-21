@@ -22,7 +22,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v6/common"
 )
 
 func TestHexOrDecimal256(t *testing.T) {

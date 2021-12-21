@@ -21,8 +21,8 @@ import (
 	"sync/atomic"
 
 	"github.com/golang/snappy"
-	"github.com/ubiq/go-ubiq/v5/common/math"
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/common/math"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 // This is the maximum amount of data that will be buffered in memory

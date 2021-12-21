@@ -24,10 +24,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/console/prompt"
-	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/console/prompt"
+	"github.com/ubiq/go-ubiq/v6/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 type CommandlineUI struct {

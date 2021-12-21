@@ -23,9 +23,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/vm"
-	"github.com/ubiq/go-ubiq/v5/eth/tracers"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/vm"
+	"github.com/ubiq/go-ubiq/v6/eth/tracers"
 )
 
 func init() {

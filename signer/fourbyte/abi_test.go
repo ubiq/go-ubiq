@@ -22,8 +22,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/accounts/abi"
-	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v6/accounts/abi"
+	"github.com/ubiq/go-ubiq/v6/common"
 )
 
 func verify(t *testing.T, jsondata, calldata string, exp []interface{}) {

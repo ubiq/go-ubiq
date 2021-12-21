@@ -39,10 +39,10 @@ import (
 	"path/filepath"
 
 	"github.com/google/uuid"
-	"github.com/ubiq/go-ubiq/v5/accounts"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/math"
-	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v6/accounts"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/math"
+	"github.com/ubiq/go-ubiq/v6/crypto"
 	"golang.org/x/crypto/pbkdf2"
 	"golang.org/x/crypto/scrypt"
 )

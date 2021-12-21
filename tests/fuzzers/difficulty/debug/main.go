@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/ubiq/go-ubiq/v5/tests/fuzzers/difficulty"
+	"github.com/ubiq/go-ubiq/v6/tests/fuzzers/difficulty"
 )
 
 func main() {

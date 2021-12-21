@@ -23,9 +23,9 @@ import (
 	"io"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/ethdb/memorydb"
-	"github.com/ubiq/go-ubiq/v5/trie"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v6/trie"
 )
 
 type kv struct {

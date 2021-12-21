@@ -28,14 +28,14 @@ import (
 	"unicode"
 	"unsafe"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/core"
-	"github.com/ubiq/go-ubiq/v5/core/vm"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	tracers2 "github.com/ubiq/go-ubiq/v5/eth/tracers"
-	"github.com/ubiq/go-ubiq/v5/eth/tracers/js/internal/tracers"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/core"
+	"github.com/ubiq/go-ubiq/v6/core/vm"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	tracers2 "github.com/ubiq/go-ubiq/v6/eth/tracers"
+	"github.com/ubiq/go-ubiq/v6/eth/tracers/js/internal/tracers"
+	"github.com/ubiq/go-ubiq/v6/log"
 	"gopkg.in/olebedev/go-duktape.v3"
 )
 

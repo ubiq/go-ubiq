@@ -26,9 +26,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/p2p/enr"
-	"github.com/ubiq/go-ubiq/v5/p2p/netutil"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/p2p/enr"
+	"github.com/ubiq/go-ubiq/v6/p2p/netutil"
 )
 
 const (

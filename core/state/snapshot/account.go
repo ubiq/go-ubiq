@@ -20,8 +20,8 @@ import (
 	"bytes"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 // Account is a modified version of a state.Account, where the root is replaced

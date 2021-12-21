@@ -19,7 +19,7 @@ package utils
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v5/eth/ethconfig"
+	"github.com/ubiq/go-ubiq/v6/eth/ethconfig"
 	"gopkg.in/urfave/cli.v1"
 )
 

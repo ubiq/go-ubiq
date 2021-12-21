@@ -26,22 +26,22 @@ import (
 	"testing"
 	"unicode"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/common/math"
-	"github.com/ubiq/go-ubiq/v5/core"
-	"github.com/ubiq/go-ubiq/v5/core/rawdb"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/core/vm"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/eth/tracers"
-	"github.com/ubiq/go-ubiq/v5/params"
-	"github.com/ubiq/go-ubiq/v5/rlp"
-	"github.com/ubiq/go-ubiq/v5/tests"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/common/math"
+	"github.com/ubiq/go-ubiq/v6/core"
+	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/core/vm"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/eth/tracers"
+	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v6/tests"
 
 	// Force-load native and js pacakges, to trigger registration
-	_ "github.com/ubiq/go-ubiq/v5/eth/tracers/js"
-	_ "github.com/ubiq/go-ubiq/v5/eth/tracers/native"
+	_ "github.com/ubiq/go-ubiq/v6/eth/tracers/js"
+	_ "github.com/ubiq/go-ubiq/v6/eth/tracers/native"
 )
 
 // To generate a new callTracer test, copy paste the makeTest method below into

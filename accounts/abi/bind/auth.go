@@ -24,13 +24,13 @@ import (
 	"io/ioutil"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v5/accounts"
-	"github.com/ubiq/go-ubiq/v5/accounts/external"
-	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/accounts"
+	"github.com/ubiq/go-ubiq/v6/accounts/external"
+	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 // ErrNoChainID is returned whenever the user failed to specify a chain id.

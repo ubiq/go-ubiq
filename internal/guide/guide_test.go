@@ -30,9 +30,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
 )
 
 // Tests that the account management snippets work correctly.

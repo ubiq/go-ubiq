@@ -20,7 +20,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v5/params"
+	"github.com/ubiq/go-ubiq/v6/params"
 )
 
 // VerifyGaslimit verifies the header gas limit according increase/decrease

@@ -25,8 +25,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/rpc"
 	"github.com/stretchr/testify/assert"
+	"github.com/ubiq/go-ubiq/v6/rpc"
 )
 
 // This test uses the admin_startRPC and admin_startWS APIs,

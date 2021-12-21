@@ -28,8 +28,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/ubiq/go-ubiq/v5/ethdb"
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 var freezerTestTableDef = map[string]bool{"test": true}

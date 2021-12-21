@@ -17,7 +17,7 @@
 package runtime
 
 import (
-	"github.com/ubiq/go-ubiq/v5/core/vm/runtime"
+	"github.com/ubiq/go-ubiq/v6/core/vm/runtime"
 )
 
 // Fuzz is the basic entry point for the go-fuzz tool

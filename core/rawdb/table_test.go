@@ -20,7 +20,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/ethdb"
+	"github.com/ubiq/go-ubiq/v6/ethdb"
 )
 
 func TestTableDatabase(t *testing.T)            { testTableDatabase(t, "prefix") }

@@ -25,16 +25,16 @@ import (
 	"os"
 	"reflect"
 
-	"github.com/ubiq/go-ubiq/v5/accounts"
-	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v5/accounts/scwallet"
-	"github.com/ubiq/go-ubiq/v5/accounts/usbwallet"
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/hexutil"
-	"github.com/ubiq/go-ubiq/v5/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/signer/core/apitypes"
-	"github.com/ubiq/go-ubiq/v5/signer/storage"
+	"github.com/ubiq/go-ubiq/v6/accounts"
+	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v6/accounts/scwallet"
+	"github.com/ubiq/go-ubiq/v6/accounts/usbwallet"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/hexutil"
+	"github.com/ubiq/go-ubiq/v6/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/signer/core/apitypes"
+	"github.com/ubiq/go-ubiq/v6/signer/storage"
 )
 
 const (

@@ -31,11 +31,11 @@ import (
 
 	"github.com/gorilla/websocket"
 	"github.com/julienschmidt/httprouter"
-	"github.com/ubiq/go-ubiq/v5/event"
-	"github.com/ubiq/go-ubiq/v5/p2p"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/p2p/simulations/adapters"
-	"github.com/ubiq/go-ubiq/v5/rpc"
+	"github.com/ubiq/go-ubiq/v6/event"
+	"github.com/ubiq/go-ubiq/v6/p2p"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/p2p/simulations/adapters"
+	"github.com/ubiq/go-ubiq/v6/rpc"
 )
 
 // DefaultClient is the default simulation API client which expects the API

@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/ubiq/go-ubiq/v5/crypto"
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
 	"gopkg.in/urfave/cli.v1"
 )
 

@@ -27,7 +27,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v5/common/math"
+	"github.com/ubiq/go-ubiq/v6/common/math"
 )
 
 func TestStreamKind(t *testing.T) {

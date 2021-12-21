@@ -24,7 +24,7 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 // RLPTest is the JSON structure of a single RLP test.

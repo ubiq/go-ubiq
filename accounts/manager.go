@@ -21,8 +21,8 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/event"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/event"
 )
 
 // managerSubBufferSize determines how many incoming wallet events

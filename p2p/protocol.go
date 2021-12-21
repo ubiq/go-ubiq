@@ -19,8 +19,8 @@ package p2p
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v5/p2p/enode"
-	"github.com/ubiq/go-ubiq/v5/p2p/enr"
+	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v6/p2p/enr"
 )
 
 // Protocol represents a P2P subprotocol implementation.

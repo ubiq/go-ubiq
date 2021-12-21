@@ -20,10 +20,10 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v5/eth/protocols/eth"
-	"github.com/ubiq/go-ubiq/v5/p2p"
-	"github.com/ubiq/go-ubiq/v5/p2p/rlpx"
-	"github.com/ubiq/go-ubiq/v5/rlp"
+	"github.com/ubiq/go-ubiq/v6/eth/protocols/eth"
+	"github.com/ubiq/go-ubiq/v6/p2p"
+	"github.com/ubiq/go-ubiq/v6/p2p/rlpx"
+	"github.com/ubiq/go-ubiq/v6/rlp"
 )
 
 type Message interface {

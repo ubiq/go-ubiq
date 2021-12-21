@@ -17,8 +17,8 @@
 package core
 
 import (
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
 )
 
 // NewTxsEvent is posted when a batch of transactions enter the transaction pool.

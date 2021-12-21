@@ -27,7 +27,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/ubiq/go-ubiq/v5/common"
+	"github.com/ubiq/go-ubiq/v6/common"
 )
 
 // TestUnpack tests the general pack/unpack tests in packing_test.go

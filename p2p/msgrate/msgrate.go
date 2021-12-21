@@ -24,7 +24,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 // measurementImpact is the impact a single measurement has on a peer's final

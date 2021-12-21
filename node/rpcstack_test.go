@@ -27,9 +27,9 @@ import (
 
 	"github.com/gorilla/websocket"
 	"github.com/stretchr/testify/assert"
-	"github.com/ubiq/go-ubiq/v5/internal/testlog"
-	"github.com/ubiq/go-ubiq/v5/log"
-	"github.com/ubiq/go-ubiq/v5/rpc"
+	"github.com/ubiq/go-ubiq/v6/internal/testlog"
+	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v6/rpc"
 )
 
 // TestCorsHandler makes sure CORS are properly handled on the http server.

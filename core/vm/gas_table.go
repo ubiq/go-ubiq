@@ -19,9 +19,9 @@ package vm
 import (
 	"errors"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/common/math"
-	"github.com/ubiq/go-ubiq/v5/params"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/common/math"
+	"github.com/ubiq/go-ubiq/v6/params"
 )
 
 // memoryGasCost calculates the quadratic gas for memory expansion. It does so

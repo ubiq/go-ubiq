@@ -24,9 +24,9 @@ import (
 	"path/filepath"
 
 	"github.com/google/uuid"
-	"github.com/ubiq/go-ubiq/v5/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v5/cmd/utils"
-	"github.com/ubiq/go-ubiq/v5/crypto"
+	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v6/cmd/utils"
+	"github.com/ubiq/go-ubiq/v6/crypto"
 	"gopkg.in/urfave/cli.v1"
 )
 

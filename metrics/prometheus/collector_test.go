@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/metrics"
+	"github.com/ubiq/go-ubiq/v6/metrics"
 )
 
 func TestMain(m *testing.M) {

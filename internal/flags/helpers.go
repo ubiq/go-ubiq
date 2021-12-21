@@ -20,7 +20,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/ubiq/go-ubiq/v5/params"
+	"github.com/ubiq/go-ubiq/v6/params"
 	"gopkg.in/urfave/cli.v1"
 )
 

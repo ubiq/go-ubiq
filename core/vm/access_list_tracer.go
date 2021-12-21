@@ -20,8 +20,8 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/common"
-	"github.com/ubiq/go-ubiq/v5/core/types"
+	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v6/core/types"
 )
 
 // accessList is an accumulator for the set of accounts and storage slots an EVM

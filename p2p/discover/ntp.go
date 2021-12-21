@@ -25,7 +25,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v5/log"
+	"github.com/ubiq/go-ubiq/v6/log"
 )
 
 const (

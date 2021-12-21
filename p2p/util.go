@@ -19,7 +19,7 @@ package p2p
 import (
 	"container/heap"
 
-	"github.com/ubiq/go-ubiq/v5/common/mclock"
+	"github.com/ubiq/go-ubiq/v6/common/mclock"
 )
 
 // expHeap tracks strings and their expiry time.
