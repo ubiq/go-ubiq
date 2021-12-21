@@ -341,7 +341,7 @@ func TestZeroValueToNotExitCall(t *testing.T) {
 		CanTransfer: core.CanTransfer,
 		Transfer:    core.Transfer,
 		Coinbase:    common.Address{},
-		BlockNumber: new(big.Int).SetUint64(8000000),
+		BlockNumber: new(big.Int).SetUint64(1500000), // previously 8000000 (before berlin/london)
 		Time:        new(big.Int).SetUint64(5),
 		Difficulty:  big.NewInt(0x30000),
 		GasLimit:    uint64(6000000),
