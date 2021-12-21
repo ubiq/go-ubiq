@@ -58,12 +58,12 @@ var (
 		EIP150Hash:          common.HexToHash("0x2086799aeebeae135c246c65021c82b4e15a2c451340993aacfd2751886514f0"),
 		EIP155Block:         big.NewInt(10),
 		EIP158Block:         big.NewInt(10),
-		ByzantiumBlock:      big.NewInt(1075090),       // Andromeda
-		ConstantinopleBlock: big.NewInt(1075090),       // Andromeda
-		PetersburgBlock:     big.NewInt(1075090),       // Andromeda
-		IstanbulBlock:       big.NewInt(1500000),       // Taurus
-		BerlinBlock:         big.NewInt(math.MaxInt64), // Orion
-		LondonBlock:         big.NewInt(math.MaxInt64), // Orion
+		ByzantiumBlock:      big.NewInt(1075090), // Andromeda
+		ConstantinopleBlock: big.NewInt(1075090), // Andromeda
+		PetersburgBlock:     big.NewInt(1075090), // Andromeda
+		IstanbulBlock:       big.NewInt(1500000), // Taurus
+		BerlinBlock:         big.NewInt(1791793), // Orion
+		LondonBlock:         big.NewInt(1791793), // Orion
 		Ubqhash: &UbqhashConfig{
 			UIP0Block:          big.NewInt(0),
 			UIP1Epoch:          big.NewInt(22),
