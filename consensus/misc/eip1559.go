@@ -62,6 +62,7 @@ func CalcBaseFee(config *params.ChainConfig, parent *types.Header) *big.Int {
 		parentGasTarget          = parent.GasLimit / params.ElasticityMultiplier
 		parentGasTargetBig       = new(big.Int).SetUint64(parentGasTarget)
 		baseFeeChangeDenominator = new(big.Int).SetUint64(params.BaseFeeChangeDenominator)
+		baseFee                  = new(big.Int).Set(parent.BaseFee)
 	)
 	// If the parent gasUsed is the same as the target, the baseFee remains unchanged.
 	if parent.GasUsed == parentGasTarget {
@@ -77,7 +78,7 @@ func CalcBaseFee(config *params.ChainConfig, parent *types.Header) *big.Int {
 			common.Big1,
 		)
 
-		return x.Add(parent.BaseFee, baseFeeDelta)
+		baseFee.Add(baseFee, baseFeeDelta)
 	} else {
 		// Otherwise if the parent block used less gas than its target, the baseFee should decrease.
 		gasUsedDelta := new(big.Int).SetUint64(parentGasTarget - parent.GasUsed)
@@ -85,9 +86,30 @@ func CalcBaseFee(config *params.ChainConfig, parent *types.Header) *big.Int {
 		y := x.Div(x, parentGasTargetBig)
 		baseFeeDelta := x.Div(y, baseFeeChangeDenominator)
 
-		return math.BigMax(
-			x.Sub(parent.BaseFee, baseFeeDelta),
-			common.Big0,
-		)
+		baseFee.Sub(baseFee, baseFeeDelta)
+	}
+
+	// Ensure that the base fee does not increase/decrease outside of the bounds
+	switch {
+	case config.IsMonoceros(parent.Number):
+		baseFee = selectBigWithinBounds(big.NewInt(params.MonocerosMinBaseFee), baseFee, nil)
+	default:
+		baseFee = selectBigWithinBounds(nil, baseFee, nil)
+	}
+
+	return baseFee
+}
+
+// selectBigWithinBounds returns [value] if it is within the bounds:
+// lowerBound <= value <= upperBound or the bound at either end if [value]
+// is outside of the defined boundaries.
+func selectBigWithinBounds(lowerBound, value, upperBound *big.Int) *big.Int {
+	switch {
+	case lowerBound != nil && value.Cmp(lowerBound) < 0:
+		return new(big.Int).Set(lowerBound)
+	case upperBound != nil && value.Cmp(upperBound) > 0:
+		return new(big.Int).Set(upperBound)
+	default:
+		return value
 	}
 }
