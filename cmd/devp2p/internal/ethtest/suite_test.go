@@ -21,11 +21,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/eth"
-	"github.com/ubiq/go-ubiq/v6/eth/ethconfig"
-	"github.com/ubiq/go-ubiq/v6/internal/utesting"
-	"github.com/ubiq/go-ubiq/v6/node"
-	"github.com/ubiq/go-ubiq/v6/p2p"
+	"github.com/ubiq/go-ubiq/v7/eth"
+	"github.com/ubiq/go-ubiq/v7/eth/ethconfig"
+	"github.com/ubiq/go-ubiq/v7/internal/utesting"
+	"github.com/ubiq/go-ubiq/v7/node"
+	"github.com/ubiq/go-ubiq/v7/p2p"
 )
 
 var (

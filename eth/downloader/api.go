@@ -20,9 +20,9 @@ import (
 	"context"
 	"sync"
 
-	ethereum "github.com/ubiq/go-ubiq/v6"
-	"github.com/ubiq/go-ubiq/v6/event"
-	"github.com/ubiq/go-ubiq/v6/rpc"
+	ethereum "github.com/ubiq/go-ubiq/v7"
+	"github.com/ubiq/go-ubiq/v7/event"
+	"github.com/ubiq/go-ubiq/v7/rpc"
 )
 
 // PublicDownloaderAPI provides an API which gives information about the current synchronisation status.

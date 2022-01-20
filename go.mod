@@ -1,4 +1,4 @@
-module github.com/ubiq/go-ubiq/v6
+module github.com/ubiq/go-ubiq/v7
 
 go 1.15
 

@@ -23,7 +23,7 @@ import (
 	"time"
 
 	"github.com/rjeczalik/notify"
-	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v7/log"
 )
 
 type watcher struct {

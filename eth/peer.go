@@ -21,8 +21,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/eth/protocols/eth"
-	"github.com/ubiq/go-ubiq/v6/eth/protocols/snap"
+	"github.com/ubiq/go-ubiq/v7/eth/protocols/eth"
+	"github.com/ubiq/go-ubiq/v7/eth/protocols/snap"
 )
 
 // ethPeerInfo represents a short summary of the `eth` sub-protocol metadata known

@@ -35,10 +35,10 @@ import (
 
 	"github.com/edsrzf/mmap-go"
 	"github.com/hashicorp/golang-lru/simplelru"
-	"github.com/ubiq/go-ubiq/v6/consensus"
-	"github.com/ubiq/go-ubiq/v6/log"
-	"github.com/ubiq/go-ubiq/v6/metrics"
-	"github.com/ubiq/go-ubiq/v6/rpc"
+	"github.com/ubiq/go-ubiq/v7/consensus"
+	"github.com/ubiq/go-ubiq/v7/log"
+	"github.com/ubiq/go-ubiq/v7/metrics"
+	"github.com/ubiq/go-ubiq/v7/rpc"
 )
 
 var ErrInvalidDumpMagic = errors.New("invalid dump magic")

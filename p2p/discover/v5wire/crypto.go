@@ -25,9 +25,9 @@ import (
 	"fmt"
 	"hash"
 
-	"github.com/ubiq/go-ubiq/v6/common/math"
-	"github.com/ubiq/go-ubiq/v6/crypto"
-	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/common/math"
+	"github.com/ubiq/go-ubiq/v7/crypto"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
 	"golang.org/x/crypto/hkdf"
 )
 

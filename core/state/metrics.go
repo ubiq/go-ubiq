@@ -16,7 +16,7 @@
 
 package state
 
-import "github.com/ubiq/go-ubiq/v6/metrics"
+import "github.com/ubiq/go-ubiq/v7/metrics"
 
 var (
 	accountUpdatedMeter   = metrics.NewRegisteredMeter("state/update/account", nil)

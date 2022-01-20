@@ -26,12 +26,12 @@ import (
 	"time"
 
 	"github.com/VictoriaMetrics/fastcache"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/core/rawdb"
-	"github.com/ubiq/go-ubiq/v6/ethdb"
-	"github.com/ubiq/go-ubiq/v6/log"
-	"github.com/ubiq/go-ubiq/v6/metrics"
-	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/core/rawdb"
+	"github.com/ubiq/go-ubiq/v7/ethdb"
+	"github.com/ubiq/go-ubiq/v7/log"
+	"github.com/ubiq/go-ubiq/v7/metrics"
+	"github.com/ubiq/go-ubiq/v7/rlp"
 )
 
 var (

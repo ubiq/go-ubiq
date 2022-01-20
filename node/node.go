@@ -27,13 +27,13 @@ import (
 	"sync"
 
 	"github.com/prometheus/tsdb/fileutil"
-	"github.com/ubiq/go-ubiq/v6/accounts"
-	"github.com/ubiq/go-ubiq/v6/core/rawdb"
-	"github.com/ubiq/go-ubiq/v6/ethdb"
-	"github.com/ubiq/go-ubiq/v6/event"
-	"github.com/ubiq/go-ubiq/v6/log"
-	"github.com/ubiq/go-ubiq/v6/p2p"
-	"github.com/ubiq/go-ubiq/v6/rpc"
+	"github.com/ubiq/go-ubiq/v7/accounts"
+	"github.com/ubiq/go-ubiq/v7/core/rawdb"
+	"github.com/ubiq/go-ubiq/v7/ethdb"
+	"github.com/ubiq/go-ubiq/v7/event"
+	"github.com/ubiq/go-ubiq/v7/log"
+	"github.com/ubiq/go-ubiq/v7/p2p"
+	"github.com/ubiq/go-ubiq/v7/rpc"
 )
 
 // Node is a container on which services can be registered.

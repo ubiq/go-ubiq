@@ -16,7 +16,7 @@
 
 package downloader
 
-import "github.com/ubiq/go-ubiq/v6/core/types"
+import "github.com/ubiq/go-ubiq/v7/core/types"
 
 type DoneEvent struct {
 	Latest *types.Header

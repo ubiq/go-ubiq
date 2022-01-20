@@ -6,13 +6,13 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/consensus/ubqhash"
-	"github.com/ubiq/go-ubiq/v6/core"
-	"github.com/ubiq/go-ubiq/v6/eth/downloader"
-	"github.com/ubiq/go-ubiq/v6/eth/gasprice"
-	"github.com/ubiq/go-ubiq/v6/miner"
-	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v7/core"
+	"github.com/ubiq/go-ubiq/v7/eth/downloader"
+	"github.com/ubiq/go-ubiq/v7/eth/gasprice"
+	"github.com/ubiq/go-ubiq/v7/miner"
+	"github.com/ubiq/go-ubiq/v7/params"
 )
 
 // MarshalTOML marshals as TOML.

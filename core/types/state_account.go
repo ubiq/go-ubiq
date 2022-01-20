@@ -19,7 +19,7 @@ package types
 import (
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v7/common"
 )
 
 // StateAccount is the Ethereum consensus representation of accounts.

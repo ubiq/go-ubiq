@@ -20,10 +20,10 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/ubiq/go-ubiq/v6/common/mclock"
-	"github.com/ubiq/go-ubiq/v6/p2p/enode"
-	"github.com/ubiq/go-ubiq/v6/p2p/enr"
-	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v7/common/mclock"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/p2p/enr"
+	"github.com/ubiq/go-ubiq/v7/rlp"
 )
 
 // Packet is implemented by all message types.

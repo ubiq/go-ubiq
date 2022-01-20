@@ -23,12 +23,12 @@ import (
 	"runtime"
 	"runtime/debug"
 
-	ethereum "github.com/ubiq/go-ubiq/v6"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/common/hexutil"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/p2p"
-	"github.com/ubiq/go-ubiq/v6/rpc"
+	ethereum "github.com/ubiq/go-ubiq/v7"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/common/hexutil"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/p2p"
+	"github.com/ubiq/go-ubiq/v7/rpc"
 )
 
 // Client is a wrapper around rpc.Client that implements geth-specific functionality.

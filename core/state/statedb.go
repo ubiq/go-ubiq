@@ -24,15 +24,15 @@ import (
 	"sort"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/core/rawdb"
-	"github.com/ubiq/go-ubiq/v6/core/state/snapshot"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/crypto"
-	"github.com/ubiq/go-ubiq/v6/log"
-	"github.com/ubiq/go-ubiq/v6/metrics"
-	"github.com/ubiq/go-ubiq/v6/rlp"
-	"github.com/ubiq/go-ubiq/v6/trie"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/core/rawdb"
+	"github.com/ubiq/go-ubiq/v7/core/state/snapshot"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/crypto"
+	"github.com/ubiq/go-ubiq/v7/log"
+	"github.com/ubiq/go-ubiq/v7/metrics"
+	"github.com/ubiq/go-ubiq/v7/rlp"
+	"github.com/ubiq/go-ubiq/v7/trie"
 )
 
 type revision struct {

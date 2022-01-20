@@ -19,7 +19,7 @@ package bitutil
 import (
 	"bytes"
 
-	"github.com/ubiq/go-ubiq/v6/common/bitutil"
+	"github.com/ubiq/go-ubiq/v7/common/bitutil"
 )
 
 // Fuzz implements a go-fuzz fuzzer method to test various encoding method

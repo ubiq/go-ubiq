@@ -22,8 +22,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v6/accounts/abi"
-	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v7/accounts/abi"
+	"github.com/ubiq/go-ubiq/v7/common"
 )
 
 // Tests that all the selectors contained in the 4byte database are valid.

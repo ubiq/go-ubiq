@@ -25,10 +25,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/core/forkid"
-	"github.com/ubiq/go-ubiq/v6/p2p/enr"
-	"github.com/ubiq/go-ubiq/v6/params"
-	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v7/core/forkid"
+	"github.com/ubiq/go-ubiq/v7/p2p/enr"
+	"github.com/ubiq/go-ubiq/v7/params"
+	"github.com/ubiq/go-ubiq/v7/rlp"
 	"gopkg.in/urfave/cli.v1"
 )
 

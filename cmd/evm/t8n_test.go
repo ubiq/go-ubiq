@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/docker/docker/pkg/reexec"
-	"github.com/ubiq/go-ubiq/v6/cmd/evm/internal/t8ntool"
-	"github.com/ubiq/go-ubiq/v6/internal/cmdtest"
+	"github.com/ubiq/go-ubiq/v7/cmd/evm/internal/t8ntool"
+	"github.com/ubiq/go-ubiq/v7/internal/cmdtest"
 )
 
 func TestMain(m *testing.M) {

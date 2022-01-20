@@ -21,7 +21,7 @@ import (
 	"math/big"
 	"sort"
 
-	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v7/params"
 )
 
 // Forks table defines supported forks and their chain config.

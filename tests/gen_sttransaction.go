@@ -6,9 +6,9 @@ import (
 	"encoding/json"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v6/common/hexutil"
-	"github.com/ubiq/go-ubiq/v6/common/math"
-	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v7/common/hexutil"
+	"github.com/ubiq/go-ubiq/v7/common/math"
+	"github.com/ubiq/go-ubiq/v7/core/types"
 )
 
 var _ = (*stTransactionMarshaling)(nil)

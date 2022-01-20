@@ -19,7 +19,7 @@ package snapshot
 import (
 	"bytes"
 
-	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v7/common"
 )
 
 // hashes is a helper to implement sort.Interface.

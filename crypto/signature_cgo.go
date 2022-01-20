@@ -24,8 +24,8 @@ import (
 	"crypto/elliptic"
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v6/common/math"
-	"github.com/ubiq/go-ubiq/v6/crypto/secp256k1"
+	"github.com/ubiq/go-ubiq/v7/common/math"
+	"github.com/ubiq/go-ubiq/v7/crypto/secp256k1"
 )
 
 // Ecrecover returns the uncompressed public key that created the given signature.

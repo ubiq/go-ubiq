@@ -17,7 +17,7 @@
 package state
 
 import (
-	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v7/common"
 )
 
 type accessList struct {

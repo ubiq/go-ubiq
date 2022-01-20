@@ -25,13 +25,13 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v6/accounts/abi"
-	"github.com/ubiq/go-ubiq/v6/accounts/abi/bind"
-	"github.com/ubiq/go-ubiq/v6/cmd/utils"
-	"github.com/ubiq/go-ubiq/v6/common/compiler"
-	"github.com/ubiq/go-ubiq/v6/crypto"
-	"github.com/ubiq/go-ubiq/v6/internal/flags"
-	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v7/accounts/abi"
+	"github.com/ubiq/go-ubiq/v7/accounts/abi/bind"
+	"github.com/ubiq/go-ubiq/v7/cmd/utils"
+	"github.com/ubiq/go-ubiq/v7/common/compiler"
+	"github.com/ubiq/go-ubiq/v7/crypto"
+	"github.com/ubiq/go-ubiq/v7/internal/flags"
+	"github.com/ubiq/go-ubiq/v7/log"
 	"gopkg.in/urfave/cli.v1"
 )
 

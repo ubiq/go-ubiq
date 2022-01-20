@@ -28,12 +28,12 @@ import (
 	"math/big"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/ubiq/go-ubiq/v6/accounts"
-	"github.com/ubiq/go-ubiq/v6/accounts/usbwallet/trezor"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/common/hexutil"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v7/accounts"
+	"github.com/ubiq/go-ubiq/v7/accounts/usbwallet/trezor"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/common/hexutil"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/log"
 )
 
 // ErrTrezorPINNeeded is returned if opening the trezor requires a PIN code. In

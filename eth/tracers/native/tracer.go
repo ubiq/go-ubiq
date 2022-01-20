@@ -37,7 +37,7 @@ package native
 import (
 	"errors"
 
-	"github.com/ubiq/go-ubiq/v6/eth/tracers"
+	"github.com/ubiq/go-ubiq/v7/eth/tracers"
 )
 
 // init registers itself this packages as a lookup for tracers.

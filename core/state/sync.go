@@ -19,11 +19,11 @@ package state
 import (
 	"bytes"
 
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/ethdb"
-	"github.com/ubiq/go-ubiq/v6/rlp"
-	"github.com/ubiq/go-ubiq/v6/trie"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/ethdb"
+	"github.com/ubiq/go-ubiq/v7/rlp"
+	"github.com/ubiq/go-ubiq/v7/trie"
 )
 
 // NewStateSync create a new state trie download scheduler.

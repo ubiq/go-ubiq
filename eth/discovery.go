@@ -17,10 +17,10 @@
 package eth
 
 import (
-	"github.com/ubiq/go-ubiq/v6/core"
-	"github.com/ubiq/go-ubiq/v6/core/forkid"
-	"github.com/ubiq/go-ubiq/v6/p2p/enode"
-	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v7/core"
+	"github.com/ubiq/go-ubiq/v7/core/forkid"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/rlp"
 )
 
 // ethEntry is the "eth" ENR entry which advertises eth protocol

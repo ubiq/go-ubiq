@@ -7,8 +7,8 @@ import (
 	"reflect"
 
 	openrpc "github.com/octanolabs/g0penrpc"
-	"github.com/ubiq/go-ubiq/v6/common/hexutil"
-	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v7/common/hexutil"
+	"github.com/ubiq/go-ubiq/v7/log"
 )
 
 func makeOpenRpcSpecV1(server *Server) (*openrpc.DocumentSpec1, error) {

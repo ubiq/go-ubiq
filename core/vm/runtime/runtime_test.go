@@ -24,20 +24,20 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/accounts/abi"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/consensus"
-	"github.com/ubiq/go-ubiq/v6/core"
-	"github.com/ubiq/go-ubiq/v6/core/asm"
-	"github.com/ubiq/go-ubiq/v6/core/rawdb"
-	"github.com/ubiq/go-ubiq/v6/core/state"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/core/vm"
-	"github.com/ubiq/go-ubiq/v6/eth/tracers"
-	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v7/accounts/abi"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/consensus"
+	"github.com/ubiq/go-ubiq/v7/core"
+	"github.com/ubiq/go-ubiq/v7/core/asm"
+	"github.com/ubiq/go-ubiq/v7/core/rawdb"
+	"github.com/ubiq/go-ubiq/v7/core/state"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/core/vm"
+	"github.com/ubiq/go-ubiq/v7/eth/tracers"
+	"github.com/ubiq/go-ubiq/v7/params"
 
 	// force-load js tracers to trigger registration
-	_ "github.com/ubiq/go-ubiq/v6/eth/tracers/js"
+	_ "github.com/ubiq/go-ubiq/v7/eth/tracers/js"
 )
 
 func TestDefaults(t *testing.T) {

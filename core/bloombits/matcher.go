@@ -26,8 +26,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/common/bitutil"
-	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v7/common/bitutil"
+	"github.com/ubiq/go-ubiq/v7/crypto"
 )
 
 // bloomIndexes represents the bit indexes inside the bloom filter that belong

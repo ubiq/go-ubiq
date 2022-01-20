@@ -23,8 +23,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/crypto"
 )
 
 // The ABI holds information about a contract's context and available

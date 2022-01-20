@@ -21,10 +21,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/eth/downloader"
-	"github.com/ubiq/go-ubiq/v6/eth/protocols/eth"
-	"github.com/ubiq/go-ubiq/v6/p2p"
-	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/eth/downloader"
+	"github.com/ubiq/go-ubiq/v7/eth/protocols/eth"
+	"github.com/ubiq/go-ubiq/v7/p2p"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
 )
 
 // Tests that fast sync is disabled after a successful sync cycle.

@@ -24,7 +24,7 @@ const (
 
 // locationTrims are trimmed for display to avoid unwieldy log lines.
 var locationTrims = []string{
-	"github.com/ubiq/go-ubiq/v6/",
+	"github.com/ubiq/go-ubiq/v7/",
 }
 
 // PrintOrigins sets or unsets log location (file:line) printing for terminal

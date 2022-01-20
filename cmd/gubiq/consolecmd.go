@@ -21,10 +21,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v6/cmd/utils"
-	"github.com/ubiq/go-ubiq/v6/console"
-	"github.com/ubiq/go-ubiq/v6/node"
-	"github.com/ubiq/go-ubiq/v6/rpc"
+	"github.com/ubiq/go-ubiq/v7/cmd/utils"
+	"github.com/ubiq/go-ubiq/v7/console"
+	"github.com/ubiq/go-ubiq/v7/node"
+	"github.com/ubiq/go-ubiq/v7/rpc"
 	"gopkg.in/urfave/cli.v1"
 )
 

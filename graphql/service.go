@@ -21,8 +21,8 @@ import (
 	"net/http"
 
 	"github.com/graph-gophers/graphql-go"
-	"github.com/ubiq/go-ubiq/v6/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v6/node"
+	"github.com/ubiq/go-ubiq/v7/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v7/node"
 )
 
 type handler struct {

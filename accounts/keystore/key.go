@@ -30,9 +30,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/ubiq/go-ubiq/v6/accounts"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v7/accounts"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/crypto"
 )
 
 const (

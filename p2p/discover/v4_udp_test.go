@@ -31,11 +31,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/internal/testlog"
-	"github.com/ubiq/go-ubiq/v6/log"
-	"github.com/ubiq/go-ubiq/v6/p2p/discover/v4wire"
-	"github.com/ubiq/go-ubiq/v6/p2p/enode"
-	"github.com/ubiq/go-ubiq/v6/p2p/enr"
+	"github.com/ubiq/go-ubiq/v7/internal/testlog"
+	"github.com/ubiq/go-ubiq/v7/log"
+	"github.com/ubiq/go-ubiq/v7/p2p/discover/v4wire"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/p2p/enr"
 )
 
 // shared test variables

@@ -23,12 +23,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/consensus"
-	"github.com/ubiq/go-ubiq/v6/consensus/ubqhash"
-	"github.com/ubiq/go-ubiq/v6/core/rawdb"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/log"
-	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v7/consensus"
+	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v7/core/rawdb"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/log"
+	"github.com/ubiq/go-ubiq/v7/params"
 )
 
 func verifyUnbrokenCanonchain(hc *HeaderChain) error {

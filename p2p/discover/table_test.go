@@ -27,10 +27,10 @@ import (
 	"testing/quick"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/crypto"
-	"github.com/ubiq/go-ubiq/v6/p2p/enode"
-	"github.com/ubiq/go-ubiq/v6/p2p/enr"
-	"github.com/ubiq/go-ubiq/v6/p2p/netutil"
+	"github.com/ubiq/go-ubiq/v7/crypto"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/p2p/enr"
+	"github.com/ubiq/go-ubiq/v7/p2p/netutil"
 )
 
 func TestTable_pingReplace(t *testing.T) {

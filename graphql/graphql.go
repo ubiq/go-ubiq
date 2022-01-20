@@ -24,15 +24,15 @@ import (
 	"math/big"
 	"strconv"
 
-	ethereum "github.com/ubiq/go-ubiq/v6"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/common/hexutil"
-	"github.com/ubiq/go-ubiq/v6/common/math"
-	"github.com/ubiq/go-ubiq/v6/core/state"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/eth/filters"
-	"github.com/ubiq/go-ubiq/v6/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v6/rpc"
+	ethereum "github.com/ubiq/go-ubiq/v7"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/common/hexutil"
+	"github.com/ubiq/go-ubiq/v7/common/math"
+	"github.com/ubiq/go-ubiq/v7/core/state"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/eth/filters"
+	"github.com/ubiq/go-ubiq/v7/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v7/rpc"
 )
 
 var (

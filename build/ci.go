@@ -59,8 +59,8 @@ import (
 	"time"
 
 	"github.com/cespare/cp"
-	"github.com/ubiq/go-ubiq/v6/internal/build"
-	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v7/internal/build"
+	"github.com/ubiq/go-ubiq/v7/params"
 )
 
 var (
@@ -988,7 +988,7 @@ func doAndroidArchive(cmdline []string) {
 	build.MustRun(tc.Go("mod", "download"))
 
 	// Build the Android archive and Maven resources
-	build.MustRun(gomobileTool("bind", "-ldflags", "-s -w", "--target", "android", "--javapkg", "com.ubiqsmart", "-v", "github.com/ubiq/go-ubiq/v6/mobile"))
+	build.MustRun(gomobileTool("bind", "-ldflags", "-s -w", "--target", "android", "--javapkg", "com.ubiqsmart", "-v", "github.com/ubiq/go-ubiq/v7/mobile"))
 
 	if *local {
 		// If we're building locally, copy bundle to build dir and skip Maven
@@ -1116,7 +1116,7 @@ func doXCodeFramework(cmdline []string) {
 	build.MustRun(tc.Go("mod", "download"))
 
 	// Build the iOS XCode framework
-	bind := gomobileTool("bind", "-ldflags", "-s -w", "--target", "ios", "-v", "github.com/ubiq/go-ubiq/v6/mobile")
+	bind := gomobileTool("bind", "-ldflags", "-s -w", "--target", "ios", "-v", "github.com/ubiq/go-ubiq/v7/mobile")
 
 	if *local {
 		// If we're building locally, use the build folder and stop afterwards

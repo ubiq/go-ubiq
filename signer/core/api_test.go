@@ -27,17 +27,17 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/accounts"
-	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/common/hexutil"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/internal/ethapi"
-	"github.com/ubiq/go-ubiq/v6/rlp"
-	"github.com/ubiq/go-ubiq/v6/signer/core"
-	"github.com/ubiq/go-ubiq/v6/signer/core/apitypes"
-	"github.com/ubiq/go-ubiq/v6/signer/fourbyte"
-	"github.com/ubiq/go-ubiq/v6/signer/storage"
+	"github.com/ubiq/go-ubiq/v7/accounts"
+	"github.com/ubiq/go-ubiq/v7/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/common/hexutil"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/internal/ethapi"
+	"github.com/ubiq/go-ubiq/v7/rlp"
+	"github.com/ubiq/go-ubiq/v7/signer/core"
+	"github.com/ubiq/go-ubiq/v7/signer/core/apitypes"
+	"github.com/ubiq/go-ubiq/v7/signer/fourbyte"
+	"github.com/ubiq/go-ubiq/v7/signer/storage"
 )
 
 //Used for testing

@@ -17,7 +17,7 @@
 package vm
 
 import (
-	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v7/params"
 )
 
 func minSwapStack(n int) int {

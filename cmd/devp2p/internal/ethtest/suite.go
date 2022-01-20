@@ -19,10 +19,10 @@ package ethtest
 import (
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/eth/protocols/eth"
-	"github.com/ubiq/go-ubiq/v6/internal/utesting"
-	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/eth/protocols/eth"
+	"github.com/ubiq/go-ubiq/v7/internal/utesting"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
 )
 
 // Suite represents a structure used to test a node's conformance

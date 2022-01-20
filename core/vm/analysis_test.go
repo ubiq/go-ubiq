@@ -19,7 +19,7 @@ package vm
 import (
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v6/crypto"
+	"github.com/ubiq/go-ubiq/v7/crypto"
 )
 
 func TestJumpDestAnalysis(t *testing.T) {

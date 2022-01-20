@@ -19,8 +19,8 @@ package trie
 import (
 	"sync"
 
-	"github.com/ubiq/go-ubiq/v6/crypto"
-	"github.com/ubiq/go-ubiq/v6/rlp"
+	"github.com/ubiq/go-ubiq/v7/crypto"
+	"github.com/ubiq/go-ubiq/v7/rlp"
 	"golang.org/x/crypto/sha3"
 )
 

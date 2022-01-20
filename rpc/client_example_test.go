@@ -21,8 +21,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/common/hexutil"
-	"github.com/ubiq/go-ubiq/v6/rpc"
+	"github.com/ubiq/go-ubiq/v7/common/hexutil"
+	"github.com/ubiq/go-ubiq/v7/rpc"
 )
 
 // In this example, our client wishes to track the latest 'block number'

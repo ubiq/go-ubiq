@@ -19,8 +19,8 @@ package eth
 import (
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/common/bitutil"
-	"github.com/ubiq/go-ubiq/v6/core/rawdb"
+	"github.com/ubiq/go-ubiq/v7/common/bitutil"
+	"github.com/ubiq/go-ubiq/v7/core/rawdb"
 )
 
 const (

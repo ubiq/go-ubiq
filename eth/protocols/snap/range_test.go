@@ -19,7 +19,7 @@ package snap
 import (
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v6/common"
+	"github.com/ubiq/go-ubiq/v7/common"
 )
 
 // Tests that given a starting hash and a density, the hash ranger can correctly

@@ -25,8 +25,8 @@ import (
 	"time"
 
 	"github.com/docker/docker/pkg/reexec"
-	"github.com/ubiq/go-ubiq/v6/internal/cmdtest"
-	"github.com/ubiq/go-ubiq/v6/rpc"
+	"github.com/ubiq/go-ubiq/v7/internal/cmdtest"
+	"github.com/ubiq/go-ubiq/v7/rpc"
 )
 
 func tmpdir(t *testing.T) string {

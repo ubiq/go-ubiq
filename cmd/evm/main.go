@@ -22,9 +22,9 @@ import (
 	"math/big"
 	"os"
 
-	"github.com/ubiq/go-ubiq/v6/cmd/evm/internal/t8ntool"
-	"github.com/ubiq/go-ubiq/v6/cmd/utils"
-	"github.com/ubiq/go-ubiq/v6/internal/flags"
+	"github.com/ubiq/go-ubiq/v7/cmd/evm/internal/t8ntool"
+	"github.com/ubiq/go-ubiq/v7/cmd/utils"
+	"github.com/ubiq/go-ubiq/v7/internal/flags"
 	"gopkg.in/urfave/cli.v1"
 )
 

@@ -18,9 +18,9 @@ package vm
 
 import (
 	"github.com/holiman/uint256"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/core/types"
-	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/params"
 	"golang.org/x/crypto/sha3"
 )
 

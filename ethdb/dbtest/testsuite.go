@@ -22,7 +22,7 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/ubiq/go-ubiq/v6/ethdb"
+	"github.com/ubiq/go-ubiq/v7/ethdb"
 )
 
 // TestDatabaseSuite runs a suite of tests against a KeyValueStore database

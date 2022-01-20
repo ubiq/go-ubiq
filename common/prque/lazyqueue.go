@@ -20,7 +20,7 @@ import (
 	"container/heap"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/common/mclock"
+	"github.com/ubiq/go-ubiq/v7/common/mclock"
 )
 
 // LazyQueue is a priority queue data structure where priorities can change over

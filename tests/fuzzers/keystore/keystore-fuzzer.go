@@ -19,7 +19,7 @@ package keystore
 import (
 	"os"
 
-	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v7/accounts/keystore"
 )
 
 func Fuzz(input []byte) int {

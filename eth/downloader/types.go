@@ -19,7 +19,7 @@ package downloader
 import (
 	"fmt"
 
-	"github.com/ubiq/go-ubiq/v6/core/types"
+	"github.com/ubiq/go-ubiq/v7/core/types"
 )
 
 // peerDropFn is a callback type for dropping a peer detected as malicious.

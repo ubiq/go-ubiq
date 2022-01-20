@@ -21,8 +21,8 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v6/cmd/utils"
+	"github.com/ubiq/go-ubiq/v7/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v7/cmd/utils"
 	"gopkg.in/urfave/cli.v1"
 )
 

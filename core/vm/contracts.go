@@ -22,13 +22,13 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/common/math"
-	"github.com/ubiq/go-ubiq/v6/crypto"
-	"github.com/ubiq/go-ubiq/v6/crypto/blake2b"
-	"github.com/ubiq/go-ubiq/v6/crypto/bls12381"
-	"github.com/ubiq/go-ubiq/v6/crypto/bn256"
-	"github.com/ubiq/go-ubiq/v6/params"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/common/math"
+	"github.com/ubiq/go-ubiq/v7/crypto"
+	"github.com/ubiq/go-ubiq/v7/crypto/blake2b"
+	"github.com/ubiq/go-ubiq/v7/crypto/bls12381"
+	"github.com/ubiq/go-ubiq/v7/crypto/bn256"
+	"github.com/ubiq/go-ubiq/v7/params"
 
 	//lint:ignore SA1019 Needed for precompile
 	"golang.org/x/crypto/ripemd160"

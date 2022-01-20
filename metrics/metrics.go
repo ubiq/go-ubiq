@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/log"
+	"github.com/ubiq/go-ubiq/v7/log"
 )
 
 // Enabled is checked by the constructor functions for all of the

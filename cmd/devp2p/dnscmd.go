@@ -25,11 +25,11 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/ubiq/go-ubiq/v6/accounts/keystore"
-	"github.com/ubiq/go-ubiq/v6/common"
-	"github.com/ubiq/go-ubiq/v6/console/prompt"
-	"github.com/ubiq/go-ubiq/v6/p2p/dnsdisc"
-	"github.com/ubiq/go-ubiq/v6/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/console/prompt"
+	"github.com/ubiq/go-ubiq/v7/p2p/dnsdisc"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
 	"gopkg.in/urfave/cli.v1"
 )
 

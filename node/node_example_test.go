@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/ubiq/go-ubiq/v6/node"
+	"github.com/ubiq/go-ubiq/v7/node"
 )
 
 // SampleLifecycle is a trivial network service that can be attached to a node for
