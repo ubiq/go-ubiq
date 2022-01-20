@@ -91,7 +91,7 @@ func CalcBaseFee(config *params.ChainConfig, parent *types.Header) *big.Int {
 
 	// Ensure that the base fee does not increase/decrease outside of the bounds
 	switch {
-	case config.IsMonoceros(parent.Number):
+	case config.IsMonoceros(new(big.Int).Add(parent.Number, common.Big1)):
 		baseFee = selectBigWithinBounds(big.NewInt(params.MonocerosMinBaseFee), baseFee, nil)
 	default:
 		baseFee = selectBigWithinBounds(nil, baseFee, nil)
