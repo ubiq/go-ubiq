@@ -40,7 +40,7 @@ import (
 var (
 	testKey, _  = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 	testAddr    = crypto.PubkeyToAddress(testKey.PublicKey)
-	testBalance = big.NewInt(8e15)
+	testBalance = big.NewInt(8e16)
 )
 
 func newTestBackend(t *testing.T) (*node.Node, []*types.Block) {
@@ -141,7 +141,7 @@ func testAccessList(t *testing.T, client *rpc.Client) {
 		From:     testAddr,
 		To:       &common.Address{},
 		Gas:      21000,
-		GasPrice: big.NewInt(70000000000),
+		GasPrice: big.NewInt(81000000000),
 		Value:    big.NewInt(1),
 	}
 	al, gas, vmErr, err := ec.CreateAccessList(context.Background(), msg)
@@ -162,7 +162,7 @@ func testAccessList(t *testing.T, client *rpc.Client) {
 		From:     testAddr,
 		To:       nil,
 		Gas:      100000,
-		GasPrice: big.NewInt(61250000000),
+		GasPrice: big.NewInt(81000000000),
 		Value:    big.NewInt(1),
 		Data:     common.FromHex("0x608060806080608155fd"),
 	}

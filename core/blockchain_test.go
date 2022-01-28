@@ -605,7 +605,7 @@ func TestFastVsFullChains(t *testing.T) {
 		gendb   = rawdb.NewMemoryDatabase()
 		key, _  = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 		address = crypto.PubkeyToAddress(key.PublicKey)
-		funds   = big.NewInt(10000000000000000)
+		funds   = big.NewInt(8000000000000000000)
 		gspec   = &Genesis{
 			Config:  params.TestChainConfig,
 			Alloc:   GenesisAlloc{address: {Balance: funds}},
@@ -867,9 +867,9 @@ func TestChainTxReorgs(t *testing.T) {
 			Config:   params.TestChainConfig,
 			GasLimit: 3141592,
 			Alloc: GenesisAlloc{
-				addr1: {Balance: big.NewInt(10000000000000000)},
-				addr2: {Balance: big.NewInt(10000000000000000)},
-				addr3: {Balance: big.NewInt(10000000000000000)},
+				addr1: {Balance: big.NewInt(100000000000000000)},
+				addr2: {Balance: big.NewInt(100000000000000000)},
+				addr3: {Balance: big.NewInt(100000000000000000)},
 			},
 		}
 		genesis = gspec.MustCommit(db)
@@ -2145,7 +2145,7 @@ func TestTransactionIndices(t *testing.T) {
 		gendb   = rawdb.NewMemoryDatabase()
 		key, _  = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 		address = crypto.PubkeyToAddress(key.PublicKey)
-		funds   = big.NewInt(100000000000000000)
+		funds   = big.NewInt(1000000000000000000)
 		gspec   = &Genesis{
 			Config:  params.TestChainConfig,
 			Alloc:   GenesisAlloc{address: {Balance: funds}},
@@ -2276,7 +2276,7 @@ func TestSkipStaleTxIndicesInFastSync(t *testing.T) {
 		gendb   = rawdb.NewMemoryDatabase()
 		key, _  = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 		address = crypto.PubkeyToAddress(key.PublicKey)
-		funds   = big.NewInt(100000000000000000)
+		funds   = big.NewInt(1000000000000000000)
 		gspec   = &Genesis{Config: params.TestChainConfig, Alloc: GenesisAlloc{address: {Balance: funds}}}
 		genesis = gspec.MustCommit(gendb)
 		signer  = types.LatestSigner(gspec.Config)
@@ -2601,7 +2601,7 @@ func TestDeleteRecreateSlots(t *testing.T) {
 		// A sender who makes transactions, has some funds
 		key, _    = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 		address   = crypto.PubkeyToAddress(key.PublicKey)
-		funds     = big.NewInt(10000000000000000)
+		funds     = big.NewInt(100000000000000000)
 		bb        = common.HexToAddress("0x000000000000000000000000000000000000bbbb")
 		aaStorage = make(map[common.Hash]common.Hash)          // Initial storage in AA
 		aaCode    = []byte{byte(vm.PC), byte(vm.SELFDESTRUCT)} // Code for AA (simple selfdestruct)
@@ -2728,7 +2728,7 @@ func TestDeleteRecreateAccount(t *testing.T) {
 		// A sender who makes transactions, has some funds
 		key, _  = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 		address = crypto.PubkeyToAddress(key.PublicKey)
-		funds   = big.NewInt(10000000000000000)
+		funds   = big.NewInt(100000000000000000)
 
 		aa        = common.HexToAddress("0x7217d81b76bdd8707601e959454e3d776aee5f43")
 		aaStorage = make(map[common.Hash]common.Hash)          // Initial storage in AA
@@ -2804,7 +2804,7 @@ func TestDeleteRecreateSlotsAcrossManyBlocks(t *testing.T) {
 		// A sender who makes transactions, has some funds
 		key, _    = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 		address   = crypto.PubkeyToAddress(key.PublicKey)
-		funds     = big.NewInt(100000000000000000)
+		funds     = big.NewInt(1000000000000000000)
 		bb        = common.HexToAddress("0x000000000000000000000000000000000000bbbb")
 		aaStorage = make(map[common.Hash]common.Hash)          // Initial storage in AA
 		aaCode    = []byte{byte(vm.PC), byte(vm.SELFDESTRUCT)} // Code for AA (simple selfdestruct)
@@ -3121,7 +3121,7 @@ func TestEIP2718Transition(t *testing.T) {
 		// A sender who makes transactions, has some funds
 		key, _  = crypto.HexToECDSA("b71c71a67e1177ad4e901695e1b4b9ee17ae16c6668d313eac2f96dbcda3f291")
 		address = crypto.PubkeyToAddress(key.PublicKey)
-		funds   = big.NewInt(10000000000000000)
+		funds   = big.NewInt(100000000000000000)
 		gspec   = &Genesis{
 			Config: params.TestChainConfig,
 			Alloc: GenesisAlloc{
@@ -3152,7 +3152,7 @@ func TestEIP2718Transition(t *testing.T) {
 			Nonce:    0,
 			To:       &aa,
 			Gas:      30000,
-			GasPrice: big.NewInt(71000000000),
+			GasPrice: big.NewInt(81000000000),
 			AccessList: types.AccessList{{
 				Address:     aa,
 				StorageKeys: []common.Hash{{0}},
@@ -3247,7 +3247,7 @@ func TestEIP1559Transition(t *testing.T) {
 			Nonce:      0,
 			To:         &aa,
 			Gas:        30000,
-			GasFeeCap:  newGwei(71),
+			GasFeeCap:  newGwei(82),
 			GasTipCap:  big.NewInt(2),
 			AccessList: accesses,
 			Data:       []byte{},
@@ -3306,7 +3306,7 @@ func TestEIP1559Transition(t *testing.T) {
 			Nonce:    0,
 			To:       &aa,
 			Gas:      30000,
-			GasPrice: newGwei(70),
+			GasPrice: newGwei(81),
 		}
 		tx := types.NewTx(txdata)
 		tx, _ = types.SignTx(tx, signer, key2)
