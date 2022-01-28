@@ -335,7 +335,7 @@ func (c *ChainConfig) String() string {
 	default:
 		engine = "unknown"
 	}
-	return fmt.Sprintf("{ChainID: %v Homestead: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v Petersburg: %v Istanbul: %v, Berlin: %v, London: %v, Engine: %v}",
+	return fmt.Sprintf("{ChainID: %v Homestead: %v EIP150: %v EIP155: %v EIP158: %v Byzantium: %v Constantinople: %v Petersburg: %v Istanbul: %v, Berlin: %v, London: %v, Monoceros: %v, Engine: %v}",
 		c.ChainID,
 		c.HomesteadBlock,
 		c.EIP150Block,
@@ -347,6 +347,7 @@ func (c *ChainConfig) String() string {
 		c.IstanbulBlock,
 		c.BerlinBlock,
 		c.LondonBlock,
+		c.MonocerosBlock,
 		engine,
 	)
 }
