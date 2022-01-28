@@ -162,7 +162,6 @@ func setStruct(dst, src reflect.Value) error {
 		if !dstField.IsValid() || !srcField.IsValid() {
 			return fmt.Errorf("could not find src field: %v value: %v in destination", srcField.Type().Name(), srcField)
 		}
-		fmt.Println("HERE")
 		if err := set(dstField, srcField); err != nil {
 			return err
 		}
