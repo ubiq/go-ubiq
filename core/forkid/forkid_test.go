@@ -50,7 +50,9 @@ func TestCreation(t *testing.T) {
 				{1499999, ID{Hash: checksumToBytes(0xa4ecb4b6), Next: 1500000}}, // Last Byzantium, Constantinople, Petersbug, (andromeda)
 				{1500000, ID{Hash: checksumToBytes(0x65ea97e0), Next: 1791793}}, // First Istanbul (taurus)
 				{1791792, ID{Hash: checksumToBytes(0x65ea97e0), Next: 1791793}}, // Last Istanbul (taurus)
-				{1791793, ID{Hash: checksumToBytes(0x9ec7f55b), Next: 0}},       // First Berlin, London (orion)
+				{1791793, ID{Hash: checksumToBytes(0x9ec7f55b), Next: 1981337}}, // First Berlin, London (orion)
+				{1981336, ID{Hash: checksumToBytes(0x9ec7f55b), Next: 1981337}}, // Last Berlin, London (orion)
+				{1981337, ID{Hash: checksumToBytes(0x9a2ad858), Next: 0}},       // First Monoceros
 				// {5000000, ID{Hash: checksumToBytes(0x757a1c47), Next: 0}}, // Future Berlin block
 			},
 		},

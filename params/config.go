@@ -64,7 +64,7 @@ var (
 		IstanbulBlock:       big.NewInt(1500000), // Taurus
 		BerlinBlock:         big.NewInt(1791793), // Orion
 		LondonBlock:         big.NewInt(1791793), // Orion
-		MonocerosBlock:      big.NewInt(math.MaxInt64),
+		MonocerosBlock:      big.NewInt(1981337), // Monoceros
 		Ubqhash: &UbqhashConfig{
 			UIP0Block:          big.NewInt(0),
 			UIP1Epoch:          big.NewInt(22),
