@@ -277,6 +277,11 @@ var (
 		Name:  "ubqhash.dagslockmmap",
 		Usage: "Lock memory maps for recent ubqhash mining DAGs",
 	}
+	UbqhashUIP1EpochFlag = cli.Uint64Flag{
+		Name:  "ubqhash.uip1epoch",
+		Usage: "Epoch to enable UIP1 (ubqhash)",
+		Value: ethconfig.Defaults.Ubqhash.UIP1Epoch,
+	}
 	// Transaction pool settings
 	TxPoolLocalsFlag = cli.StringFlag{
 		Name:  "txpool.locals",
@@ -1229,6 +1234,9 @@ func setUbqhash(ctx *cli.Context, cfg *ethconfig.Config) {
 	if ctx.GlobalIsSet(UbqhashDatasetsLockMmapFlag.Name) {
 		cfg.Ubqhash.DatasetsLockMmap = ctx.GlobalBool(UbqhashDatasetsLockMmapFlag.Name)
 	}
+	if ctx.GlobalIsSet(UbqhashUIP1EpochFlag.Name) {
+		cfg.Ubqhash.UIP1Epoch = ctx.GlobalUint64(UbqhashUIP1EpochFlag.Name)
+	}
 }
 
 func setMiner(ctx *cli.Context, cfg *miner.Config) {
@@ -1696,6 +1704,7 @@ func MakeChain(ctx *cli.Context, stack *node.Node) (chain *core.BlockChain, chai
 				DatasetsInMem:    ethconfig.Defaults.Ubqhash.DatasetsInMem,
 				DatasetsOnDisk:   ethconfig.Defaults.Ubqhash.DatasetsOnDisk,
 				DatasetsLockMmap: ethconfig.Defaults.Ubqhash.DatasetsLockMmap,
+				UIP1Epoch:        ctx.GlobalUint64(UbqhashUIP1EpochFlag.Name),
 			}, nil, false)
 		}
 	}

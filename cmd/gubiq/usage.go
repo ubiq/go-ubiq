@@ -72,6 +72,7 @@ var AppHelpFlagGroups = []flags.FlagGroup{
 			utils.UbqhashDatasetsInMemoryFlag,
 			utils.UbqhashDatasetsOnDiskFlag,
 			utils.UbqhashDatasetsLockMmapFlag,
+			utils.UbqhashUIP1EpochFlag,
 		},
 	},
 	{

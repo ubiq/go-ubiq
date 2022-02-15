@@ -80,6 +80,7 @@ var (
 		utils.UbqhashDatasetsInMemoryFlag,
 		utils.UbqhashDatasetsOnDiskFlag,
 		utils.UbqhashDatasetsLockMmapFlag,
+		utils.UbqhashUIP1EpochFlag,
 		utils.TxPoolLocalsFlag,
 		utils.TxPoolNoLocalsFlag,
 		utils.TxPoolJournalFlag,

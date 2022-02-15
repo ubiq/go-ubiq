@@ -18,7 +18,6 @@ package ubqhash
 
 import (
 	"encoding/binary"
-	"fmt"
 	"hash"
 	"math/big"
 	"reflect"
@@ -154,16 +153,10 @@ func seedHash(block uint64) []byte {
 func generateCache(dest []uint32, epoch uint64, uip1Epoch uint64, seed []byte) {
 	// Print some debug logs to allow analysis on low end devices
 	logger := log.New("epoch", epoch)
-	fmt.Printf("generateCache - epoch: %d, uip1Epoch: %d", epoch, uip1Epoch)
 	start := time.Now()
 	defer func() {
 		elapsed := time.Since(start)
-
-		logFn := logger.Debug
-		if elapsed > 3*time.Second {
-			logFn = logger.Info
-		}
-		logFn("Generated ubqhash verification cache", "elapsed", common.PrettyDuration(elapsed))
+		logger.Info("Generated ubqhash verification cache", "uip1Epoch", uip1Epoch, "elapsed", common.PrettyDuration(elapsed))
 	}()
 	// Convert our destination slice to a byte buffer
 	var cache []byte
@@ -285,7 +278,7 @@ func generateDatasetItem(cache []uint32, index uint32, keccak512 hasher) []byte 
 
 // generateDataset generates the entire ubqhash dataset for mining.
 // This method places the result into dest in machine byte order.
-func generateDataset(dest []uint32, epoch uint64, cache []uint32) {
+func generateDataset(dest []uint32, epoch uint64, uip1Epoch uint64, cache []uint32) {
 	// Print some debug logs to allow analysis on low end devices
 	logger := log.New("epoch", epoch)
 
@@ -297,7 +290,7 @@ func generateDataset(dest []uint32, epoch uint64, cache []uint32) {
 		if elapsed > 3*time.Second {
 			logFn = logger.Info
 		}
-		logFn("Generated ubqhash verification cache", "elapsed", common.PrettyDuration(elapsed))
+		logFn("Generated ubqhash DAG", "uip1Epoch", uip1Epoch, "elapsed", common.PrettyDuration(elapsed))
 	}()
 
 	// Figure out whether the bytes need to be swapped for the machine
@@ -343,7 +336,7 @@ func generateDataset(dest []uint32, epoch uint64, cache []uint32) {
 				copy(dataset[index*hashBytes:], item)
 
 				if status := atomic.AddUint64(&progress, 1); status%percent == 0 {
-					logger.Info("Generating DAG in progress", "percentage", (status*100)/(size/hashBytes), "elapsed", common.PrettyDuration(time.Since(start)))
+					logger.Info("Generating DAG in progress", "uip1Epoch", uip1Epoch, "percentage", (status*100)/(size/hashBytes), "elapsed", common.PrettyDuration(time.Since(start)))
 				}
 			}
 		}(i)

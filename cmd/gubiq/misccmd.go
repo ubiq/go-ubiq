@@ -43,7 +43,10 @@ var (
 			runtime.GOOS, runtime.GOARCH, runtime.Version()),
 	}
 	makecacheCommand = cli.Command{
-		Action:    utils.MigrateFlags(makecache),
+		Action: utils.MigrateFlags(makecache),
+		Flags: []cli.Flag{
+			utils.UbqhashUIP1EpochFlag,
+		},
 		Name:      "makecache",
 		Usage:     "Generate ubqhash verification cache (for testing)",
 		ArgsUsage: "<blockNum> <outputDir>",
@@ -56,7 +59,10 @@ Regular users do not need to execute it.
 `,
 	}
 	makedagCommand = cli.Command{
-		Action:    utils.MigrateFlags(makedag),
+		Action: utils.MigrateFlags(makedag),
+		Flags: []cli.Flag{
+			utils.UbqhashUIP1EpochFlag,
+		},
 		Name:      "makedag",
 		Usage:     "Generate ubqhash mining DAG (for testing)",
 		ArgsUsage: "<blockNum> <outputDir>",
@@ -112,7 +118,7 @@ func makecache(ctx *cli.Context) error {
 	if err != nil {
 		utils.Fatalf("Invalid block number: %v", err)
 	}
-	ubqhash.MakeCache(block, args[1])
+	ubqhash.MakeCache(block, args[1], ctx.Uint64(utils.UbqhashUIP1EpochFlag.Name))
 
 	return nil
 }
@@ -127,7 +133,7 @@ func makedag(ctx *cli.Context) error {
 	if err != nil {
 		utils.Fatalf("Invalid block number: %v", err)
 	}
-	ubqhash.MakeDataset(block, args[1])
+	ubqhash.MakeDataset(block, args[1], ctx.Uint64(utils.UbqhashUIP1EpochFlag.Name))
 
 	return nil
 }

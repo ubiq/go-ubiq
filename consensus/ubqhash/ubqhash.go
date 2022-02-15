@@ -329,7 +329,7 @@ func (d *dataset) generate(dir string, limit int, lock bool, test bool) {
 			generateCache(cache, d.epoch, d.uip1Epoch, seed)
 
 			d.dataset = make([]uint32, dsize/4)
-			generateDataset(d.dataset, d.epoch, cache)
+			generateDataset(d.dataset, d.epoch, d.uip1Epoch, cache)
 
 			return
 		}
@@ -358,12 +358,12 @@ func (d *dataset) generate(dir string, limit int, lock bool, test bool) {
 		cache := make([]uint32, csize/4)
 		generateCache(cache, d.epoch, d.uip1Epoch, seed)
 
-		d.dump, d.mmap, d.dataset, err = memoryMapAndGenerate(path, dsize, lock, func(buffer []uint32) { generateDataset(buffer, d.epoch, cache) })
+		d.dump, d.mmap, d.dataset, err = memoryMapAndGenerate(path, dsize, lock, func(buffer []uint32) { generateDataset(buffer, d.epoch, d.uip1Epoch, cache) })
 		if err != nil {
 			logger.Error("Failed to generate mapped ubqhash dataset", "err", err)
 
 			d.dataset = make([]uint32, dsize/4)
-			generateDataset(d.dataset, d.epoch, cache)
+			generateDataset(d.dataset, d.epoch, d.uip1Epoch, cache)
 		}
 		// Iterate over all previous instances and delete old ones
 		for ep := int(d.epoch) - limit; ep >= 0; ep-- {
@@ -391,14 +391,14 @@ func (d *dataset) finalizer() {
 }
 
 // MakeCache generates a new ubqhash cache and optionally stores it to disk.
-func MakeCache(block uint64, dir string) {
-	c := cache{epoch: block / epochLength}
+func MakeCache(block uint64, dir string, uip1Epoch uint64) {
+	c := cache{epoch: block / epochLength, uip1Epoch: uip1Epoch}
 	c.generate(dir, math.MaxInt32, false, false)
 }
 
 // MakeDataset generates a new ubqhash dataset and optionally stores it to disk.
-func MakeDataset(block uint64, dir string) {
-	d := dataset{epoch: block / epochLength}
+func MakeDataset(block uint64, dir string, uip1Epoch uint64) {
+	d := dataset{epoch: block / epochLength, uip1Epoch: uip1Epoch}
 	d.generate(dir, math.MaxInt32, false, false)
 }
 
