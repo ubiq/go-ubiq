@@ -309,8 +309,8 @@ func (d *Downloader) UnregisterPeer(id string) error {
 
 // Synchronise tries to sync up our local block chain with a remote peer, both
 // adding various sanity checks as well as wrapping it with various log entries.
-func (d *Downloader) Synchronise(id string, head common.Hash, td *big.Int, mode SyncMode) error {
-	err := d.synchronise(id, head, td, mode)
+func (d *Downloader) Synchronise(id string, head common.Hash, td *big.Int, mode SyncMode, isLondon bool) error {
+	err := d.synchronise(id, head, td, mode, isLondon)
 
 	switch err {
 	case nil, errBusy, errCanceled:
@@ -336,7 +336,7 @@ func (d *Downloader) Synchronise(id string, head common.Hash, td *big.Int, mode 
 // synchronise will select the peer and use it for synchronising. If an empty string is given
 // it will use the best peer possible and synchronize if its TD is higher than our own. If any of the
 // checks fail an error will be returned. This method is synchronous
-func (d *Downloader) synchronise(id string, hash common.Hash, td *big.Int, mode SyncMode) error {
+func (d *Downloader) synchronise(id string, hash common.Hash, td *big.Int, mode SyncMode, isLondon bool) error {
 	// Mock out the synchronisation if testing
 	if d.synchroniseMock != nil {
 		return d.synchroniseMock(id, hash)
@@ -411,12 +411,19 @@ func (d *Downloader) synchronise(id string, hash common.Hash, td *big.Int, mode 
 	atomic.StoreUint32(&d.mode, uint32(mode))
 
 	// Set correct values based on syncmode (flux downloader fix) - iquidus
-	if mode == FullSync {
-		maxResultsProcess = 1
-		maxHeadersProcess = 1
-	} else {
+	if isLondon {
+		log.Info("Using orion downloader")
 		maxResultsProcess = 2048
-		maxHeadersProcess = 1
+		maxHeadersProcess = 2048
+	} else {
+		log.Info("Using flux downloader")
+		if mode == FullSync {
+			maxResultsProcess = 1
+			maxHeadersProcess = 1
+		} else {
+			maxResultsProcess = 2048
+			maxHeadersProcess = 1
+		}
 	}
 
 	// Retrieve the origin peer and initiate the downloading process
