@@ -29,28 +29,28 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/contracts/checkpointoracle/contract"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/forkid"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/les/checkpointoracle"
-	"github.com/ethereum/go-ethereum/les/flowcontrol"
-	vfs "github.com/ethereum/go-ethereum/les/vflux/server"
-	"github.com/ethereum/go-ethereum/light"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ubiq/go-ubiq/v7/accounts/abi/bind"
+	"github.com/ubiq/go-ubiq/v7/accounts/abi/bind/backends"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/common/mclock"
+	"github.com/ubiq/go-ubiq/v7/consensus"
+	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v7/contracts/checkpointoracle/contract"
+	"github.com/ubiq/go-ubiq/v7/core"
+	"github.com/ubiq/go-ubiq/v7/core/forkid"
+	"github.com/ubiq/go-ubiq/v7/core/rawdb"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/crypto"
+	"github.com/ubiq/go-ubiq/v7/eth/ethconfig"
+	"github.com/ubiq/go-ubiq/v7/ethdb"
+	"github.com/ubiq/go-ubiq/v7/event"
+	"github.com/ubiq/go-ubiq/v7/les/checkpointoracle"
+	"github.com/ubiq/go-ubiq/v7/les/flowcontrol"
+	vfs "github.com/ubiq/go-ubiq/v7/les/vflux/server"
+	"github.com/ubiq/go-ubiq/v7/light"
+	"github.com/ubiq/go-ubiq/v7/p2p"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/params"
 )
 
 var (
@@ -193,9 +193,9 @@ func testIndexers(db ethdb.Database, odr light.OdrBackend, config *light.Indexer
 func newTestClientHandler(backend *backends.SimulatedBackend, odr *LesOdr, indexers []*core.ChainIndexer, db ethdb.Database, peers *serverPeerSet, ulcServers []string, ulcFraction int) (*clientHandler, func()) {
 	var (
 		evmux  = new(event.TypeMux)
-		engine = ethash.NewFaker()
+		engine = ubqhash.NewFaker()
 		gspec  = core.Genesis{
-			Config:   params.AllEthashProtocolChanges,
+			Config:   params.AllUbqhashProtocolChanges,
 			Alloc:    core.GenesisAlloc{bankAddr: {Balance: bankFunds}},
 			GasLimit: 100000000,
 			BaseFee:  big.NewInt(params.InitialBaseFee),

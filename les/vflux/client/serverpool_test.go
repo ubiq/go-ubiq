@@ -24,11 +24,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/ethdb/memorydb"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/enr"
+	"github.com/ubiq/go-ubiq/v7/common/mclock"
+	"github.com/ubiq/go-ubiq/v7/ethdb"
+	"github.com/ubiq/go-ubiq/v7/ethdb/memorydb"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/p2p/enr"
 )
 
 const (
