@@ -194,7 +194,7 @@ func (ubqhash *Ubqhash) verifyHeaderWorker(chain consensus.ChainHeaderReader, he
 
 // VerifyUncles verifies that the given block's uncles conform to the consensus
 // rules of the stock Ethereum ubqhash engine.
-func (ubqhash *Ubqhash) VerifyUncles(chain consensus.ChainHeaderReader, block *types.Block) error {
+func (ubqhash *Ubqhash) VerifyUncles(chain consensus.ChainReader, block *types.Block) error {
 	// If we're running a full engine faking, accept any input as valid
 	if ubqhash.config.PowMode == ModeFullFake {
 		return nil

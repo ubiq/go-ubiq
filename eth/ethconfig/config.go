@@ -62,7 +62,7 @@ var LightClientGPO = gasprice.Config{
 
 // Defaults contains default settings for use on the Ubiq main net.
 var Defaults = Config{
-	SyncMode: downloader.FastSync,
+	SyncMode: downloader.SnapSync,
 	Ubqhash: ubqhash.Config{
 		CacheDir:         "ubqhash",
 		CachesInMem:      2,
@@ -75,7 +75,7 @@ var Defaults = Config{
 	},
 	NetworkId:               8,
 	TxLookupLimit:           2350000,
-	LightPeers:              100, // TODO - iquidus
+	LightPeers:              100,
 	UltraLightFraction:      75,
 	DatabaseCache:           512,
 	TrieCleanCache:          154,

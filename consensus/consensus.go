@@ -53,6 +53,15 @@ type ChainHeaderReader interface {
 	CalcPastMedianTime(number uint64, parent *types.Header) *big.Int
 
 	// GetBlock retrieves a block from the database by hash and number.
+	// GetBlock(hash common.Hash, number uint64) *types.Block
+}
+
+// ChainReader defines a small collection of methods needed to access the local
+// blockchain during header and/or uncle verification.
+type ChainReader interface {
+	ChainHeaderReader
+
+	// GetBlock retrieves a block from the database by hash and number.
 	GetBlock(hash common.Hash, number uint64) *types.Block
 }
 
@@ -76,7 +85,7 @@ type Engine interface {
 
 	// VerifyUncles verifies that the given block's uncles conform to the consensus
 	// rules of a given engine.
-	VerifyUncles(chain ChainHeaderReader, block *types.Block) error
+	VerifyUncles(chain ChainReader, block *types.Block) error
 
 	// Prepare initializes the consensus fields of a block header according to the
 	// rules of a particular engine. The changes are executed inline.
