@@ -29,7 +29,6 @@ import (
 	"github.com/ubiq/go-ubiq/v7/common"
 	"github.com/ubiq/go-ubiq/v7/common/hexutil"
 	"github.com/ubiq/go-ubiq/v7/consensus"
-	"github.com/ubiq/go-ubiq/v7/consensus/beacon"
 	"github.com/ubiq/go-ubiq/v7/consensus/clique"
 	"github.com/ubiq/go-ubiq/v7/core"
 	"github.com/ubiq/go-ubiq/v7/core/bloombits"
@@ -464,10 +463,6 @@ func (s *Ethereum) StartMining(threads int) error {
 		var cli *clique.Clique
 		if c, ok := s.engine.(*clique.Clique); ok {
 			cli = c
-		} else if cl, ok := s.engine.(*beacon.Beacon); ok {
-			if c, ok := cl.InnerEngine().(*clique.Clique); ok {
-				cli = c
-			}
 		}
 		if cli != nil {
 			wallet, err := s.accountManager.Find(accounts.Account{Address: eb})

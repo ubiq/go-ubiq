@@ -25,7 +25,6 @@ import (
 
 	"github.com/ubiq/go-ubiq/v7/common"
 	"github.com/ubiq/go-ubiq/v7/consensus"
-	"github.com/ubiq/go-ubiq/v7/consensus/beacon"
 	"github.com/ubiq/go-ubiq/v7/consensus/clique"
 	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v7/core/rawdb"
@@ -112,7 +111,7 @@ func testHeaderVerificationForMerging(t *testing.T, isClique bool) {
 		copy(genspec.ExtraData[32:], addr[:])
 		genesis := genspec.MustCommit(testdb)
 
-		genEngine := beacon.New(engine)
+		genEngine := engine
 		preBlocks, _ = GenerateChain(params.AllCliqueProtocolChanges, genesis, genEngine, testdb, 8, nil)
 		td := 0
 		for i, block := range preBlocks {
@@ -133,11 +132,11 @@ func testHeaderVerificationForMerging(t *testing.T, isClique bool) {
 		config.TerminalTotalDifficulty = big.NewInt(int64(td))
 		postBlocks, _ = GenerateChain(&config, preBlocks[len(preBlocks)-1], genEngine, testdb, 8, nil)
 		chainConfig = &config
-		runEngine = beacon.New(engine)
+		runEngine = engine
 	} else {
 		gspec := &Genesis{Config: params.TestChainConfig}
 		genesis := gspec.MustCommit(testdb)
-		genEngine := beacon.New(ubqhash.NewFaker())
+		genEngine := ubqhash.NewFaker()
 
 		preBlocks, _ = GenerateChain(params.TestChainConfig, genesis, genEngine, testdb, 8, nil)
 		td := 0
@@ -150,7 +149,7 @@ func testHeaderVerificationForMerging(t *testing.T, isClique bool) {
 		postBlocks, _ = GenerateChain(params.TestChainConfig, preBlocks[len(preBlocks)-1], genEngine, testdb, 8, nil)
 
 		chainConfig = &config
-		runEngine = beacon.New(ubqhash.NewFaker())
+		runEngine = ubqhash.NewFaker()
 	}
 
 	preHeaders := make([]*types.Header, len(preBlocks))

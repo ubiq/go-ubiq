@@ -145,8 +145,8 @@ type Downloader struct {
 	chainInsertHook  func([]*fetchResult)  // Method to call upon inserting a chain of blocks (possibly in multiple invocations)
 }
 
-// BlockChain encapsulates functions required to sync a (full or fast) blockchain.
-type BlockChain interface {
+// LightChain encapsulates functions required to synchronise a light chain.
+type LightChain interface {
 	// HasHeader verifies a header's presence in the local chain.
 	HasHeader(common.Hash, uint64) bool
 

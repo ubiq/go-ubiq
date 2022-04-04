@@ -326,3 +326,4 @@ func (cr *fakeChainReader) GetBlock(hash common.Hash, number uint64) *types.Bloc
 func (cr *fakeChainReader) CalcPastMedianTime(number uint64, parent *types.Header) *big.Int {
 	return nil
 }
+func (cr *fakeChainReader) GetTd(hash common.Hash, number uint64) *big.Int { return nil }

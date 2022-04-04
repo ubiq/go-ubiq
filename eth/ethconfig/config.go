@@ -28,7 +28,6 @@ import (
 
 	"github.com/ubiq/go-ubiq/v7/common"
 	"github.com/ubiq/go-ubiq/v7/consensus"
-	"github.com/ubiq/go-ubiq/v7/consensus/beacon"
 	"github.com/ubiq/go-ubiq/v7/consensus/clique"
 	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v7/core"
@@ -245,5 +244,5 @@ func CreateConsensusEngine(stack *node.Node, chainConfig *params.ChainConfig, co
 		}, notify, noverify)
 		engine.(*ubqhash.Ubqhash).SetThreads(-1) // Disable CPU mining
 	}
-	return beacon.New(engine) // TODO(iquidus): why is this returning a new beacon instead of just the engine ????
+	return engine
 }

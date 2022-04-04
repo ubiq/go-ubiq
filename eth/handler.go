@@ -26,7 +26,6 @@ import (
 
 	"github.com/ubiq/go-ubiq/v7/common"
 	"github.com/ubiq/go-ubiq/v7/consensus"
-	"github.com/ubiq/go-ubiq/v7/consensus/beacon"
 	"github.com/ubiq/go-ubiq/v7/core"
 	"github.com/ubiq/go-ubiq/v7/core/forkid"
 	"github.com/ubiq/go-ubiq/v7/core/types"
@@ -178,21 +177,6 @@ func newHandler(config *handlerConfig) (*handler, error) {
 
 	// Construct the fetcher (short sync)
 	validator := func(header *types.Header) error {
-		// All the block fetcher activities should be disabled
-		// after the transition. Print the warning log.
-		if h.merger.PoSFinalized() {
-			log.Warn("Unexpected validation activity", "hash", header.Hash(), "number", header.Number)
-			return errors.New("unexpected behavior after transition")
-		}
-		// Reject all the PoS style headers in the first place. No matter
-		// the chain has finished the transition or not, the PoS headers
-		// should only come from the trusted consensus layer instead of
-		// p2p network.
-		if beacon, ok := h.chain.Engine().(*beacon.Beacon); ok {
-			if beacon.IsPoSHeader(header) {
-				return errors.New("unexpected post-merge header")
-			}
-		}
 		return h.chain.Engine().VerifyHeader(h.chain, header, true)
 	}
 	heighter := func() uint64 {
@@ -539,17 +523,6 @@ func (h *handler) Stop() {
 // BroadcastBlock will either propagate a block to a subset of its peers, or
 // will only announce its availability (depending what's requested).
 func (h *handler) BroadcastBlock(block *types.Block, propagate bool) {
-	// Disable the block propagation if the chain has already entered the PoS
-	// stage. The block propagation is delegated to the consensus layer.
-	if h.merger.PoSFinalized() {
-		return
-	}
-	// Disable the block propagation if it's the post-merge block.
-	if beacon, ok := h.chain.Engine().(*beacon.Beacon); ok {
-		if beacon.IsPoSHeader(block.Header()) {
-			return
-		}
-	}
 	hash := block.Hash()
 	peers := h.peers.peersWithoutBlock(hash)
 
