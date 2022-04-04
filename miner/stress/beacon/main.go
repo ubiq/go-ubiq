@@ -27,24 +27,23 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/fdlimit"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/eth/catalyst"
-	"github.com/ethereum/go-ethereum/eth/downloader"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/les"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/miner"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ubiq/go-ubiq/v7/accounts/keystore"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/common/fdlimit"
+	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
+	"github.com/ubiq/go-ubiq/v7/core"
+	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/crypto"
+	"github.com/ubiq/go-ubiq/v7/eth"
+	"github.com/ubiq/go-ubiq/v7/eth/downloader"
+	"github.com/ubiq/go-ubiq/v7/eth/ethconfig"
+	"github.com/ubiq/go-ubiq/v7/les"
+	"github.com/ubiq/go-ubiq/v7/log"
+	"github.com/ubiq/go-ubiq/v7/miner"
+	"github.com/ubiq/go-ubiq/v7/node"
+	"github.com/ubiq/go-ubiq/v7/p2p"
+	"github.com/ubiq/go-ubiq/v7/p2p/enode"
+	"github.com/ubiq/go-ubiq/v7/params"
 )
 
 type nodetype int
@@ -356,7 +355,7 @@ func main() {
 		faucets[i], _ = crypto.GenerateKey()
 	}
 	// Pre-generate the ethash mining DAG so we don't race
-	ethash.MakeDataset(1, filepath.Join(os.Getenv("HOME"), ".ethash"))
+	ubqhash.MakeDataset(1, filepath.Join(os.Getenv("HOME"), ".ubqhash"))
 
 	// Create an Ethash network based off of the Ropsten config
 	genesis := makeGenesis(faucets)

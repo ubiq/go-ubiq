@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ethereum/go-ethereum/p2p"
+	"github.com/ubiq/go-ubiq/v7/p2p"
 )
 
 var (

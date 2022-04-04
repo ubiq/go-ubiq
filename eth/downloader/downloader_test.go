@@ -28,9 +28,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/consensus/ethash"
 	ethereum "github.com/ubiq/go-ubiq/v7"
 	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v7/core"
 	"github.com/ubiq/go-ubiq/v7/core/rawdb"
 	"github.com/ubiq/go-ubiq/v7/core/types"
@@ -66,7 +66,7 @@ func newTester() *downloadTester {
 	}
 	core.GenesisBlockForTesting(db, testAddress, big.NewInt(1000000000000000))
 
-	chain, err := core.NewBlockChain(db, nil, params.TestChainConfig, ethash.NewFaker(), vm.Config{}, nil, nil)
+	chain, err := core.NewBlockChain(db, nil, params.TestChainConfig, ubqhash.NewFaker(), vm.Config{}, nil, nil)
 	if err != nil {
 		panic(err)
 	}

@@ -21,11 +21,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/common/math"
+	"github.com/ubiq/go-ubiq/v7/core/rawdb"
+	"github.com/ubiq/go-ubiq/v7/core/state"
+	"github.com/ubiq/go-ubiq/v7/params"
 )
 
 var loopInterruptTests = []string{

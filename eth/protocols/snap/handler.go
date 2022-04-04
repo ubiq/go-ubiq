@@ -21,10 +21,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ubiq/go-ubiq/light"
 	"github.com/ubiq/go-ubiq/v7/common"
 	"github.com/ubiq/go-ubiq/v7/core"
 	"github.com/ubiq/go-ubiq/v7/core/types"
+	"github.com/ubiq/go-ubiq/v7/light"
 	"github.com/ubiq/go-ubiq/v7/log"
 	"github.com/ubiq/go-ubiq/v7/metrics"
 	"github.com/ubiq/go-ubiq/v7/p2p"

@@ -47,7 +47,6 @@ import (
 	"github.com/ubiq/go-ubiq/v7/core/vm"
 	"github.com/ubiq/go-ubiq/v7/crypto"
 	"github.com/ubiq/go-ubiq/v7/eth"
-	"github.com/ubiq/go-ubiq/v7/eth/catalyst"
 	"github.com/ubiq/go-ubiq/v7/eth/downloader"
 	"github.com/ubiq/go-ubiq/v7/eth/ethconfig"
 	"github.com/ubiq/go-ubiq/v7/eth/gasprice"
@@ -781,11 +780,6 @@ var (
 		Name:  "metrics.influxdb.organization",
 		Usage: "InfluxDB organization name (v2 only)",
 		Value: metrics.DefaultConfig.InfluxDBOrganization,
-	}
-
-	CatalystFlag = cli.BoolFlag{
-		Name:  "catalyst",
-		Usage: "Catalyst mode (eth2 integration testing)",
 	}
 )
 
@@ -1592,28 +1586,18 @@ func SetDNSDiscoveryDefaults(cfg *ethconfig.Config, genesis common.Hash) {
 // RegisterEthService adds an Ethereum client to the stack.
 // The second return value is the full node instance, which may be nil if the
 // node is running as a light client.
-func RegisterEthService(stack *node.Node, cfg *ethconfig.Config, isCatalyst bool) (ethapi.Backend, *eth.Ethereum) {
+func RegisterEthService(stack *node.Node, cfg *ethconfig.Config) (ethapi.Backend, *eth.Ethereum) {
 	if cfg.SyncMode == downloader.LightSync {
 		backend, err := les.New(stack, cfg)
 		if err != nil {
-			Fatalf("Failed to register the Ethereum service: %v", err)
+			Fatalf("Failed to register the Ubiq service: %v", err)
 		}
 		stack.RegisterAPIs(tracers.APIs(backend.ApiBackend))
-		if isCatalyst {
-			if err := catalyst.RegisterLight(stack, backend); err != nil {
-				Fatalf("Failed to register the catalyst service: %v", err)
-			}
-		}
 		return backend.ApiBackend, nil
 	}
 	backend, err := eth.New(stack, cfg)
 	if err != nil {
 		Fatalf("Failed to register the Ubiq service: %v", err)
-	}
-	if isCatalyst {
-		if err := catalyst.Register(stack, backend); err != nil {
-			Fatalf("Failed to register the catalyst service: %v", err)
-		}
 	}
 	stack.RegisterAPIs(tracers.APIs(backend.APIBackend))
 	return backend.APIBackend, backend
