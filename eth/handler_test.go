@@ -22,6 +22,7 @@ import (
 	"sync"
 
 	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/consensus"
 	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v7/core"
 	"github.com/ubiq/go-ubiq/v7/core/rawdb"
@@ -149,8 +150,9 @@ func newTestHandlerWithBlocks(blocks int) *testHandler {
 		Database:   db,
 		Chain:      chain,
 		TxPool:     txpool,
+		Merger:     consensus.NewMerger(rawdb.NewMemoryDatabase()),
 		Network:    1,
-		Sync:       downloader.FastSync,
+		Sync:       downloader.SnapSync,
 		BloomCache: 1,
 	})
 	handler.Start(1000)

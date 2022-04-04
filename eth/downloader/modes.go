@@ -23,9 +23,9 @@ import "fmt"
 type SyncMode uint32
 
 const (
-	FullSync SyncMode = iota // Synchronise the entire blockchain history from full blocks
-	FastSync                 // Quickly download the headers, full sync only at the chain
-	SnapSync                 // Download the chain and the state via compact snapshots
+	FullSync  SyncMode = iota // Synchronise the entire blockchain history from full blocks
+	SnapSync                  // Download the chain and the state via compact snapshots
+	LightSync                 // Download only the headers and terminate afterwards
 )
 
 func (mode SyncMode) IsValid() bool {
@@ -37,10 +37,10 @@ func (mode SyncMode) String() string {
 	switch mode {
 	case FullSync:
 		return "full"
-	case FastSync:
-		return "fast"
 	case SnapSync:
 		return "snap"
+	case LightSync:
+		return "light"
 	default:
 		return "unknown"
 	}
@@ -50,10 +50,10 @@ func (mode SyncMode) MarshalText() ([]byte, error) {
 	switch mode {
 	case FullSync:
 		return []byte("full"), nil
-	case FastSync:
-		return []byte("fast"), nil
 	case SnapSync:
 		return []byte("snap"), nil
+	case LightSync:
+		return []byte("light"), nil
 	default:
 		return nil, fmt.Errorf("unknown sync mode %d", mode)
 	}
@@ -63,12 +63,12 @@ func (mode *SyncMode) UnmarshalText(text []byte) error {
 	switch string(text) {
 	case "full":
 		*mode = FullSync
-	case "fast":
-		*mode = FastSync
 	case "snap":
 		*mode = SnapSync
+	case "light":
+		*mode = LightSync
 	default:
-		return fmt.Errorf(`unknown sync mode %q, want "full" or "fast"`, text)
+		return fmt.Errorf(`unknown sync mode %q, want "full", "snap" or "light"`, text)
 	}
 	return nil
 }

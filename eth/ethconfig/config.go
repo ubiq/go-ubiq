@@ -28,6 +28,7 @@ import (
 
 	"github.com/ubiq/go-ubiq/v7/common"
 	"github.com/ubiq/go-ubiq/v7/consensus"
+	"github.com/ubiq/go-ubiq/v7/consensus/beacon"
 	"github.com/ubiq/go-ubiq/v7/consensus/clique"
 	"github.com/ubiq/go-ubiq/v7/consensus/ubqhash"
 	"github.com/ubiq/go-ubiq/v7/core"
@@ -211,37 +212,38 @@ type Config struct {
 // CreateConsensusEngine creates a consensus engine for the given chain configuration.
 func CreateConsensusEngine(stack *node.Node, chainConfig *params.ChainConfig, config *ubqhash.Config, notify []string, noverify bool, db ethdb.Database) consensus.Engine {
 	// If proof-of-authority is requested, set it up
+	var engine consensus.Engine
 	if chainConfig.Clique != nil {
-		return clique.New(chainConfig.Clique, db)
-	}
-	// Otherwise assume proof-of-work
-	switch config.PowMode {
-	case ubqhash.ModeFake:
-		log.Warn("Ubqhash used in fake mode")
-	case ubqhash.ModeTest:
-		log.Warn("Ubqhash used in test mode")
-	case ubqhash.ModeShared:
-		log.Warn("Ubqhash used in shared mode")
-	}
+		engine = clique.New(chainConfig.Clique, db)
+	} else {
+		switch config.PowMode {
+		case ubqhash.ModeFake:
+			log.Warn("Ubqhash used in fake mode")
+		case ubqhash.ModeTest:
+			log.Warn("Ubqhash used in test mode")
+		case ubqhash.ModeShared:
+			log.Warn("Ubqhash used in shared mode")
+		}
 
-	var uip1Epoch uint64 = math.MaxUint64
-	if chainConfig.Ubqhash != nil && chainConfig.Ubqhash.UIP1Epoch != nil {
-		uip1Epoch = chainConfig.Ubqhash.UIP1Epoch.Uint64()
-	}
+		var uip1Epoch uint64 = math.MaxUint64
+		if chainConfig.Ubqhash != nil && chainConfig.Ubqhash.UIP1Epoch != nil {
+			uip1Epoch = chainConfig.Ubqhash.UIP1Epoch.Uint64()
+		}
 
-	engine := ubqhash.New(ubqhash.Config{
-		PowMode:          config.PowMode,
-		CacheDir:         stack.ResolvePath(config.CacheDir),
-		CachesInMem:      config.CachesInMem,
-		CachesOnDisk:     config.CachesOnDisk,
-		CachesLockMmap:   config.CachesLockMmap,
-		DatasetDir:       config.DatasetDir,
-		DatasetsInMem:    config.DatasetsInMem,
-		DatasetsOnDisk:   config.DatasetsOnDisk,
-		DatasetsLockMmap: config.DatasetsLockMmap,
-		NotifyFull:       config.NotifyFull,
-		UIP1Epoch:        uip1Epoch,
-	}, notify, noverify)
-	engine.SetThreads(-1) // Disable CPU mining
-	return engine
+		engine = ubqhash.New(ubqhash.Config{
+			PowMode:          config.PowMode,
+			CacheDir:         stack.ResolvePath(config.CacheDir),
+			CachesInMem:      config.CachesInMem,
+			CachesOnDisk:     config.CachesOnDisk,
+			CachesLockMmap:   config.CachesLockMmap,
+			DatasetDir:       config.DatasetDir,
+			DatasetsInMem:    config.DatasetsInMem,
+			DatasetsOnDisk:   config.DatasetsOnDisk,
+			DatasetsLockMmap: config.DatasetsLockMmap,
+			NotifyFull:       config.NotifyFull,
+			UIP1Epoch:        uip1Epoch,
+		}, notify, noverify)
+		engine.(*ubqhash.Ubqhash).SetThreads(-1) // Disable CPU mining
+	}
+	return beacon.New(engine) // TODO(iquidus): why is this returning a new beacon instead of just the engine ????
 }

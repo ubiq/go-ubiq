@@ -25,6 +25,7 @@ import (
 
 	"github.com/ubiq/go-ubiq/v7/core/state"
 	"github.com/ubiq/go-ubiq/v7/core/vm"
+	"github.com/ubiq/go-ubiq/v7/eth/tracers/logger"
 	"github.com/ubiq/go-ubiq/v7/log"
 	"github.com/ubiq/go-ubiq/v7/tests"
 
@@ -58,7 +59,7 @@ func stateTestCmd(ctx *cli.Context) error {
 	log.Root().SetHandler(glogger)
 
 	// Configure the EVM logger
-	config := &vm.LogConfig{
+	config := &logger.Config{
 		EnableMemory:     !ctx.GlobalBool(DisableMemoryFlag.Name),
 		DisableStack:     ctx.GlobalBool(DisableStackFlag.Name),
 		DisableStorage:   ctx.GlobalBool(DisableStorageFlag.Name),
@@ -66,18 +67,18 @@ func stateTestCmd(ctx *cli.Context) error {
 	}
 	var (
 		tracer   vm.EVMLogger
-		debugger *vm.StructLogger
+		debugger *logger.StructLogger
 	)
 	switch {
 	case ctx.GlobalBool(MachineFlag.Name):
-		tracer = vm.NewJSONLogger(config, os.Stderr)
+		tracer = logger.NewJSONLogger(config, os.Stderr)
 
 	case ctx.GlobalBool(DebugFlag.Name):
-		debugger = vm.NewStructLogger(config)
+		debugger = logger.NewStructLogger(config)
 		tracer = debugger
 
 	default:
-		debugger = vm.NewStructLogger(config)
+		debugger = logger.NewStructLogger(config)
 	}
 	// Load the test content from the input file
 	src, err := ioutil.ReadFile(ctx.Args().First())
@@ -118,7 +119,7 @@ func stateTestCmd(ctx *cli.Context) error {
 			if ctx.GlobalBool(DebugFlag.Name) {
 				if debugger != nil {
 					fmt.Fprintln(os.Stderr, "#### TRACE ####")
-					vm.WriteTrace(os.Stderr, debugger.StructLogs())
+					logger.WriteTrace(os.Stderr, debugger.StructLogs())
 				}
 			}
 		}

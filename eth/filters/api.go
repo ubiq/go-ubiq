@@ -29,7 +29,6 @@ import (
 	"github.com/ubiq/go-ubiq/v7/common"
 	"github.com/ubiq/go-ubiq/v7/common/hexutil"
 	"github.com/ubiq/go-ubiq/v7/core/types"
-	"github.com/ubiq/go-ubiq/v7/ethdb"
 	"github.com/ubiq/go-ubiq/v7/event"
 	"github.com/ubiq/go-ubiq/v7/rpc"
 )
@@ -51,7 +50,6 @@ type PublicFilterAPI struct {
 	backend   Backend
 	mux       *event.TypeMux
 	quit      chan struct{}
-	chainDb   ethdb.Database
 	events    *EventSystem
 	filtersMu sync.Mutex
 	filters   map[rpc.ID]*filter
@@ -62,7 +60,6 @@ type PublicFilterAPI struct {
 func NewPublicFilterAPI(backend Backend, lightMode bool, timeout time.Duration) *PublicFilterAPI {
 	api := &PublicFilterAPI{
 		backend: backend,
-		chainDb: backend.ChainDb(),
 		events:  NewEventSystem(backend, lightMode),
 		filters: make(map[rpc.ID]*filter),
 		timeout: timeout,

@@ -47,6 +47,7 @@ import (
 	"github.com/ubiq/go-ubiq/v7/core/vm"
 	"github.com/ubiq/go-ubiq/v7/crypto"
 	"github.com/ubiq/go-ubiq/v7/eth"
+	"github.com/ubiq/go-ubiq/v7/eth/catalyst"
 	"github.com/ubiq/go-ubiq/v7/eth/downloader"
 	"github.com/ubiq/go-ubiq/v7/eth/ethconfig"
 	"github.com/ubiq/go-ubiq/v7/eth/gasprice"
@@ -56,6 +57,7 @@ import (
 	"github.com/ubiq/go-ubiq/v7/graphql"
 	"github.com/ubiq/go-ubiq/v7/internal/ethapi"
 	"github.com/ubiq/go-ubiq/v7/internal/flags"
+	"github.com/ubiq/go-ubiq/v7/les"
 	"github.com/ubiq/go-ubiq/v7/log"
 	"github.com/ubiq/go-ubiq/v7/metrics"
 	"github.com/ubiq/go-ubiq/v7/metrics/exp"
@@ -205,7 +207,7 @@ var (
 	defaultSyncMode = ethconfig.Defaults.SyncMode
 	SyncModeFlag    = TextMarshalerFlag{
 		Name:  "syncmode",
-		Usage: `Blockchain sync mode ("fast", "full", or "snap")`,
+		Usage: `Blockchain sync mode ("snap", "full" or "light")`,
 		Value: &defaultSyncMode,
 	}
 	GCModeFlag = cli.StringFlag{
@@ -238,6 +240,49 @@ var (
 	OverrideOrionFlag = cli.Uint64Flag{
 		Name:  "override.orion",
 		Usage: "Manually specify Orion fork-block, overriding the bundled setting",
+	}
+	// Light server and client settings
+	LightServeFlag = cli.IntFlag{
+		Name:  "light.serve",
+		Usage: "Maximum percentage of time allowed for serving LES requests (multi-threaded processing allows values over 100)",
+		Value: ethconfig.Defaults.LightServ,
+	}
+	LightIngressFlag = cli.IntFlag{
+		Name:  "light.ingress",
+		Usage: "Incoming bandwidth limit for serving light clients (kilobytes/sec, 0 = unlimited)",
+		Value: ethconfig.Defaults.LightIngress,
+	}
+	LightEgressFlag = cli.IntFlag{
+		Name:  "light.egress",
+		Usage: "Outgoing bandwidth limit for serving light clients (kilobytes/sec, 0 = unlimited)",
+		Value: ethconfig.Defaults.LightEgress,
+	}
+	LightMaxPeersFlag = cli.IntFlag{
+		Name:  "light.maxpeers",
+		Usage: "Maximum number of light clients to serve, or light servers to attach to",
+		Value: ethconfig.Defaults.LightPeers,
+	}
+	UltraLightServersFlag = cli.StringFlag{
+		Name:  "ulc.servers",
+		Usage: "List of trusted ultra-light servers",
+		Value: strings.Join(ethconfig.Defaults.UltraLightServers, ","),
+	}
+	UltraLightFractionFlag = cli.IntFlag{
+		Name:  "ulc.fraction",
+		Usage: "Minimum % of trusted ultra-light servers required to announce a new head",
+		Value: ethconfig.Defaults.UltraLightFraction,
+	}
+	UltraLightOnlyAnnounceFlag = cli.BoolFlag{
+		Name:  "ulc.onlyannounce",
+		Usage: "Ultra light server sends announcements only",
+	}
+	LightNoPruneFlag = cli.BoolFlag{
+		Name:  "light.nopruning",
+		Usage: "Disable ancient light chain data pruning",
+	}
+	LightNoSyncServeFlag = cli.BoolFlag{
+		Name:  "light.nosyncserve",
+		Usage: "Enables serving light clients before syncing",
 	}
 	// Ubqhash settings
 	UbqhashCacheDirFlag = DirectoryFlag{
@@ -1072,7 +1117,7 @@ func SetP2PConfig(ctx *cli.Context, cfg *p2p.Config) {
 		cfg.NetRestrict = list
 	}
 
-	if ctx.GlobalBool(DeveloperFlag.Name) || ctx.GlobalBool(CatalystFlag.Name) {
+	if ctx.GlobalBool(DeveloperFlag.Name) {
 		// --dev mode can't use p2p networking.
 		cfg.MaxPeers = 0
 		cfg.ListenAddr = ""
@@ -1547,10 +1592,28 @@ func SetDNSDiscoveryDefaults(cfg *ethconfig.Config, genesis common.Hash) {
 // RegisterEthService adds an Ethereum client to the stack.
 // The second return value is the full node instance, which may be nil if the
 // node is running as a light client.
-func RegisterEthService(stack *node.Node, cfg *ethconfig.Config) (ethapi.Backend, *eth.Ethereum) {
+func RegisterEthService(stack *node.Node, cfg *ethconfig.Config, isCatalyst bool) (ethapi.Backend, *eth.Ethereum) {
+	if cfg.SyncMode == downloader.LightSync {
+		backend, err := les.New(stack, cfg)
+		if err != nil {
+			Fatalf("Failed to register the Ethereum service: %v", err)
+		}
+		stack.RegisterAPIs(tracers.APIs(backend.ApiBackend))
+		if isCatalyst {
+			if err := catalyst.RegisterLight(stack, backend); err != nil {
+				Fatalf("Failed to register the catalyst service: %v", err)
+			}
+		}
+		return backend.ApiBackend, nil
+	}
 	backend, err := eth.New(stack, cfg)
 	if err != nil {
 		Fatalf("Failed to register the Ubiq service: %v", err)
+	}
+	if isCatalyst {
+		if err := catalyst.Register(stack, backend); err != nil {
+			Fatalf("Failed to register the catalyst service: %v", err)
+		}
 	}
 	stack.RegisterAPIs(tracers.APIs(backend.APIBackend))
 	return backend.APIBackend, backend

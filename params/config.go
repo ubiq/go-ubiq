@@ -455,6 +455,7 @@ func (c *ChainConfig) CheckConfigForkOrder() error {
 		{name: "istanbulBlock", block: c.IstanbulBlock},
 		{name: "berlinBlock", block: c.BerlinBlock},
 		{name: "londonBlock", block: c.LondonBlock},
+		{name: "monocerosBlock", block: c.MonocerosBlock},
 	} {
 		if lastFork.name != "" {
 			// Next one must be higher number
@@ -514,6 +515,9 @@ func (c *ChainConfig) checkCompatible(newcfg *ChainConfig, head *big.Int) *Confi
 	}
 	if isForkIncompatible(c.LondonBlock, newcfg.LondonBlock, head) {
 		return newCompatError("London fork block", c.LondonBlock, newcfg.LondonBlock)
+	}
+	if isForkIncompatible(c.MonocerosBlock, newcfg.MonocerosBlock, head) {
+		return newCompatError("Monoceros fork block", c.MonocerosBlock, newcfg.MonocerosBlock)
 	}
 	return nil
 }

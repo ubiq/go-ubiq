@@ -158,7 +158,7 @@ func makeFullNode(ctx *cli.Context) (*node.Node, ethapi.Backend) {
 	if ctx.GlobalIsSet(utils.OverrideOrionFlag.Name) {
 		cfg.Eth.OverrideOrion = new(big.Int).SetUint64(ctx.GlobalUint64(utils.OverrideOrionFlag.Name))
 	}
-	backend, _ := utils.RegisterEthService(stack, &cfg.Eth)
+	backend, _ := utils.RegisterEthService(stack, &cfg.Eth, false)
 
 	// Configure GraphQL if requested
 	if ctx.GlobalIsSet(utils.GraphQLEnabledFlag.Name) {

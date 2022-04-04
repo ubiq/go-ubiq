@@ -45,6 +45,9 @@ type ChainHeaderReader interface {
 	// GetHeaderByHash retrieves a block header from the database by its hash.
 	GetHeaderByHash(hash common.Hash) *types.Header
 
+	// GetTd retrieves the total difficulty from the database by hash and number.
+	GetTd(hash common.Hash, number uint64) *big.Int
+
 	// CalcPastMedianTime calculates the median time of the previous few blocks
 	// prior to, and including, the passed block node.
 	CalcPastMedianTime(number uint64, parent *types.Header) *big.Int

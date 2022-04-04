@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/ubiq/go-ubiq/v7/common"
+	"github.com/ubiq/go-ubiq/v7/consensus"
 	"github.com/ubiq/go-ubiq/v7/consensus/clique"
 	"github.com/ubiq/go-ubiq/v7/core"
 	"github.com/ubiq/go-ubiq/v7/core/rawdb"
@@ -245,6 +246,7 @@ func createMiner(t *testing.T) (*Miner, *event.TypeMux) {
 	// Create consensus engine
 	engine := clique.New(chainConfig.Clique, chainDB)
 	// Create Ethereum backend
+	merger := consensus.NewMerger(rawdb.NewMemoryDatabase())
 	bc, err := core.NewBlockChain(chainDB, nil, chainConfig, engine, vm.Config{}, nil, nil)
 	if err != nil {
 		t.Fatalf("can't create new chain %v", err)
@@ -257,5 +259,5 @@ func createMiner(t *testing.T) (*Miner, *event.TypeMux) {
 	// Create event Mux
 	mux := new(event.TypeMux)
 	// Create Miner
-	return New(backend, &config, chainConfig, mux, engine, nil), mux
+	return New(backend, &config, chainConfig, mux, engine, nil, merger), mux
 }

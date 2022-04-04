@@ -55,7 +55,7 @@ on how you can run your own `gubiq` instance.
 By far the most common scenario is people wanting to simply interact with the Ubiq
 network: create accounts; transfer funds; deploy and interact with contracts. For this
 particular use-case the user doesn't care about years-old historical data, so we can
-fast-sync quickly to the current state of the network. To do so:
+sync quickly to the current state of the network. To do so:
 
 ```shell
 $ gubiq console
@@ -112,7 +112,7 @@ docker run -d --name ubiq-node -v /Users/alice/ubiq:/root \
            ubiq/client-go
 ```
 
-This will start `gubiq` in fast-sync mode with a DB memory allowance of 1GB just as the
+This will start `gubiq` in snap-sync mode with a DB memory allowance of 1GB just as the
 above command does.  It will also create a persistent volume in your home directory for
 saving your blockchain as well as map the default ports. There is also an `alpine` tag
 available for a slim version of the image.
