@@ -56,7 +56,7 @@ import (
 var (
 	bankKey, _ = crypto.GenerateKey()
 	bankAddr   = crypto.PubkeyToAddress(bankKey.PublicKey)
-	bankFunds  = big.NewInt(1_000_000_000_000_000_000)
+	bankFunds  = big.NewInt(9_000_000_000_000_000_000)
 
 	userKey1, _ = crypto.GenerateKey()
 	userKey2, _ = crypto.GenerateKey()
@@ -135,7 +135,7 @@ func prepare(n int, backend *backends.SimulatedBackend) {
 			userNonce1, _ := backend.PendingNonceAt(ctx, userAddr1)
 
 			// bankUser transfers more ether to user1
-			tx1, _ := types.SignTx(types.NewTransaction(bankNonce, userAddr1, big.NewInt(1_000_000_000_000_000), params.TxGas, big.NewInt(params.InitialBaseFee), nil), signer, bankKey)
+			tx1, _ := types.SignTx(types.NewTransaction(bankNonce, userAddr1, big.NewInt(1_000_000_000_000_000_000), params.TxGas, big.NewInt(params.InitialBaseFee), nil), signer, bankKey)
 			backend.SendTransaction(ctx, tx1)
 
 			// user1 relays ether to user2
