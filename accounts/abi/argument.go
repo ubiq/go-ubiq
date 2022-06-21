@@ -116,7 +116,6 @@ func (arguments Arguments) UnpackIntoMap(v map[string]interface{}, data []byte) 
 
 // Copy performs the operation go format -> provided struct.
 func (arguments Arguments) Copy(v interface{}, values []interface{}) error {
-	//fmt.Println("Copy")
 	// make sure the passed value is arguments pointer
 	if reflect.Ptr != reflect.ValueOf(v).Kind() {
 		return fmt.Errorf("abi: Unpack(non-pointer %T)", v)
