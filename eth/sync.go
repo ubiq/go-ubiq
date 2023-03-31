@@ -208,6 +208,7 @@ func (cs *chainSyncer) startSync(op *chainSyncOp) {
 
 // doSync synchronizes the local blockchain with a remote peer.
 func (h *handler) doSync(op *chainSyncOp) error {
+	isLondon := false
 	if op.mode == downloader.SnapSync {
 		// Before launch the snap sync, we have to ensure user uses the same
 		// txlookup limit.
@@ -225,10 +226,13 @@ func (h *handler) doSync(op *chainSyncOp) error {
 			h.chain.SetTxLookupLimit(*stored)
 			log.Warn("Update txLookup limit", "provided", limit, "updated", *stored)
 		}
+		// use header to determine if london is enabled
+		isLondon = h.chain.Config().IsLondon(h.chain.CurrentHeader().Number)
+	} else {
+		// use block to determine if london is enabled
+		isLondon = h.chain.Config().IsLondon(h.chain.CurrentBlock().Number())
 	}
 
-	startBlock := h.chain.CurrentBlock()
-	isLondon := h.chain.Config().IsLondon(startBlock.Number())
 	// Run the sync cycle, and disable fast sync if we're past the pivot block
 	err := h.downloader.Synchronise(op.peer.ID(), op.head, op.td, op.mode, isLondon)
 	if err != nil {
