@@ -195,7 +195,7 @@ func init() {
 	// Initialize the CLI app and start Gubiq
 	app.Action = gubiq
 	app.HideVersion = true // we have a command to print the version
-	app.Copyright = "Copyright 2013-2021 The go-ubiq Authors"
+	app.Copyright = "Copyright 2013-2023 The go-ubiq Authors"
 	app.Commands = []cli.Command{
 		// See chaincmd.go:
 		initCommand,
