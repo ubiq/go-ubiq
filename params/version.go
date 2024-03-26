@@ -21,10 +21,10 @@ import (
 )
 
 const (
-	VersionMajor = 7         // Major version component of the current release
-	VersionMinor = 0         // Minor version component of the current release
-	VersionPatch = 2         // Patch version component of the current release
-	VersionMeta  = "develop" // Version metadata to append to the version string
+	VersionMajor = 7           // Major version component of the current release
+	VersionMinor = 0           // Minor version component of the current release
+	VersionPatch = 2           // Patch version component of the current release
+	VersionMeta  = "sunflower" // Version metadata to append to the version string
 )
 
 // Version holds the textual version string.
@@ -43,7 +43,8 @@ var VersionWithMeta = func() string {
 
 // ArchiveVersion holds the textual version string used for Gubiq archives.
 // e.g. "1.8.11-dea1ce05" for stable releases, or
-//      "1.8.13-unstable-21c059b6" for unstable releases
+//
+//	"1.8.13-unstable-21c059b6" for unstable releases
 func ArchiveVersion(gitCommit string) string {
 	vsn := Version
 	if VersionMeta != "stable" {
